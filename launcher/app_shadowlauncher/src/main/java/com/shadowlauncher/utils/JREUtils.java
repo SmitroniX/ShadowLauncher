@@ -286,7 +286,7 @@ public class JREUtils {
         setJavaEnvironment(activity, runtimeHome);
 
         final String graphicsLib = loadGraphicsLibrary();
-        List<String> userArgs = getJavaArgs(activity, runtimeHome, userArgsString);
+        List<String> userArgs = getJavaArgs(activity, runtimeHome, userArgsString, gameDirectory);
 
         //Remove arguments that can interfere with the good working of the launcher
         purgeArg(userArgs,"-Xms");
@@ -344,6 +344,10 @@ public class JREUtils {
      * @return A list filled with args.
      */
     public static List<String> getJavaArgs(Context ctx, String runtimeHome, String userArgumentsString) {
+        return getJavaArgs(ctx, runtimeHome, userArgumentsString, null);
+    }
+
+    public static List<String> getJavaArgs(Context ctx, String runtimeHome, String userArgumentsString, File gameDirectory) {
         List<String> userArguments = parseJavaArguments(userArgumentsString);
         String resolvFile;
         resolvFile = new File(Tools.DIR_DATA,"resolv.conf").getAbsolutePath();
@@ -356,7 +360,8 @@ public class JREUtils {
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
                 "-Dos.version=Android-" + Build.VERSION.RELEASE,
-                "-Dpojav.path.minecraft=" + Tools.DIR_GAME_NEW,
+                "-Dpojav.path.minecraft=" + (gameDirectory == null ? Tools.DIR_GAME_NEW : gameDirectory.getAbsolutePath()),
+                "-Dshadow.path.instance=" + (gameDirectory == null ? Tools.DIR_GAME_NEW : gameDirectory.getAbsolutePath()),
                 "-Dpojav.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 

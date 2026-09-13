@@ -137,11 +137,19 @@ public class MainMenuFragment extends Fragment {
 
     private File getCurrentProfileDirectory() {
         String currentProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, null);
-        if(!Tools.isValidString(currentProfile)) return new File(Tools.DIR_GAME_NEW);
         LauncherProfiles.load();
-        MinecraftProfile profileObject = LauncherProfiles.mainProfileJson.profiles.get(currentProfile);
-        if(profileObject == null) return new File(Tools.DIR_GAME_NEW);
-        return Tools.getGameDirPath(profileObject);
+        MinecraftProfile profileObject = null;
+        if (Tools.isValidString(currentProfile) && LauncherProfiles.mainProfileJson != null && LauncherProfiles.mainProfileJson.profiles != null) {
+            profileObject = LauncherProfiles.mainProfileJson.profiles.get(currentProfile);
+        }
+        if (profileObject == null) {
+            try {
+                profileObject = LauncherProfiles.getCurrentProfile();
+            } catch (Exception ignored) {
+                profileObject = MinecraftProfile.getDefaultProfile();
+            }
+        }
+        return Tools.ensureInstanceDirectoryStructure(profileObject);
     }
 
     @Override

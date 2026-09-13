@@ -359,17 +359,21 @@ public final class Tools {
     public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
         if(minecraftProfile.gameDir != null && !minecraftProfile.gameDir.trim().isEmpty()){
             String path = minecraftProfile.gameDir.trim();
-            if(path.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(path.replace(Tools.LAUNCHERPROFILES_RTPREFIX, Tools.DIR_GAME_HOME + "/"));
-            if(path.startsWith("shadow://"))
-                return new File(path.replace("shadow://", Tools.DIR_GAME_HOME + "/"));
-            if(path.startsWith("/"))
-                return new File(path);
-            if(path.startsWith("./"))
-                return new File(Tools.DIR_GAME_HOME, path.substring(2));
-            return new File(Tools.DIR_GAME_HOME, path);
+            if(!path.equals(".minecraft") && !path.equals("./.minecraft") && !path.endsWith("/.minecraft")) {
+                if(path.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
+                    return new File(path.replace(Tools.LAUNCHERPROFILES_RTPREFIX, Tools.DIR_GAME_HOME + "/"));
+                if(path.startsWith("shadow://"))
+                    return new File(path.replace("shadow://", Tools.DIR_GAME_HOME + "/"));
+                if(path.startsWith("/"))
+                    return new File(path);
+                if(path.startsWith("./"))
+                    return new File(Tools.DIR_GAME_HOME, path.substring(2));
+                return new File(Tools.DIR_GAME_HOME, path);
+            }
         }
-        return new File(Tools.DIR_GAME_NEW);
+        // Auto-isolate instance per version/profile!
+        String generated = generateInstancePath(minecraftProfile.name, minecraftProfile.lastVersionId);
+        return new File(Tools.DIR_GAME_HOME, generated.startsWith("./") ? generated.substring(2) : generated);
     }
 
     /**
@@ -393,24 +397,38 @@ public final class Tools {
      * Check if a profile is configured as an isolated instance (separate directory)
      */
     public static boolean isIsolatedInstance(@Nullable MinecraftProfile profile) {
-        if (profile == null || profile.gameDir == null || profile.gameDir.trim().isEmpty()) {
-            return false;
+        if (profile == null) return false;
+        if (profile.gameDir == null || profile.gameDir.trim().isEmpty()) {
+            return true; // Auto-isolated instance by default!
         }
         String path = profile.gameDir.trim();
         return !path.equals(".minecraft") && !path.equals("./.minecraft") && !path.endsWith("/.minecraft");
     }
 
     /**
+     * Generate an isolated instance relative path for a profile name and version
+     */
+    public static String generateInstancePath(@Nullable String profileName, @Nullable String versionId) {
+        String baseName = null;
+        if (profileName != null && !profileName.trim().isEmpty() && !"Default".equalsIgnoreCase(profileName.trim()) && !"New".equalsIgnoreCase(profileName.trim())) {
+            baseName = profileName.trim();
+        } else if (versionId != null && !versionId.trim().isEmpty()) {
+            baseName = versionId.trim();
+        } else if (profileName != null && !profileName.trim().isEmpty()) {
+            baseName = profileName.trim();
+        } else {
+            baseName = "Default";
+        }
+        String safeName = baseName.replaceAll("[^a-zA-Z0-9._ -]", "_").trim();
+        if (safeName.isEmpty()) safeName = "Instance";
+        return "./instances/" + safeName;
+    }
+
+    /**
      * Generate an isolated instance relative path for a profile name
      */
     public static String generateInstancePath(String profileName) {
-        String safeName;
-        if (profileName == null || profileName.trim().isEmpty()) {
-            safeName = "Instance";
-        } else {
-            safeName = profileName.trim().replaceAll("[^a-zA-Z0-9._ -]", "_");
-        }
-        return "./instances/" + safeName;
+        return generateInstancePath(profileName, null);
     }
 
     public static void buildNotificationChannel(Context context){

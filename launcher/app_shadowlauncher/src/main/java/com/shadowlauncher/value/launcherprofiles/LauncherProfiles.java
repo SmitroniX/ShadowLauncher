@@ -35,6 +35,22 @@ public class LauncherProfiles {
         if (mainProfileJson.profiles.size() == 0)
             mainProfileJson.profiles.put(UUID.randomUUID().toString(), MinecraftProfile.getDefaultProfile());
 
+        // Ensure every profile has its own isolated instance directory and folders
+        boolean instanceUpdated = false;
+        for (Map.Entry<String, MinecraftProfile> entry : mainProfileJson.profiles.entrySet()) {
+            MinecraftProfile p = entry.getValue();
+            if (p != null) {
+                if (p.gameDir == null || p.gameDir.trim().isEmpty() || p.gameDir.equals(".minecraft") || p.gameDir.equals("./.minecraft")) {
+                    p.gameDir = Tools.generateInstancePath(p.name, p.lastVersionId);
+                    instanceUpdated = true;
+                }
+                Tools.ensureInstanceDirectoryStructure(p);
+            }
+        }
+        if (instanceUpdated) {
+            write();
+        }
+
         // Normalize profile names from mod installers
         if(normalizeProfileIds(mainProfileJson)){
             write();
@@ -65,6 +81,10 @@ public class LauncherProfiles {
      * @param minecraftProfile the profile to insert
      */
     public static void insertMinecraftProfile(MinecraftProfile minecraftProfile) {
+        if (minecraftProfile.gameDir == null || minecraftProfile.gameDir.trim().isEmpty() || minecraftProfile.gameDir.equals(".minecraft") || minecraftProfile.gameDir.equals("./.minecraft")) {
+            minecraftProfile.gameDir = Tools.generateInstancePath(minecraftProfile.name, minecraftProfile.lastVersionId);
+        }
+        Tools.ensureInstanceDirectoryStructure(minecraftProfile);
         mainProfileJson.profiles.put(getFreeProfileKey(), minecraftProfile);
     }
 
@@ -101,7 +121,13 @@ public class LauncherProfiles {
         // Swap the new keys
         for(String profileKey : keys){
             MinecraftProfile currentProfile = launcherProfiles.profiles.get(profileKey);
-            insertMinecraftProfile(currentProfile);
+            if (currentProfile != null) {
+                if (currentProfile.gameDir == null || currentProfile.gameDir.trim().isEmpty() || currentProfile.gameDir.equals(".minecraft") || currentProfile.gameDir.equals("./.minecraft")) {
+                    currentProfile.gameDir = Tools.generateInstancePath(currentProfile.name, currentProfile.lastVersionId);
+                }
+                Tools.ensureInstanceDirectoryStructure(currentProfile);
+                insertMinecraftProfile(currentProfile);
+            }
             launcherProfiles.profiles.remove(profileKey);
             hasNormalized = true;
         }

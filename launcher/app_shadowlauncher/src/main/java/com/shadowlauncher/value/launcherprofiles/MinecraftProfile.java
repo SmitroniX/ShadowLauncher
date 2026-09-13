@@ -1,6 +1,7 @@
 package com.shadowlauncher.value.launcherprofiles;
 
 import androidx.annotation.Keep;
+import com.shadowlauncher.Tools;
 
 @Keep
 public class MinecraftProfile {
@@ -35,6 +36,7 @@ public class MinecraftProfile {
 		MinecraftProfile defaultProfile = new MinecraftProfile();
 		defaultProfile.name = "Default";
 		defaultProfile.lastVersionId = "1.7.10";
+		defaultProfile.gameDir = Tools.generateInstancePath(defaultProfile.name, defaultProfile.lastVersionId);
 		return defaultProfile;
 	}
 

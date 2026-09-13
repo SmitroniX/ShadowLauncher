@@ -224,6 +224,19 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         return v -> VersionSelectorDialog.open(v.getContext(), false, (id, snapshot)-> {
             mTempProfile.lastVersionId = id;
             mDefaultVersion.setText(id);
+            if(mDefaultName.getText().toString().trim().isEmpty() || "Default".equalsIgnoreCase(mDefaultName.getText().toString().trim()) || "New".equalsIgnoreCase(mDefaultName.getText().toString().trim())) {
+                mDefaultName.setText(id);
+                mTempProfile.name = id;
+            }
+            if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
+                String newPath = Tools.generateInstancePath(mDefaultName.getText().toString(), id);
+                mDefaultPath.setText(newPath);
+                mTempProfile.gameDir = newPath;
+            }
+            if (mDefaultRuntime != null && mDefaultRuntime.getAdapter() instanceof RTSpinnerAdapter) {
+                int detected = NewJREUtil.detectRequiredJavaVersion(null, id);
+                ((RTSpinnerAdapter) mDefaultRuntime.getAdapter()).setAutoText("Auto (Java " + detected + " - Recommended)");
+            }
         });
     }
 
@@ -269,11 +282,11 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultName.setText(mTempProfile.name);
         mDefaultControl.setText(mTempProfile.controlFile == null ? "" : mTempProfile.controlFile);
 
-        boolean isInstance = Tools.isIsolatedInstance(mTempProfile) || (getArguments() != null);
+        boolean isInstance = Tools.isIsolatedInstance(mTempProfile) || (getArguments() != null) || mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty();
         mInstanceSwitch.setChecked(isInstance);
         mInstanceShortcutsContainer.setVisibility(isInstance ? View.VISIBLE : View.GONE);
-        if (isInstance && (mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty())) {
-            mTempProfile.gameDir = Tools.generateInstancePath(mTempProfile.name);
+        if (isInstance && (mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty() || mTempProfile.gameDir.equals(".minecraft") || mTempProfile.gameDir.equals("./.minecraft"))) {
+            mTempProfile.gameDir = Tools.generateInstancePath(mTempProfile.name, mTempProfile.lastVersionId);
         }
         mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
     }
@@ -288,8 +301,10 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             mProfileKey = profile;
         }else{
             minecraftProfile = MinecraftProfile.createTemplate();
-            minecraftProfile.gameDir = Tools.generateInstancePath(minecraftProfile.name);
             mProfileKey = LauncherProfiles.getFreeProfileKey();
+        }
+        if (minecraftProfile.gameDir == null || minecraftProfile.gameDir.trim().isEmpty() || minecraftProfile.gameDir.equals(".minecraft") || minecraftProfile.gameDir.equals("./.minecraft")) {
+            minecraftProfile.gameDir = Tools.generateInstancePath(minecraftProfile.name, minecraftProfile.lastVersionId);
         }
         return minecraftProfile;
     }
@@ -327,7 +342,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         String path = mDefaultPath.getText().toString().trim();
         if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
             if(path.isEmpty() || path.equals(".minecraft")) {
-                path = Tools.generateInstancePath(mTempProfile.name);
+                path = Tools.generateInstancePath(mTempProfile.name, mTempProfile.lastVersionId);
                 mDefaultPath.setText(path);
             }
             mTempProfile.gameDir = path;
@@ -353,6 +368,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         //First, check for potential issues in the inputs
         updateTempProfilePaths();
         if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
+            if (mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty() || mTempProfile.gameDir.equals(".minecraft")) {
+                mTempProfile.gameDir = Tools.generateInstancePath(mTempProfile.name, mTempProfile.lastVersionId);
+            }
             Tools.ensureInstanceDirectoryStructure(mTempProfile);
         }
 
