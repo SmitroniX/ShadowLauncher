@@ -1,0 +1,129 @@
+name: Build Shadow Launcher APK
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      bundle_runtimes:
+        description: 'Bundle offline OpenJDK runtimes (~148MB APK)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Native Android APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Java 8 (Toolchain compatibility)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Set up Java 21 (Gradle & Android Gradle Plugin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Android NDK (25.2.9519653)
+        run: |
+          echo "=== Configuring Android SDK & NDK ==="
+          if [ -z "$ANDROID_HOME" ]; then
+            export ANDROID_HOME="$ANDROID_SDK_ROOT"
+          fi
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          
+          # Install NDK 25.2 if not already cached
+          if [ ! -d "$ANDROID_HOME/ndk/25.2.9519653" ]; then
+            echo "Installing NDK 25.2.9519653..."
+            echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;25.2.9519653"
+          fi
+          
+          echo "sdk.dir=$ANDROID_HOME" > launcher/local.properties
+          echo "ndk.dir=$ANDROID_HOME/ndk/25.2.9519653" >> launcher/local.properties
+          cat launcher/local.properties
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+
+      - name: Make Scripts & Gradlew Executable
+        run: |
+          chmod +x launcher/gradlew
+          chmod +x scripts/*.sh || true
+
+      - name: Build Subproject Dependencies
+        run: |
+          cd launcher
+          ./gradlew :forge_installer:jar :arc_dns_injector:jar :jre_lwjgl3glfw:jar --no-daemon
+
+      - name: Optional - Bundle Offline OpenJDK Runtimes
+        if: ${{ github.event.inputs.bundle_runtimes == 'true' }}
+        run: |
+          echo "=== Downloading OpenJDK Runtimes for All-In-One APK ==="
+          mkdir -p launcher/app_pojavlauncher/src/main/assets/components/jre
+          mkdir -p launcher/app_pojavlauncher/src/main/assets/components/jre-new
+
+          curl -L -o /tmp/jre8-arm64.tar.xz "https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/releases/download/jre8-40df388/jre8-arm64-20220811-release.tar.xz"
+          tar -xf /tmp/jre8-arm64.tar.xz -C launcher/app_pojavlauncher/src/main/assets/components/jre/
+
+          curl -L -o /tmp/jre17-arm64.tar.xz "https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/releases/download/jre17-ca01427/jre17-arm64-20220817-release.tar.xz"
+          tar -xf /tmp/jre17-arm64.tar.xz -C launcher/app_pojavlauncher/src/main/assets/components/jre-new/
+
+      - name: Compile & Assemble Shadow Launcher APK
+        run: |
+          cd launcher
+          ./gradlew :app_pojavlauncher:assembleDebug --no-daemon --stacktrace
+
+      - name: Prepare Output Artifacts
+        run: |
+          mkdir -p dist
+          BUILT_APK="launcher/app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk"
+          FINAL_APK="dist/ShadowLauncher.apk"
+          cp "$BUILT_APK" "$FINAL_APK"
+          cd dist
+          sha256sum ShadowLauncher.apk > ShadowLauncher.apk.sha256
+          echo "=== Build Artifacts Prepared ==="
+          ls -lh
+          cat ShadowLauncher.apk.sha256
+
+      - name: Upload APK Artifact to GitHub Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: ShadowLauncher-APK
+          path: dist/*
+          retention-days: 30
+
+      - name: Publish GitHub Release (On Tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/ShadowLauncher.apk
+            dist/ShadowLauncher.apk.sha256
+          name: "Shadow Launcher ${{ github.ref_name }}"
+          draft: false
+          prerelease: false
+          generate_release_notes: true
