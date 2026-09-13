@@ -36,9 +36,9 @@ public class AWTInputBridge {
     
     static {
         try {
-            System.loadLibrary("shadowexec_awt");
-        } catch (UnsatisfiedLinkError e) {
             System.loadLibrary("pojavexec_awt");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("shadowexec_awt");
         }
     }
     

@@ -531,14 +531,14 @@ public class JREUtils {
     static {
         System.loadLibrary("exithook");
         try {
-            System.loadLibrary("shadowexec");
-        } catch (UnsatisfiedLinkError e) {
             System.loadLibrary("pojavexec");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("shadowexec");
         }
         try {
-            System.loadLibrary("shadowexec_awt");
-        } catch (UnsatisfiedLinkError e) {
             System.loadLibrary("pojavexec_awt");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("shadowexec_awt");
         }
     }
 }

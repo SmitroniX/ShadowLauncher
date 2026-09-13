@@ -33,11 +33,18 @@ jfieldID field_x;
 jfieldID field_y;
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved) {
-    if (dalvikJavaVMPtr == NULL) {
-        //Save dalvik global JavaVM pointer
+    JNIEnv *env = NULL;
+    if ((*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_4) != JNI_OK || env == NULL) {
+        return JNI_VERSION_1_4;
+    }
+
+    // Check whether this VM is Android ART / Dalvik or OpenJDK
+    jclass androidClass = (*env)->FindClass(env, "android/app/Activity");
+    if (androidClass != NULL) {
+        // This is Android ART / Dalvik VM
+        (*env)->DeleteLocalRef(env, androidClass);
         dalvikJavaVMPtr = vm;
-        JNIEnv *env = NULL;
-        (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_4);
+
         jclass mainActivityClass = (*env)->FindClass(env, "com/shadowlauncher/MainActivity");
         if (mainActivityClass == NULL) {
             (*env)->ExceptionClear(env);
@@ -45,12 +52,16 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
         }
         if (mainActivityClass != NULL) {
             class_MainActivity = (*env)->NewGlobalRef(env, mainActivityClass);
-            method_OpenLink= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
-            method_OpenPath= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
+            method_OpenLink = (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
+            method_OpenPath = (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
             method_QuerySystemClipboard = (*env)->GetStaticMethodID(env, class_MainActivity, "querySystemClipboard", "()V");
             method_PutClipboardData = (*env)->GetStaticMethodID(env, class_MainActivity, "putClipboardData", "(Ljava/lang/String;Ljava/lang/String;)V");
+            (*env)->DeleteLocalRef(env, mainActivityClass);
         }
-    } else if (dalvikJavaVMPtr != vm) {
+        (*env)->ExceptionClear(env);
+    } else {
+        // This is OpenJDK Runtime VM
+        (*env)->ExceptionClear(env);
         runtimeJavaVMPtr = vm;
     }
 
@@ -72,9 +83,15 @@ JNIEXPORT void JNICALL Java_com_shadowlauncher_AWTInputBridge_nativeSendData(JNI
             (*runtimeJNIEnvPtr_INPUT)->ExceptionClear(runtimeJNIEnvPtr_INPUT);
             class_CTCAndroidInput = (*runtimeJNIEnvPtr_INPUT)->FindClass(runtimeJNIEnvPtr_INPUT, "com/github/caciocavallosilano/cacio/ctc/CTCAndroidInput");
         }
-        assert(class_CTCAndroidInput != NULL);
+        if (class_CTCAndroidInput == NULL) {
+            (*runtimeJNIEnvPtr_INPUT)->ExceptionClear(runtimeJNIEnvPtr_INPUT);
+            return;
+        }
         method_ReceiveInput = (*runtimeJNIEnvPtr_INPUT)->GetStaticMethodID(runtimeJNIEnvPtr_INPUT, class_CTCAndroidInput, "receiveData", "(IIIII)V");
-        assert(method_ReceiveInput != NULL);
+        if (method_ReceiveInput == NULL) {
+            (*runtimeJNIEnvPtr_INPUT)->ExceptionClear(runtimeJNIEnvPtr_INPUT);
+            return;
+        }
     }
     (*runtimeJNIEnvPtr_INPUT)->CallStaticVoidMethod(
         runtimeJNIEnvPtr_INPUT,
@@ -88,10 +105,8 @@ JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeSendData(JN
     Java_com_shadowlauncher_AWTInputBridge_nativeSendData(env, clazz, type, i1, i2, i3, i4);
 }
 
-// TODO: check for memory leaks
-// int printed = 0;
 int threadAttached = 0;
-JNIEXPORT jintArray JNICALL Java_com_shadowlauncher_utils_JREUtils_renderAWTScreenFrame(JNIEnv* env, jclass clazz /*, jobject canvas, jint width, jint height */) {
+JNIEXPORT jintArray JNICALL Java_com_shadowlauncher_utils_JREUtils_renderAWTScreenFrame(JNIEnv* env, jclass clazz) {
     if (runtimeJNIEnvPtr_GRAPHICS == NULL) {
         if (runtimeJavaVMPtr == NULL) {
             return NULL;
@@ -109,9 +124,15 @@ JNIEXPORT jintArray JNICALL Java_com_shadowlauncher_utils_JREUtils_renderAWTScre
             (*runtimeJNIEnvPtr_GRAPHICS)->ExceptionClear(runtimeJNIEnvPtr_GRAPHICS);
             class_CTCScreen = (*runtimeJNIEnvPtr_GRAPHICS)->FindClass(runtimeJNIEnvPtr_GRAPHICS, "com/github/caciocavallosilano/cacio/ctc/CTCScreen");
         }
-        assert(class_CTCScreen != NULL);
+        if (class_CTCScreen == NULL) {
+            (*runtimeJNIEnvPtr_GRAPHICS)->ExceptionClear(runtimeJNIEnvPtr_GRAPHICS);
+            return NULL;
+        }
         method_GetRGB = (*runtimeJNIEnvPtr_GRAPHICS)->GetStaticMethodID(runtimeJNIEnvPtr_GRAPHICS, class_CTCScreen, "getCurrentScreenRGB", "()[I");
-        assert(method_GetRGB != NULL);
+        if (method_GetRGB == NULL) {
+            (*runtimeJNIEnvPtr_GRAPHICS)->ExceptionClear(runtimeJNIEnvPtr_GRAPHICS);
+            return NULL;
+        }
     }
     jreRgbArray = (jintArray) (*runtimeJNIEnvPtr_GRAPHICS)->CallStaticObjectMethod(
         runtimeJNIEnvPtr_GRAPHICS,
@@ -128,9 +149,7 @@ JNIEXPORT jintArray JNICALL Java_com_shadowlauncher_utils_JREUtils_renderAWTScre
     androidRgbArray = (*env)->NewIntArray(env, arrayLength);
     (*env)->SetIntArrayRegion(env, androidRgbArray, 0, arrayLength, rgbArray);
 
-    (*runtimeJNIEnvPtr_GRAPHICS)->ReleaseIntArrayElements(runtimeJNIEnvPtr_GRAPHICS, jreRgbArray, rgbArray, NULL);
-    // (*env)->DeleteLocalRef(env, androidRgbArray);
-    // free(rgbArray);
+    (*runtimeJNIEnvPtr_GRAPHICS)->ReleaseIntArrayElements(runtimeJNIEnvPtr_GRAPHICS, jreRgbArray, rgbArray, 0);
     
     return androidRgbArray;
 }
@@ -140,7 +159,9 @@ JNIEXPORT jintArray JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_renderAWTScr
 }
 
 JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCClipboard_nQuerySystemClipboard(JNIEnv *env, jclass clazz) {
-    JNIEnv *dalvikEnv;char detachable = 0;
+    if (dalvikJavaVMPtr == NULL || class_MainActivity == NULL) return;
+    JNIEnv *dalvikEnv;
+    char detachable = 0;
     if((*dalvikJavaVMPtr)->GetEnv(dalvikJavaVMPtr, (void **) &dalvikEnv, JNI_VERSION_1_6) == JNI_EDETACHED) {
         (*dalvikJavaVMPtr)->AttachCurrentThread(dalvikJavaVMPtr, &dalvikEnv, NULL);
         detachable = 1;
@@ -149,12 +170,16 @@ JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCClipboard_nQuerySystem
         class_CTCClipboard = (*env)->NewGlobalRef(env, clazz);
         method_SystemClipboardDataReceived = (*env)->GetStaticMethodID(env, clazz, "systemClipboardDataReceived", "(Ljava/lang/String;Ljava/lang/String;)V");
     }
-    (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_QuerySystemClipboard);
+    if (method_QuerySystemClipboard != NULL) {
+        (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_QuerySystemClipboard);
+    }
     if(detachable) (*dalvikJavaVMPtr)->DetachCurrentThread(dalvikJavaVMPtr);
 }
 
 JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCClipboard_nPutClipboardData(JNIEnv* env, jclass clazz, jstring clipboardData, jstring clipboardDataMime) {
-    JNIEnv *dalvikEnv;char detachable = 0;
+    if (dalvikJavaVMPtr == NULL || class_MainActivity == NULL) return;
+    JNIEnv *dalvikEnv;
+    char detachable = 0;
     if((*dalvikJavaVMPtr)->GetEnv(dalvikJavaVMPtr, (void **) &dalvikEnv, JNI_VERSION_1_6) == JNI_EDETACHED) {
         (*dalvikJavaVMPtr)->AttachCurrentThread(dalvikJavaVMPtr, &dalvikEnv, NULL);
         detachable = 1;
@@ -162,9 +187,11 @@ JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCClipboard_nPutClipboar
 
     const char* dataChars = (*env)->GetStringUTFChars(env, clipboardData, NULL);
     const char* mimeChars = (*env)->GetStringUTFChars(env, clipboardDataMime, NULL);
-    (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_PutClipboardData,
-                                       (*dalvikEnv)->NewStringUTF(dalvikEnv, dataChars),
-                                       (*dalvikEnv)->NewStringUTF(dalvikEnv, mimeChars));
+    if (method_PutClipboardData != NULL) {
+        (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_PutClipboardData,
+                                           (*dalvikEnv)->NewStringUTF(dalvikEnv, dataChars),
+                                           (*dalvikEnv)->NewStringUTF(dalvikEnv, mimeChars));
+    }
     (*env)->ReleaseStringUTFChars(env, clipboardData, dataChars);
     (*env)->ReleaseStringUTFChars(env, clipboardDataMime, mimeChars);
     if(detachable) (*dalvikJavaVMPtr)->DetachCurrentThread(dalvikJavaVMPtr);
@@ -179,31 +206,38 @@ JNIEXPORT void JNICALL Java_com_github_caciocavallosilano_cacio_ctc_CTCClipboard
 }
 
 JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCDesktopPeer_openFile(JNIEnv *env, jclass clazz, jstring filePath) {
-    JNIEnv *dalvikEnv;char detachable = 0;
+    if (dalvikJavaVMPtr == NULL || class_MainActivity == NULL) return;
+    JNIEnv *dalvikEnv;
+    char detachable = 0;
     if((*dalvikJavaVMPtr)->GetEnv(dalvikJavaVMPtr, (void **) &dalvikEnv, JNI_VERSION_1_6) == JNI_EDETACHED) {
         (*dalvikJavaVMPtr)->AttachCurrentThread(dalvikJavaVMPtr, &dalvikEnv, NULL);
         detachable = 1;
     }
     const char* stringChars = (*env)->GetStringUTFChars(env, filePath, NULL);
-    (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_OpenPath, (*dalvikEnv)->NewStringUTF(dalvikEnv, stringChars));
+    if (method_OpenPath != NULL) {
+        (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_OpenPath, (*dalvikEnv)->NewStringUTF(dalvikEnv, stringChars));
+    }
     (*env)->ReleaseStringUTFChars(env, filePath, stringChars);
     if(detachable) (*dalvikJavaVMPtr)->DetachCurrentThread(dalvikJavaVMPtr);
 }
 
 JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCDesktopPeer_openUri(JNIEnv *env, jclass clazz, jstring uri) {
-    JNIEnv *dalvikEnv;char detachable = 0;
+    if (dalvikJavaVMPtr == NULL || class_MainActivity == NULL) return;
+    JNIEnv *dalvikEnv;
+    char detachable = 0;
     if((*dalvikJavaVMPtr)->GetEnv(dalvikJavaVMPtr, (void **) &dalvikEnv, JNI_VERSION_1_6) == JNI_EDETACHED) {
         (*dalvikJavaVMPtr)->AttachCurrentThread(dalvikJavaVMPtr, &dalvikEnv, NULL);
         detachable = 1;
     }
     const char* stringChars = (*env)->GetStringUTFChars(env, uri, NULL);
-    (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_OpenLink, (*dalvikEnv)->NewStringUTF(dalvikEnv, stringChars));
+    if (method_OpenLink != NULL) {
+        (*dalvikEnv)->CallStaticVoidMethod(dalvikEnv, class_MainActivity, method_OpenLink, (*dalvikEnv)->NewStringUTF(dalvikEnv, stringChars));
+    }
     (*env)->ReleaseStringUTFChars(env, uri, stringChars);
     if(detachable) (*dalvikJavaVMPtr)->DetachCurrentThread(dalvikJavaVMPtr);
 }
 
 JNIEXPORT void JNICALL Java_com_shadowlauncher_AWTInputBridge_nativeClipboardReceived(JNIEnv *env, jclass clazz, jstring clipboardData, jstring clipboardDataMime) {
-    if(method_SystemClipboardDataReceived == NULL || class_CTCClipboard == NULL) return;
     if (runtimeJNIEnvPtr_INPUT == NULL) {
         if (runtimeJavaVMPtr == NULL) {
             return;
@@ -211,13 +245,19 @@ JNIEXPORT void JNICALL Java_com_shadowlauncher_AWTInputBridge_nativeClipboardRec
             (*runtimeJavaVMPtr)->AttachCurrentThread(runtimeJavaVMPtr, &runtimeJNIEnvPtr_INPUT, NULL);
         }
     }
-    const char* dataChars = clipboardData != NULL ? (*env)->GetStringUTFChars(env, clipboardData, NULL) : NULL;
-    const char* mimeChars = clipboardDataMime != NULL ? (*env)->GetStringUTFChars(env, clipboardDataMime, NULL) : NULL;
-    (*runtimeJNIEnvPtr_INPUT)->CallStaticVoidMethod(runtimeJNIEnvPtr_INPUT, class_CTCClipboard, method_SystemClipboardDataReceived,
-                                                    clipboardData != NULL ? (*runtimeJNIEnvPtr_INPUT)->NewStringUTF(runtimeJNIEnvPtr_INPUT, dataChars) : NULL,
-                                                    clipboardDataMime != NULL ? (*runtimeJNIEnvPtr_INPUT)->NewStringUTF(runtimeJNIEnvPtr_INPUT, mimeChars) : NULL);
-    if(dataChars != NULL) (*env)->ReleaseStringUTFChars(env, clipboardData, dataChars);
-    if(mimeChars != NULL) (*env)->ReleaseStringUTFChars(env, clipboardDataMime, mimeChars);
+    if (class_CTCClipboard != NULL && method_SystemClipboardDataReceived != NULL) {
+        const char *charsData = (*env)->GetStringUTFChars(env, clipboardData, NULL);
+        const char *charsMime = (*env)->GetStringUTFChars(env, clipboardDataMime, NULL);
+        (*runtimeJNIEnvPtr_INPUT)->CallStaticVoidMethod(
+            runtimeJNIEnvPtr_INPUT,
+            class_CTCClipboard,
+            method_SystemClipboardDataReceived,
+            (*runtimeJNIEnvPtr_INPUT)->NewStringUTF(runtimeJNIEnvPtr_INPUT, charsData),
+            (*runtimeJNIEnvPtr_INPUT)->NewStringUTF(runtimeJNIEnvPtr_INPUT, charsMime)
+        );
+        (*env)->ReleaseStringUTFChars(env, clipboardData, charsData);
+        (*env)->ReleaseStringUTFChars(env, clipboardDataMime, charsMime);
+    }
 }
 
 JNIEXPORT void JNICALL
@@ -231,26 +271,36 @@ Java_com_shadowlauncher_AWTInputBridge_nativeMoveWindow(JNIEnv *env, jclass claz
     }
     if(field_y == NULL) {
         class_Frame = (*runtimeJNIEnvPtr_INPUT)->FindClass(runtimeJNIEnvPtr_INPUT, "java/awt/Frame");
+        if (class_Frame == NULL) {
+            (*runtimeJNIEnvPtr_INPUT)->ExceptionClear(runtimeJNIEnvPtr_INPUT);
+            return;
+        }
         method_GetFrames = (*runtimeJNIEnvPtr_INPUT)->GetStaticMethodID(runtimeJNIEnvPtr_INPUT, class_Frame, "getFrames", "()[Ljava/awt/Frame;");
         method_GetBounds = (*runtimeJNIEnvPtr_INPUT)->GetMethodID(runtimeJNIEnvPtr_INPUT, class_Frame, "getBounds", "(Ljava/awt/Rectangle;)Ljava/awt/Rectangle;");
         method_SetBounds = (*runtimeJNIEnvPtr_INPUT)->GetMethodID(runtimeJNIEnvPtr_INPUT, class_Frame, "setBounds", "(Ljava/awt/Rectangle;)V");
         class_Rectangle = (*runtimeJNIEnvPtr_INPUT)->FindClass(runtimeJNIEnvPtr_INPUT, "java/awt/Rectangle");
+        if (class_Rectangle == NULL) {
+            (*runtimeJNIEnvPtr_INPUT)->ExceptionClear(runtimeJNIEnvPtr_INPUT);
+            return;
+        }
         constructor_Rectangle = (*runtimeJNIEnvPtr_INPUT)->GetMethodID(runtimeJNIEnvPtr_INPUT, class_Rectangle, "<init>", "()V");
         field_x = (*runtimeJNIEnvPtr_INPUT)->GetFieldID(runtimeJNIEnvPtr_INPUT, class_Rectangle, "x", "I");
         field_y = (*runtimeJNIEnvPtr_INPUT)->GetFieldID(runtimeJNIEnvPtr_INPUT, class_Rectangle, "y", "I");
     }
     jobject rectangle = (*runtimeJNIEnvPtr_INPUT)->NewObject(runtimeJNIEnvPtr_INPUT, class_Rectangle, constructor_Rectangle);
     jobjectArray frames = (*runtimeJNIEnvPtr_INPUT)->CallStaticObjectMethod(runtimeJNIEnvPtr_INPUT, class_Frame, method_GetFrames);
-    for(jsize i = 0; i < (*runtimeJNIEnvPtr_INPUT)->GetArrayLength(runtimeJNIEnvPtr_INPUT, frames); i++) {
-        jobject frame = (*runtimeJNIEnvPtr_INPUT)->GetObjectArrayElement(runtimeJNIEnvPtr_INPUT, frames, i);
-        (*runtimeJNIEnvPtr_INPUT)->CallObjectMethod(runtimeJNIEnvPtr_INPUT, frame, method_GetBounds, rectangle);
-        (*runtimeJNIEnvPtr_INPUT)->SetIntField(runtimeJNIEnvPtr_INPUT, rectangle,  field_x, (*runtimeJNIEnvPtr_INPUT)->GetIntField(runtimeJNIEnvPtr_INPUT, rectangle, field_x) + xoff);
-        (*runtimeJNIEnvPtr_INPUT)->SetIntField(runtimeJNIEnvPtr_INPUT, rectangle,  field_y, (*runtimeJNIEnvPtr_INPUT)->GetIntField(runtimeJNIEnvPtr_INPUT, rectangle, field_y) + yoff);
-        (*runtimeJNIEnvPtr_INPUT)->CallVoidMethod(runtimeJNIEnvPtr_INPUT, frame, method_SetBounds, rectangle);
-        (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, frame);
+    if (frames != NULL) {
+        for(jsize i = 0; i < (*runtimeJNIEnvPtr_INPUT)->GetArrayLength(runtimeJNIEnvPtr_INPUT, frames); i++) {
+            jobject frame = (*runtimeJNIEnvPtr_INPUT)->GetObjectArrayElement(runtimeJNIEnvPtr_INPUT, frames, i);
+            (*runtimeJNIEnvPtr_INPUT)->CallObjectMethod(runtimeJNIEnvPtr_INPUT, frame, method_GetBounds, rectangle);
+            (*runtimeJNIEnvPtr_INPUT)->SetIntField(runtimeJNIEnvPtr_INPUT, rectangle,  field_x, (*runtimeJNIEnvPtr_INPUT)->GetIntField(runtimeJNIEnvPtr_INPUT, rectangle, field_x) + xoff);
+            (*runtimeJNIEnvPtr_INPUT)->SetIntField(runtimeJNIEnvPtr_INPUT, rectangle,  field_y, (*runtimeJNIEnvPtr_INPUT)->GetIntField(runtimeJNIEnvPtr_INPUT, rectangle, field_y) + yoff);
+            (*runtimeJNIEnvPtr_INPUT)->CallVoidMethod(runtimeJNIEnvPtr_INPUT, frame, method_SetBounds, rectangle);
+            (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, frame);
+        }
+        (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, frames);
     }
     (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, rectangle);
-    (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, frames);
 }
 
 JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeClipboardReceived(JNIEnv *env, jclass clazz, jstring clipboardData, jstring clipboardDataMime) {

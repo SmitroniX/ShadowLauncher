@@ -170,8 +170,11 @@ Java_com_shadowlauncher_utils_JREUtils_setupExitMethod(JNIEnv *env, jclass clazz
         (*env)->ExceptionClear(env);
         exitClass = (*env)->FindClass(env,"net/kdt/pojavlaunch/ExitActivity");
     }
-    exitTrap_exitClass = (*env)->NewGlobalRef(env,exitClass);
-    exitTrap_staticMethod = (*env)->GetStaticMethodID(env,exitTrap_exitClass,"showExitMessage","(Landroid/content/Context;IZ)V");
+    if (exitClass != NULL) {
+        exitTrap_exitClass = (*env)->NewGlobalRef(env,exitClass);
+        exitTrap_staticMethod = (*env)->GetStaticMethodID(env,exitTrap_exitClass,"showExitMessage","(Landroid/content/Context;IZ)V");
+    }
+    (*env)->ExceptionClear(env);
 }
 
 JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_Logger_appendToLog(JNIEnv *env, jclass clazz, jstring text) {
