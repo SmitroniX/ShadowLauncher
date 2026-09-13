@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shadow Launcher</string>
-    <string name="launcher_subtitle">High-Performance Minecraft Mobile &amp; PC Engine</string>
+    <string name="play">PLAY</string>
+    <string name="custom_controls">Custom Controls</string>
+    <string name="view_log">View Log</string>
+    <string name="settings">Settings</string>
+    <string name="install_jar">Install .JAR</string>
+    <string name="java_memory">Java &amp; Memory</string>
+    <string name="renderer">Renderer</string>
+    <string name="save">Save Layout</string>
+    <string name="reset">Reset Default</string>
 </resources>

@@ -12,15 +12,16 @@
 
 ## 🌟 Overview
 
-**Shadow Launcher** is an advanced, ultra-optimized Minecraft launcher engineered specifically for high-framerate mobile gameplay (and future desktop PC releases). Standard mobile launchers frequently suffer from high CPU driver overhead, massive memory leaks, and unresponsive on-screen touch controls.
+**Shadow Launcher** is an advanced, ultra-optimized Minecraft launcher engineered specifically for high-framerate mobile gameplay (and future desktop PC releases). Unlike hybrid or webview-wrapped apps, Shadow Launcher's Android application is **100% Pure Native Android (Java & OpenGL ES)**, architected identically to **PojavLauncher** and **MJ Launcher (MCinaBox/FCL)**:
 
-Shadow Launcher solves this with:
-- **Shadow Turbo Engine**: Custom Vulkan 1.3 pipeline for Adreno and Mali GPUs delivering up to **2.4x higher frame rates** (120Hz/144Hz support) and up to 40% reduced battery draw.
-- **Zero-Lag Heap & JVM Tuning**: Dynamic heap calculator with pre-configured Aikar's G1GC flags, Shenandoah low-pause GC (<10ms pause times), and automatic memory leak suppression.
-- **ShadowTouch Mobile Gamepad**: Fully customizable ergonomic on-screen touch controls with tactile haptic vibration, sprint-locking, gyro aim assist, and auto-detection for Bluetooth controllers (Xbox, PlayStation, Razer Kishi).
-- **1-Click Mod & Shader Hub**: Pre-configured bundles for Sodium, Iris Shaders, Lithium, FerriteCore, ImmediatelyFast, and Entity Culling from Modrinth & CurseForge.
-- **Multi-Instance Manager**: Support for Minecraft 1.21.1 Tricky Trials down to 1.8.9 PvP, across Fabric, Forge, NeoForge, Quilt, and Vanilla.
-- **Interactive Web Demo**: A full in-browser launcher sandbox and 3D Minecraft simulation experience.
+- **100% Native Android UI & Architecture**: Native Android Activities (`MainActivity`, `InGameActivity`, `ControlsEditorActivity`, `SettingsActivity`, `ConsoleLogActivity`) and native Android XML layouts.
+- **Native OpenGL ES 3D Game Engine**: Real `GLSurfaceView` with perspective camera projection, voxel rendering, and touch look controls.
+- **Pojav On-Screen Touch Controls**: Full native HUD with `PRI` (attack/mine), `SEC` (place/use), `INV` (inventory), `F3` (debug HUD), `F5` (third-person view), `CHAT`, `TAB`, `ESC` (pause), and `GUI` (hide buttons).
+- **Signature Virtual Mouse System (`MOUSE`)**: Native virtual mouse cursor pointer with touchpad drag and acceleration.
+- **In-App Custom Controls Layout Editor**: Pojav-style visual grid canvas allowing users to drag, resize, and remap touch buttons directly on their device screen.
+- **Java Runtime Management (JRE 8, 17, 21)**: Auto-selection and manual switching between OpenJDK 21 (for modern Minecraft 1.21+), OpenJDK 17 (for 1.17–1.20.4), and OpenJDK 8 (for 1.12.2 and 1.8.9 PvP).
+- **Live JVM Terminal Logger**: Native console output stream displaying Minecraft stdout, stderr, and GC statistics.
+- **Interactive Web Demo for Website Visitors**: In addition to the pure native Android APK, visitors to the official website can test the launcher, layout editor, and 3D simulator right in their web browser without installing anything.
 
 ---
 

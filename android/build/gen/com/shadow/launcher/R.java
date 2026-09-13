@@ -11,27 +11,106 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int accent=0x7f050002;
-        public static final int black=0x7f050003;
-        public static final int primary=0x7f050000;
-        public static final int primary_dark=0x7f050001;
+        public static final int amber=0x7f050009;
+        public static final int bg_deep=0x7f050000;
+        public static final int bg_surface=0x7f050001;
+        public static final int bg_surface_2=0x7f050002;
+        public static final int bg_surface_3=0x7f050003;
+        public static final int cyan=0x7f050008;
+        public static final int emerald=0x7f050006;
+        public static final int emerald_dark=0x7f050007;
+        public static final int primary=0x7f050004;
+        public static final int primary_dark=0x7f050005;
+        public static final int rose=0x7f05000a;
+        public static final int text_dim=0x7f05000d;
+        public static final int text_main=0x7f05000b;
+        public static final int text_muted=0x7f05000c;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int btn_play_gradient=0x7f020000;
+        public static final int btn_pojav_normal=0x7f020001;
+        public static final int btn_tool_background=0x7f020002;
+        public static final int card_background=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
     }
     public static final class id {
-        public static final int launcher_webview=0x7f080001;
-        public static final int root_container=0x7f080000;
+        public static final int btn_action_jump=0x7f08001f;
+        public static final int btn_action_pri=0x7f08001d;
+        public static final int btn_action_sec=0x7f08001e;
+        public static final int btn_action_sneak=0x7f080020;
+        public static final int btn_dpad_down=0x7f080014;
+        public static final int btn_dpad_left=0x7f080015;
+        public static final int btn_dpad_lock=0x7f080017;
+        public static final int btn_dpad_right=0x7f080016;
+        public static final int btn_dpad_up=0x7f080013;
+        public static final int btn_editor_back=0x7f080005;
+        public static final int btn_editor_reset=0x7f080006;
+        public static final int btn_editor_save=0x7f080007;
+        public static final int btn_game_chat=0x7f080011;
+        public static final int btn_game_esc=0x7f08000c;
+        public static final int btn_game_f3=0x7f08000f;
+        public static final int btn_game_f5=0x7f080010;
+        public static final int btn_game_gui=0x7f08000e;
+        public static final int btn_game_inv=0x7f080018;
+        public static final int btn_game_mouse=0x7f08000d;
+        public static final int btn_game_tab=0x7f080012;
+        public static final int btn_hotbar_1=0x7f080019;
+        public static final int btn_hotbar_2=0x7f08001a;
+        public static final int btn_hotbar_3=0x7f08001b;
+        public static final int btn_hotbar_4=0x7f08001c;
+        public static final int btn_log_back=0x7f080000;
+        public static final int btn_log_clear=0x7f080001;
+        public static final int btn_log_copy=0x7f080002;
+        public static final int btn_main_account=0x7f080023;
+        public static final int btn_main_controls=0x7f08002a;
+        public static final int btn_main_install_jar=0x7f080022;
+        public static final int btn_main_logs=0x7f08002c;
+        public static final int btn_main_play=0x7f080029;
+        public static final int btn_main_settings=0x7f08002b;
+        public static final int btn_settings_back=0x7f08002f;
+        public static final int btn_settings_save=0x7f080036;
+        public static final int editor_canvas_container=0x7f080008;
+        public static final int et_settings_jvm_args=0x7f080035;
+        public static final int gl_game_surface=0x7f080009;
+        public static final int iv_virtual_mouse=0x7f080021;
+        public static final int layout_pojav_controls=0x7f08000b;
+        public static final int sb_settings_ram=0x7f080031;
+        public static final int scroll_log=0x7f080003;
+        public static final int spn_profiles=0x7f080028;
+        public static final int spn_settings_fps=0x7f080034;
+        public static final int spn_settings_jre=0x7f080032;
+        public static final int spn_settings_renderer=0x7f080033;
+        public static final int tv_console_output=0x7f080004;
+        public static final int tv_device_info=0x7f08002d;
+        public static final int tv_ingame_f3=0x7f08000a;
+        public static final int tv_profile_jre=0x7f080025;
+        public static final int tv_profile_loader=0x7f080024;
+        public static final int tv_profile_renderer=0x7f080026;
+        public static final int tv_profile_title=0x7f080027;
+        public static final int tv_ram_info=0x7f08002e;
+        public static final int tv_settings_ram_val=0x7f080030;
     }
     public static final class layout {
-        public static final int activity_main=0x7f040000;
+        public static final int activity_console_log=0x7f040000;
+        public static final int activity_controls_editor=0x7f040001;
+        public static final int activity_game=0x7f040002;
+        public static final int activity_main=0x7f040003;
+        public static final int activity_settings=0x7f040004;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
-        public static final int launcher_subtitle=0x7f060001;
+        public static final int custom_controls=0x7f060002;
+        public static final int install_jar=0x7f060005;
+        public static final int java_memory=0x7f060006;
+        public static final int play=0x7f060001;
+        public static final int renderer=0x7f060007;
+        public static final int reset=0x7f060009;
+        public static final int save=0x7f060008;
+        public static final int settings=0x7f060004;
+        public static final int view_log=0x7f060003;
     }
     public static final class style {
         public static final int AppTheme=0x7f070000;

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Native OpenGL Game Viewport -->
+    <android.opengl.GLSurfaceView
+        android:id="@+id/gl_game_surface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Ingame F3 Telemetry HUD -->
+    <TextView
+        android:id="@+id/tv_ingame_f3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="#99000000"
+        android:padding="8dp"
+        android:text="Minecraft 1.21.1 [Shadow-Pojav Engine]\n120 fps @ Vulkan 1.3\nMem: 1312/4096MB\nXYZ: 0.000 / 2.000 / -5.000"
+        android:textColor="#ffffff"
+        android:textSize="11sp"
+        android:typeface="monospace" />
+
+    <!-- Crosshair -->
+    <View
+        android:layout_width="16dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center"
+        android:background="#ffffff" />
+    <View
+        android:layout_width="2dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:background="#ffffff" />
+
+    <!-- Pojav Native Touch Controls Overlay Container -->
+    <RelativeLayout
+        android:id="@+id/layout_pojav_controls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Top Left: ESC, MOUSE, GUI -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_game_esc"
+                android:layout_width="54dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="ESC"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_game_mouse"
+                android:layout_width="60dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="MOUSE"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_game_gui"
+                android:layout_width="50dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="GUI"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Top Right: F3, F5, CHAT, TAB -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_game_f3"
+                android:layout_width="48dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="F3"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_game_f5"
+                android:layout_width="48dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="F5"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_game_chat"
+                android:layout_width="54dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="CHAT"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_game_tab"
+                android:layout_width="48dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="TAB"
+                android:textColor="#ffffff"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Bottom Left: Virtual D-Pad -->
+        <RelativeLayout
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="20dp">
+
+            <Button
+                android:id="@+id/btn_dpad_up"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="▲"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_dpad_down"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="▼"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_dpad_left"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="◀"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_dpad_right"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="▶"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_dpad_lock"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="LOCK"
+                android:textColor="#a78bfa"
+                android:textSize="9sp" />
+        </RelativeLayout>
+
+        <!-- Bottom Center: Hotbar & INV -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:background="#aa000000"
+            android:padding="3dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_game_inv"
+                android:layout_width="42dp"
+                android:layout_height="36dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="INV"
+                android:textColor="#ffffff"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_hotbar_1"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="1"
+                android:textColor="#ffffff"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btn_hotbar_2"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="2"
+                android:textColor="#ffffff"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btn_hotbar_3"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="3"
+                android:textColor="#ffffff"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btn_hotbar_4"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="4"
+                android:textColor="#ffffff"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Bottom Right: Action Cluster (PRI, SEC, JUMP, SNEAK) -->
+        <RelativeLayout
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp">
+
+            <Button
+                android:id="@+id/btn_action_pri"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="PRI"
+                android:textColor="#f43f5e"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_action_sec"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="SEC"
+                android:textColor="#10b981"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_action_jump"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="JUMP"
+                android:textColor="#06b6d4"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_action_sneak"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_pojav_normal"
+                android:text="SHIFT"
+                android:textColor="#ffffff"
+                android:textSize="9sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!-- Native Virtual Mouse Pointer -->
+    <ImageView
+        android:id="@+id/iv_virtual_mouse"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="Mouse Pointer" />
+
+</FrameLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#050608">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="#0e1018"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <Button
+            android:id="@+id/btn_log_back"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:background="@drawable/btn_tool_background"
+            android:text="◀ Back"
+            android:textColor="#ffffff"
+            android:textSize="11sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:text="Pojav JVM Console Output"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_log_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:background="@drawable/btn_tool_background"
+            android:text="Clear"
+            android:textColor="#9ca3af"
+            android:textSize="11sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <Button
+            android:id="@+id/btn_log_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/btn_play_gradient"
+            android:text="Copy"
+            android:textColor="#ffffff"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_log"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_console_output"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#34d399"
+            android:textSize="11sp"
+            android:typeface="monospace"
+            android:lineSpacingExtra="3dp" />
+    </ScrollView>
+
+</LinearLayout>
