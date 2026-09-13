@@ -1,0 +1,21 @@
+# Gradle & Android build artifacts
+.gradle/
+build/
+*/build/
+*/*/build/
+bin/
+gen/
+obj/
+local.properties
+.cxx/
+*/.cxx/
+*/*/.cxx/
+
+# IDE files
+.idea/
+*.iml
+.DS_Store
+
+# Temporary logs
+*.log
+website_server.log
