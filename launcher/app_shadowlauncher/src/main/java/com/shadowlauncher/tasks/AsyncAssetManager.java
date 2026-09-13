@@ -25,35 +25,39 @@ public class AsyncAssetManager {
     private AsyncAssetManager(){}
 
     /**
-     * Attempt to install the java 8 runtime, if necessary
+     * Attempt to install the bundled Java 8, 17, and 21 runtimes if necessary
      * @param am App context
      */
     public static void unpackRuntime(AssetManager am) {
-        /* Check if JRE is included */
+        unpackSingleRuntime(am, "Internal", "components/jre", 8);
+        unpackSingleRuntime(am, "Internal-17", "components/jre-new", 17);
+        unpackSingleRuntime(am, "Internal-21", "components/jre-21", 21);
+    }
+
+    private static void unpackSingleRuntime(AssetManager am, String name, String path, int majorVersion) {
         String rt_version = null;
-        String current_rt_version = MultiRTUtils.readInternalRuntimeVersion("Internal");
+        String current_rt_version = MultiRTUtils.readInternalRuntimeVersion(name);
         try {
-            rt_version = Tools.read(am.open("components/jre/version"));
+            rt_version = Tools.read(am.open(path + "/version"));
         } catch (IOException e) {
-            Log.e("JREAuto", "JRE was not included on this APK.", e);
+            Log.e("JREAuto", "JRE " + name + " was not included on this APK.", e);
         }
-        String exactJREName = MultiRTUtils.getExactJreName(8);
-        if(current_rt_version == null && exactJREName != null && !exactJREName.equals("Internal")/*this clause is for when the internal runtime is goofed*/) return;
+        String exactJREName = MultiRTUtils.getExactJreName(majorVersion);
+        if(current_rt_version == null && exactJREName != null && !exactJREName.equals(name)) return;
         if(rt_version == null) return;
         if(rt_version.equals(current_rt_version)) return;
 
-        // Install the runtime in an async manner, hope for the best
+        // Install the runtime in an async manner
         String finalRt_version = rt_version;
         sExecutorService.execute(() -> {
-
             try {
                 MultiRTUtils.installRuntimeNamedBinpack(
-                        am.open("components/jre/universal.tar.xz"),
-                        am.open("components/jre/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
-                        "Internal", finalRt_version);
-                MultiRTUtils.postPrepare("Internal");
-            }catch (IOException e) {
-                Log.e("JREAuto", "Internal JRE unpack failed", e);
+                        am.open(path + "/universal.tar.xz"),
+                        am.open(path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                        name, finalRt_version);
+                MultiRTUtils.postPrepare(name);
+            } catch (IOException e) {
+                Log.e("JREAuto", "Internal JRE " + name + " unpack failed", e);
             }
         });
     }

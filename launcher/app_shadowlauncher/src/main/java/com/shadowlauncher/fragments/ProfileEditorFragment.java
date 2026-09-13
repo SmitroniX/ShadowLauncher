@@ -27,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import com.shadowlauncher.NewJREUtil;
 import com.shadowlauncher.R;
 import com.shadowlauncher.Tools;
 import com.shadowlauncher.extra.ExtraConstants;
@@ -129,6 +130,22 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         View.OnClickListener versionSelectListener = getVersionSelectListener();
         mVersionSelectButton.setOnClickListener(versionSelectListener);
         mDefaultVersion.setOnClickListener(versionSelectListener);
+        mDefaultVersion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mDefaultRuntime != null && mDefaultRuntime.getAdapter() instanceof RTSpinnerAdapter) {
+                    String ver = s != null ? s.toString() : "";
+                    int detected = NewJREUtil.detectRequiredJavaVersion(null, ver);
+                    ((RTSpinnerAdapter) mDefaultRuntime.getAdapter()).setAutoText("Auto (Java " + detected + " - Recommended)");
+                }
+            }
+        });
 
         // Set up the icon change click listener
         mProfileIcon.setOnClickListener(v -> CropperUtils.startCropper(mCropperLauncher));
@@ -221,14 +238,22 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         // Runtime spinner
         List<Runtime> runtimes = MultiRTUtils.getRuntimes();
-        int jvmIndex = runtimes.indexOf(new Runtime("<Default>"));
-        if (mTempProfile.javaDir != null) {
+        int reqJava = NewJREUtil.detectRequiredJavaVersion(null, mTempProfile.lastVersionId);
+        String autoLabel = "Auto (Java " + reqJava + " - Recommended)";
+        RTSpinnerAdapter runtimeAdapter = new RTSpinnerAdapter(context, runtimes, autoLabel);
+        mDefaultRuntime.setAdapter(runtimeAdapter);
+
+        int jvmIndex = 0; // Default is Auto at position 0
+        if (mTempProfile.javaDir != null && mTempProfile.javaDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX)) {
             String selectedRuntime = mTempProfile.javaDir.substring(Tools.LAUNCHERPROFILES_RTPREFIX.length());
-            int nindex = runtimes.indexOf(new Runtime(selectedRuntime));
-            if (nindex != -1) jvmIndex = nindex;
+            for (int i = 0; i < runtimeAdapter.getCount(); i++) {
+                Runtime r = (Runtime) runtimeAdapter.getItem(i);
+                if (selectedRuntime.equals(r.name)) {
+                    jvmIndex = i;
+                    break;
+                }
+            }
         }
-        mDefaultRuntime.setAdapter(new RTSpinnerAdapter(context, runtimes));
-        if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
 
         // Renderer spinner

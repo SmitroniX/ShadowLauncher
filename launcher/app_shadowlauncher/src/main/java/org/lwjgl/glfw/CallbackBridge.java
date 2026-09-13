@@ -241,7 +241,11 @@ public class CallbackBridge {
     private static native ByteBuffer nativeCreateGamepadButtonBuffer();
     private static native ByteBuffer nativeCreateGamepadAxisBuffer();
     static {
-        System.loadLibrary("shadowexec");
+        try {
+            System.loadLibrary("shadowexec");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("pojavexec");
+        }
         sGamepadButtonBuffer = nativeCreateGamepadButtonBuffer();
         sGamepadAxisBuffer = createGamepadAxisBuffer();
     }

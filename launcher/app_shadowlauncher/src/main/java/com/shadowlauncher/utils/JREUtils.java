@@ -172,6 +172,7 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String jreHome) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJAV_NATIVEDIR", NATIVE_LIB_DIR);
+        envMap.put("SHADOW_NATIVEDIR", NATIVE_LIB_DIR);
         envMap.put("JAVA_HOME", jreHome);
         envMap.put("HOME", Tools.DIR_GAME_HOME);
         envMap.put("TMPDIR", Tools.DIR_CACHE.getAbsolutePath());
@@ -529,7 +530,15 @@ public class JREUtils {
     public static native int[] renderAWTScreenFrame(/* Object canvas, int width, int height */);
     static {
         System.loadLibrary("exithook");
-        System.loadLibrary("shadowexec");
-        System.loadLibrary("shadowexec_awt");
+        try {
+            System.loadLibrary("shadowexec");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("pojavexec");
+        }
+        try {
+            System.loadLibrary("shadowexec_awt");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("pojavexec_awt");
+        }
     }
 }

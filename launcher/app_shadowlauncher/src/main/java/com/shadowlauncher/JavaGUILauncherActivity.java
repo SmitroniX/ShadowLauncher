@@ -205,13 +205,16 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
         }
         String nearestRuntime = MultiRTUtils.getNearestJreName(javaVersion);
         if(nearestRuntime == null) {
+            NewJREUtil.unpackInternalRuntimeSync(getAssets(), javaVersion);
+            nearestRuntime = MultiRTUtils.getNearestJreName(javaVersion);
+        }
+        if(nearestRuntime == null) {
             finalErrorDialog(getString(R.string.multirt_nocompatiblert, javaVersion));
             return null;
         }
         Runtime selectedRuntime = MultiRTUtils.forceReread(nearestRuntime);
         int selectedJavaVersion = Math.max(javaVersion, selectedRuntime.javaVersion);
-        // Don't allow versions higher than Java 17 because our caciocavallo implementation does not allow for it
-        if(selectedJavaVersion > 17) {
+        if(selectedJavaVersion > 21) {
             finalErrorDialog(getString(R.string.execute_jar_incompatible_runtime, selectedJavaVersion));
             return null;
         }

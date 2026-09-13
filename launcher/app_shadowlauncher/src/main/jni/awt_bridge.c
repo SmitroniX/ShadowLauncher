@@ -38,11 +38,18 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
         dalvikJavaVMPtr = vm;
         JNIEnv *env = NULL;
         (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_4);
-        class_MainActivity = (*env)->NewGlobalRef(env,(*env)->FindClass(env, "com/shadowlauncher/MainActivity"));
-        method_OpenLink= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
-        method_OpenPath= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
-        method_QuerySystemClipboard = (*env)->GetStaticMethodID(env, class_MainActivity, "querySystemClipboard", "()V");
-        method_PutClipboardData = (*env)->GetStaticMethodID(env, class_MainActivity, "putClipboardData", "(Ljava/lang/String;Ljava/lang/String;)V");
+        jclass mainActivityClass = (*env)->FindClass(env, "com/shadowlauncher/MainActivity");
+        if (mainActivityClass == NULL) {
+            (*env)->ExceptionClear(env);
+            mainActivityClass = (*env)->FindClass(env, "net/kdt/pojavlaunch/MainActivity");
+        }
+        if (mainActivityClass != NULL) {
+            class_MainActivity = (*env)->NewGlobalRef(env, mainActivityClass);
+            method_OpenLink= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
+            method_OpenPath= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
+            method_QuerySystemClipboard = (*env)->GetStaticMethodID(env, class_MainActivity, "querySystemClipboard", "()V");
+            method_PutClipboardData = (*env)->GetStaticMethodID(env, class_MainActivity, "putClipboardData", "(Ljava/lang/String;Ljava/lang/String;)V");
+        }
     } else if (dalvikJavaVMPtr != vm) {
         runtimeJavaVMPtr = vm;
     }
@@ -75,6 +82,10 @@ JNIEXPORT void JNICALL Java_com_shadowlauncher_AWTInputBridge_nativeSendData(JNI
         method_ReceiveInput,
         type, i1, i2, i3, i4
     );
+}
+
+JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeSendData(JNIEnv* env, jclass clazz, jint type, jint i1, jint i2, jint i3, jint i4) {
+    Java_com_shadowlauncher_AWTInputBridge_nativeSendData(env, clazz, type, i1, i2, i3, i4);
 }
 
 // TODO: check for memory leaks
@@ -122,6 +133,10 @@ JNIEXPORT jintArray JNICALL Java_com_shadowlauncher_utils_JREUtils_renderAWTScre
     // free(rgbArray);
     
     return androidRgbArray;
+}
+
+JNIEXPORT jintArray JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_renderAWTScreenFrame(JNIEnv* env, jclass clazz) {
+    return Java_com_shadowlauncher_utils_JREUtils_renderAWTScreenFrame(env, clazz);
 }
 
 JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCClipboard_nQuerySystemClipboard(JNIEnv *env, jclass clazz) {
@@ -236,4 +251,12 @@ Java_com_shadowlauncher_AWTInputBridge_nativeMoveWindow(JNIEnv *env, jclass claz
     }
     (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, rectangle);
     (*runtimeJNIEnvPtr_INPUT)->DeleteLocalRef(runtimeJNIEnvPtr_INPUT, frames);
+}
+
+JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeClipboardReceived(JNIEnv *env, jclass clazz, jstring clipboardData, jstring clipboardDataMime) {
+    Java_com_shadowlauncher_AWTInputBridge_nativeClipboardReceived(env, clazz, clipboardData, clipboardDataMime);
+}
+
+JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeMoveWindow(JNIEnv *env, jclass clazz, jint xoff, jint yoff) {
+    Java_com_shadowlauncher_AWTInputBridge_nativeMoveWindow(env, clazz, xoff, yoff);
 }

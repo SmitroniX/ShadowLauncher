@@ -253,7 +253,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="6dp"
                                 android:background="@drawable/badge_instance_button"
-                                android:text="🧩 Mods"
+                                android:drawableStart="@drawable/ic_instance_mods"
+                                android:drawablePadding="6dp"
+                                android:text="Mods"
                                 android:textColor="@color/accent_cyan"
                                 android:textSize="@dimen/_11ssp" />
 
@@ -263,7 +265,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="6dp"
                                 android:background="@drawable/badge_instance_button"
-                                android:text="🎨 Resource Packs"
+                                android:drawableStart="@drawable/ic_instance_packs"
+                                android:drawablePadding="6dp"
+                                android:text="Resource Packs"
                                 android:textColor="@color/primary_text"
                                 android:textSize="@dimen/_11ssp" />
 
@@ -273,7 +277,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="6dp"
                                 android:background="@drawable/badge_instance_button"
-                                android:text="🌍 Saves"
+                                android:drawableStart="@drawable/ic_instance_saves"
+                                android:drawablePadding="6dp"
+                                android:text="Saves"
                                 android:textColor="@color/primary_text"
                                 android:textSize="@dimen/_11ssp" />
 
@@ -283,7 +289,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="6dp"
                                 android:background="@drawable/badge_instance_button"
-                                android:text="💡 Shaders"
+                                android:drawableStart="@drawable/ic_instance_shaders"
+                                android:drawablePadding="6dp"
+                                android:text="Shaders"
                                 android:textColor="@color/primary_text"
                                 android:textSize="@dimen/_11ssp" />
 
@@ -292,7 +300,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/badge_instance_button"
-                                android:text="📁 Instance Root"
+                                android:drawableStart="@drawable/ic_instance_root"
+                                android:drawablePadding="6dp"
+                                android:text="Instance Root"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="@dimen/_11ssp" />
                         </LinearLayout>

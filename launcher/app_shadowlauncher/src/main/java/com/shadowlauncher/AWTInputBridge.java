@@ -35,7 +35,11 @@ public class AWTInputBridge {
     }
     
     static {
-        System.loadLibrary("shadowexec_awt");
+        try {
+            System.loadLibrary("shadowexec_awt");
+        } catch (UnsatisfiedLinkError e) {
+            System.loadLibrary("pojavexec_awt");
+        }
     }
     
     public static native void nativeSendData(int type, int i1, int i2, int i3, int i4);

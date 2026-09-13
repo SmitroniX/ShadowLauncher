@@ -35,6 +35,14 @@ public class ContextExecutor {
         }
     }
 
+    public static Activity getActivity() {
+        return Tools.getWeakReference(sActivity);
+    }
+
+    public static Application getApplication() {
+        return Tools.getWeakReference(sApplication);
+    }
+
     /**
      * Set the Activity that this ContextExecutor will use for executing tasks
      * @param activity the activity to be used

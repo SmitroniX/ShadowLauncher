@@ -84,3 +84,8 @@ Java_com_shadowlauncher_utils_JREUtils_initializeHooks(JNIEnv *env, jclass clazz
     // We only use the hook to capture the exit code.
     atexit(custom_atexit);
 }
+
+JNIEXPORT void JNICALL
+Java_net_kdt_pojavlaunch_utils_JREUtils_initializeHooks(JNIEnv *env, jclass clazz) {
+    Java_com_shadowlauncher_utils_JREUtils_initializeHooks(env, clazz);
+}

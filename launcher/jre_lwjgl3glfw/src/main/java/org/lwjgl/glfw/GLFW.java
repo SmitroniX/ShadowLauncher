@@ -523,7 +523,11 @@ public class GLFW
         try {
             System.loadLibrary("shadowexec");
         } catch (UnsatisfiedLinkError e) {
-            e.printStackTrace();
+            try {
+                System.loadLibrary("pojavexec");
+            } catch (UnsatisfiedLinkError e2) {
+                e2.printStackTrace();
+            }
         }
         mGLFWErrorCallback = GLFWErrorCallback.createPrint();
         mGLFWKeyCodes = new ArrayMap<>();
@@ -595,7 +599,14 @@ public class GLFW
         throw new UnsupportedOperationException();
     }
 
-    private static final SharedLibrary GLFW = Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libshadowexec.so", true);
+    private static final SharedLibrary GLFW = loadGlfw();
+    private static SharedLibrary loadGlfw() {
+        try {
+            return Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libshadowexec.so", true);
+        } catch (Throwable t) {
+            return Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libpojavexec.so", true);
+        }
+    }
 
     /** Contains the function pointers loaded from the glfw {@link SharedLibrary}. */
     public static final class Functions {

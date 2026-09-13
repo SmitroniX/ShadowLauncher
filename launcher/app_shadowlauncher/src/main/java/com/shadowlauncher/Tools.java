@@ -16,6 +16,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -306,7 +307,8 @@ public final class Tools {
         }
 
 
-        Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
+        NewJREUtil.unpackInternalRuntimeSync(activity.getAssets(), versionJavaRequirement);
+        Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(activity, minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
 
 
@@ -1297,11 +1299,25 @@ public final class Tools {
     }
 
     public static @NonNull String pickRuntime(MinecraftProfile minecraftProfile, int targetJavaVersion) {
+        return pickRuntime(ContextExecutor.getActivity(), minecraftProfile, targetJavaVersion);
+    }
+
+    public static @NonNull String pickRuntime(Context context, MinecraftProfile minecraftProfile, int targetJavaVersion) {
         String runtime = getSelectedRuntime(minecraftProfile);
         String profileRuntime = getRuntimeName(minecraftProfile.javaDir);
         Runtime pickedRuntime = MultiRTUtils.read(runtime);
         if(runtime == null || pickedRuntime.javaVersion == 0 || pickedRuntime.javaVersion < targetJavaVersion) {
             String preferredRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
+            if(preferredRuntime == null) {
+                AssetManager am = null;
+                if(context != null) am = context.getAssets();
+                else if(ContextExecutor.getActivity() != null) am = ContextExecutor.getActivity().getAssets();
+                else if(ContextExecutor.getApplication() != null) am = ContextExecutor.getApplication().getAssets();
+                if(am != null) {
+                    NewJREUtil.unpackInternalRuntimeSync(am, targetJavaVersion);
+                    preferredRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
+                }
+            }
             if(preferredRuntime == null) throw new RuntimeException("Failed to autopick runtime!");
             if(profileRuntime != null) minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX+preferredRuntime;
             runtime = preferredRuntime;
