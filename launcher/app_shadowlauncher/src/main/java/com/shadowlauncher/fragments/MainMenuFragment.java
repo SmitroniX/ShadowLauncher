@@ -3,6 +3,7 @@ package com.shadowlauncher.fragments;
 import static com.shadowlauncher.Tools.openPath;
 import static com.shadowlauncher.Tools.shareLog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.kdt.mcgui.mcVersionSpinner;
@@ -65,13 +67,12 @@ public class MainMenuFragment extends Fragment {
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
-            Tools.switchDemo(Tools.isDemoProfile(v.getContext())); // avoid switching accounts being able to access
-            if(Tools.isDemoProfile(v.getContext())){
-                Toast.makeText(v.getContext(), R.string.toast_not_available_demo, Toast.LENGTH_LONG).show();
-                return;
-            }
+            showInstanceDirectoryDialog(v.getContext());
+        });
 
+        mOpenDirectoryButton.setOnLongClickListener((v) -> {
             openPath(v.getContext(), getCurrentProfileDirectory(), false);
+            return true;
         });
 
 
@@ -79,6 +80,59 @@ public class MainMenuFragment extends Fragment {
             Tools.swapFragment(requireActivity(), GamepadMapperFragment.class, GamepadMapperFragment.TAG, null);
             return true;
         });
+    }
+
+    private void showInstanceDirectoryDialog(Context context) {
+        String currentProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, null);
+        LauncherProfiles.load();
+        MinecraftProfile profileObject = null;
+        if (Tools.isValidString(currentProfile) && LauncherProfiles.mainProfileJson != null && LauncherProfiles.mainProfileJson.profiles != null) {
+            profileObject = LauncherProfiles.mainProfileJson.profiles.get(currentProfile);
+        }
+        if (profileObject == null) {
+            try {
+                profileObject = LauncherProfiles.getCurrentProfile();
+            } catch (Exception ignored) {
+                profileObject = MinecraftProfile.getDefaultProfile();
+            }
+        }
+
+        final File instanceDir = Tools.ensureInstanceDirectoryStructure(profileObject);
+        final String displayName = (Tools.isValidString(profileObject.name) && !"New".equalsIgnoreCase(profileObject.name))
+                ? profileObject.name : (profileObject.lastVersionId != null ? profileObject.lastVersionId : "Default");
+        final boolean isInstance = Tools.isIsolatedInstance(profileObject);
+
+        final CharSequence[] items = new CharSequence[] {
+            "📁  " + getString(R.string.instance_open_root) + " (" + instanceDir.getName() + ")",
+            "🧩  " + getString(R.string.instance_open_mods),
+            "🎨  " + getString(R.string.instance_open_resourcepacks),
+            "🌍  " + getString(R.string.instance_open_saves),
+            "💡  " + getString(R.string.instance_open_shaders),
+            "⚙️  " + getString(R.string.instance_open_config),
+            "📦  Global Root (.minecraft)"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle((isInstance ? "⚡ " : "") + getString(R.string.instance_select_directory_title) + " - " + displayName);
+        builder.setItems(items, (dialog, which) -> {
+            File target;
+            switch(which) {
+                case 1: target = new File(instanceDir, "mods"); break;
+                case 2: target = new File(instanceDir, "resourcepacks"); break;
+                case 3: target = new File(instanceDir, "saves"); break;
+                case 4: target = new File(instanceDir, "shaderpacks"); break;
+                case 5: target = new File(instanceDir, "config"); break;
+                case 6: target = new File(Tools.DIR_GAME_NEW); break;
+                case 0:
+                default:
+                    target = instanceDir;
+                    break;
+            }
+            if(!target.exists()) target.mkdirs();
+            openPath(context, target, false);
+        });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.show();
     }
 
     private File getCurrentProfileDirectory() {
@@ -97,12 +151,6 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void runInstallerWithConfirmation(boolean isCustomArgs) {
-        // avoid using custom installers to install a version
-        if(Tools.isLocalProfile(requireContext()) || Tools.isDemoProfile(requireContext())){
-            Toast.makeText(requireContext(), R.string.toast_not_available_demo, Toast.LENGTH_LONG).show();
-            return;
-        }
-
         if (ProgressKeeper.getTaskCount() == 0)
             Tools.installMod(requireActivity(), isCustomArgs);
         else

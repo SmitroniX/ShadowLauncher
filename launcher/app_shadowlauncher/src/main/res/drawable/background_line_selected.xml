@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape
-            android:shape="rectangle" >
-
-            <corners android:radius="@dimen/_2sdp" />
-
-            <stroke
-                android:width="@dimen/_2sdp"
-                android:color="@color/minebutton_color"/>
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp"/>
+            <solid android:color="@color/card_surface_elevated"/>
+            <stroke android:width="2dp" android:color="@color/accent_cyan"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="@dimen/padding_input_bottom"
+                android:top="@dimen/padding_input_top" />
         </shape>
     </item>
 </layer-list>

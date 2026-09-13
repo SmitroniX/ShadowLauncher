@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape
-            android:shape="rectangle" >
-
-            <corners android:radius="@dimen/_2sdp" />
-
-
-            <stroke
-                android:width="@dimen/_2sdp"
-                android:color="#909090"/>
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp"/>
+            <solid android:color="@color/card_surface"/>
+            <stroke android:width="1.5dp" android:color="@color/card_border"/>
         </shape>
     </item>
     <item android:drawable="?attr/selectableItemBackground"/>
     <item>
-        <shape
-            android:shape="rectangle">
-
+        <shape android:shape="rectangle">
             <padding
                 android:bottom="@dimen/padding_input_bottom"
                 android:top="@dimen/padding_input_top" />

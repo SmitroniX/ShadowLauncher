@@ -17,9 +17,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.shadowlauncher.R;
@@ -37,6 +42,7 @@ import com.shadowlauncher.value.launcherprofiles.LauncherProfiles;
 import com.shadowlauncher.value.launcherprofiles.MinecraftProfile;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -55,6 +61,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
     private ImageView mProfileIcon;
+    private SwitchCompat mInstanceSwitch;
+    private View mInstanceShortcutsContainer;
+    private Button mInstanceModsBtn, mInstancePacksBtn, mInstanceSavesBtn, mInstanceShadersBtn, mInstanceRootBtn;
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
     private List<String> mRenderNames;
@@ -124,6 +133,48 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         // Set up the icon change click listener
         mProfileIcon.setOnClickListener(v -> CropperUtils.startCropper(mCropperLauncher));
 
+        // Instance switch behavior
+        mInstanceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mInstanceShortcutsContainer.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            if(isChecked) {
+                String cur = mDefaultPath.getText().toString().trim();
+                if(cur.isEmpty() || cur.equals(".minecraft")) {
+                    String instancePath = Tools.generateInstancePath(mDefaultName.getText().toString());
+                    mDefaultPath.setText(instancePath);
+                    if(mTempProfile != null) mTempProfile.gameDir = instancePath;
+                }
+            } else {
+                mDefaultPath.setText("");
+                if(mTempProfile != null) mTempProfile.gameDir = null;
+            }
+        });
+
+        // Sync instance path with instance name when typing
+        mDefaultName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
+                    String curPath = mDefaultPath.getText().toString().trim();
+                    if(curPath.isEmpty() || curPath.startsWith("./instances/") || curPath.startsWith("instances/")) {
+                        String newPath = Tools.generateInstancePath(s.toString());
+                        mDefaultPath.setText(newPath);
+                        if(mTempProfile != null) mTempProfile.gameDir = newPath;
+                    }
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        // Instance folder quick action buttons
+        mInstanceModsBtn.setOnClickListener(v -> openInstanceSubdir("mods"));
+        mInstancePacksBtn.setOnClickListener(v -> openInstanceSubdir("resourcepacks"));
+        mInstanceSavesBtn.setOnClickListener(v -> openInstanceSubdir("saves"));
+        mInstanceShadersBtn.setOnClickListener(v -> openInstanceSubdir("shaderpacks"));
+        mInstanceRootBtn.setOnClickListener(v -> openInstanceSubdir(null));
+
         loadValues(LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, ""), view.getContext());
     }
 
@@ -191,28 +242,28 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultVersion.setText(mTempProfile.lastVersionId);
         mDefaultJvmArgument.setText(mTempProfile.javaArgs == null ? "" : mTempProfile.javaArgs);
         mDefaultName.setText(mTempProfile.name);
-        mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
         mDefaultControl.setText(mTempProfile.controlFile == null ? "" : mTempProfile.controlFile);
+
+        boolean isInstance = Tools.isIsolatedInstance(mTempProfile) || (getArguments() != null);
+        mInstanceSwitch.setChecked(isInstance);
+        mInstanceShortcutsContainer.setVisibility(isInstance ? View.VISIBLE : View.GONE);
+        if (isInstance && (mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty())) {
+            mTempProfile.gameDir = Tools.generateInstancePath(mTempProfile.name);
+        }
+        mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
     }
 
     private MinecraftProfile getProfile(@NonNull String profile){
         MinecraftProfile minecraftProfile;
         if(getArguments() == null) {
-            // EDGE CASE: User leaves Pojav in background. Pojav gets terminated in the background.
-            // Current selected fragment and its arguments are saved.
-            // User returns to Pojav. Android restarts process and reinitializes fragment without
-            // going to the main screen. mainProfileJson and profiles left uninitialized, which
-            // results in a crash.
-            // Reload the profiles to avoid this edge case.
             LauncherProfiles.load();
             MinecraftProfile originalProfile = LauncherProfiles.mainProfileJson.profiles.get(profile);
-            // EDGE CASE: User edits the JSON, so the profile that was edited no longer exists.
-            // Create a brand new profile as a fallback for this case.
             if(originalProfile != null) minecraftProfile = new MinecraftProfile(originalProfile);
             else minecraftProfile = MinecraftProfile.createTemplate();
             mProfileKey = profile;
         }else{
             minecraftProfile = MinecraftProfile.createTemplate();
+            minecraftProfile.gameDir = Tools.generateInstancePath(minecraftProfile.name);
             mProfileKey = LauncherProfiles.getFreeProfileKey();
         }
         return minecraftProfile;
@@ -235,19 +286,57 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mVersionSelectButton = view.findViewById(R.id.vprof_editor_version_button);
         mGameDirButton = view.findViewById(R.id.vprof_editor_path_button);
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
+
+        mInstanceSwitch = view.findViewById(R.id.vprof_editor_instance_switch);
+        mInstanceShortcutsContainer = view.findViewById(R.id.vprof_editor_instance_shortcuts_container);
+        mInstanceModsBtn = view.findViewById(R.id.vprof_editor_instance_mods_btn);
+        mInstancePacksBtn = view.findViewById(R.id.vprof_editor_instance_packs_btn);
+        mInstanceSavesBtn = view.findViewById(R.id.vprof_editor_instance_saves_btn);
+        mInstanceShadersBtn = view.findViewById(R.id.vprof_editor_instance_shaders_btn);
+        mInstanceRootBtn = view.findViewById(R.id.vprof_editor_instance_root_btn);
+    }
+
+    private void updateTempProfilePaths() {
+        if(mTempProfile == null) return;
+        mTempProfile.name = mDefaultName.getText().toString();
+        String path = mDefaultPath.getText().toString().trim();
+        if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
+            if(path.isEmpty() || path.equals(".minecraft")) {
+                path = Tools.generateInstancePath(mTempProfile.name);
+                mDefaultPath.setText(path);
+            }
+            mTempProfile.gameDir = path;
+        } else {
+            mTempProfile.gameDir = path.isEmpty() ? null : path;
+        }
+    }
+
+    private void openInstanceSubdir(@Nullable String subfolder) {
+        updateTempProfilePaths();
+        File root = Tools.ensureInstanceDirectoryStructure(mTempProfile);
+        File target = (subfolder != null) ? new File(root, subfolder) : root;
+        if(!target.exists()) target.mkdirs();
+        try {
+            Tools.openPath(requireContext(), target, false);
+            Toast.makeText(requireContext(), getString(R.string.instance_folder_toast, target.getName()), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), target.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void save(){
         //First, check for potential issues in the inputs
+        updateTempProfilePaths();
+        if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
+            Tools.ensureInstanceDirectoryStructure(mTempProfile);
+        }
+
         mTempProfile.lastVersionId = mDefaultVersion.getText().toString();
         mTempProfile.controlFile = mDefaultControl.getText().toString();
-        mTempProfile.name = mDefaultName.getText().toString();
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
-        mTempProfile.gameDir = mDefaultPath.getText().toString();
 
         if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
-        if(mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
 
         Runtime selectedRuntime = (Runtime) mDefaultRuntime.getSelectedItem();
         mTempProfile.javaDir = (selectedRuntime.name.equals("<Default>") || selectedRuntime.versionString == null)
@@ -255,7 +344,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
-
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();

@@ -420,7 +420,7 @@
     <string name="mcl_button_discord">Discord</string>
     <string name="ltw_render_distance_warning_msg">Your GPU is not capable of rendering above 7 render distance without Sodium or other similar mods. The render distance will be automatically reduced when you click "OK".</string>
     <string name="mcl_button_open_directory">Open game directory</string>
-    <string name="discord_invite" translatable="false">https://discord.com/invite/aenk3EUvER</string>
+    <string name="discord_invite" translatable="false">https://discord.gg/gtBzgWnD5X</string>
     <string name="local_login_bad_username_title">Unsuitable username</string>
     <string name="local_login_bad_username_text">The username must be between 3–16 characters long, and must only contain latin letters, numbers 0–9 and underscores.</string>
     <string name="quick_setting_title">Quick settings</string>
@@ -431,4 +431,15 @@
     <string name="bta_installer_nightly_versions">Nightly BTA versions</string>
     <string name="newdl_extracting_native_libraries" formatted="false">Extracting native libraries (%d/%d)</string>
     <string name="toast_not_available_demo">This is not available in demo mode</string>
+    <string name="instance_isolation_title">Isolated Instance Mode</string>
+    <string name="instance_isolation_desc">Isolate mods, resource packs, worlds &amp; configs into this version\'s own folder</string>
+    <string name="instance_open_root">Instance Folder</string>
+    <string name="instance_open_mods">Mods</string>
+    <string name="instance_open_resourcepacks">Resource Packs</string>
+    <string name="instance_open_saves">Saves</string>
+    <string name="instance_open_shaders">Shaders</string>
+    <string name="instance_open_config">Config</string>
+    <string name="instance_select_directory_title">Instance Directories</string>
+    <string name="instance_badge">ISOLATED INSTANCE</string>
+    <string name="instance_folder_toast">Opened: %s</string>
 </resources>

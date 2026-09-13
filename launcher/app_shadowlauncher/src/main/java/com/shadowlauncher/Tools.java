@@ -105,7 +105,7 @@ public final class Tools {
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static final String URL_HOME = "https://pojavlauncherteam.github.io";
+    public static final String URL_HOME = "https://smitronix.dev";
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
     public static File DIR_CACHE;
@@ -118,6 +118,7 @@ public final class Tools {
     public static String DIR_ACCOUNT_NEW;
     public static String DIR_GAME_HOME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/ShadowLauncher";
     public static String DIR_GAME_NEW;
+    public static String DIR_INSTANCES;
     public static String GAME_PROFILES_FILE;
 
     // New since 3.0.0
@@ -194,6 +195,8 @@ public final class Tools {
         initEarlyConstants(ctx);
         DIR_GAME_HOME = getShadowStorageRoot(ctx).getAbsolutePath();
         DIR_GAME_NEW = DIR_GAME_HOME + "/.minecraft";
+        DIR_INSTANCES = DIR_GAME_HOME + "/instances";
+        FileUtils.ensureDirectorySilently(new File(DIR_INSTANCES));
         DIR_HOME_VERSION = DIR_GAME_NEW + "/versions";
         DIR_HOME_LIBRARY = DIR_GAME_NEW + "/libraries";
         DIR_HOME_CRASH = DIR_GAME_NEW + "/crash-reports";
@@ -285,7 +288,7 @@ public final class Tools {
             }
         }
         LauncherProfiles.load();
-        File gamedir = Tools.getGameDirPath(minecraftProfile);
+        File gamedir = Tools.ensureInstanceDirectoryStructure(minecraftProfile);
         if(checkRenderDistance(gamedir)) {
             LifecycleAwareAlertDialog.DialogCreator dialogCreator = ((alertDialog, dialogBuilder) ->
                     dialogBuilder.setMessage(activity.getString(R.string.ltw_render_distance_warning_msg))
@@ -352,13 +355,60 @@ public final class Tools {
     }
 
     public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
-        if(minecraftProfile.gameDir != null){
-            if(minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/"));
-            else
-                return new File(Tools.DIR_GAME_HOME,minecraftProfile.gameDir);
+        if(minecraftProfile.gameDir != null && !minecraftProfile.gameDir.trim().isEmpty()){
+            String path = minecraftProfile.gameDir.trim();
+            if(path.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
+                return new File(path.replace(Tools.LAUNCHERPROFILES_RTPREFIX, Tools.DIR_GAME_HOME + "/"));
+            if(path.startsWith("shadow://"))
+                return new File(path.replace("shadow://", Tools.DIR_GAME_HOME + "/"));
+            if(path.startsWith("/"))
+                return new File(path);
+            if(path.startsWith("./"))
+                return new File(Tools.DIR_GAME_HOME, path.substring(2));
+            return new File(Tools.DIR_GAME_HOME, path);
         }
         return new File(Tools.DIR_GAME_NEW);
+    }
+
+    /**
+     * Ensures that an instance has all isolated subdirectories:
+     * mods/, resourcepacks/, saves/, shaderpacks/, config/.
+     * @param minecraftProfile the profile to ensure directories for
+     * @return the resolved root directory of the instance
+     */
+    public static File ensureInstanceDirectoryStructure(@NonNull MinecraftProfile minecraftProfile) {
+        File gamedir = getGameDirPath(minecraftProfile);
+        FileUtils.ensureDirectorySilently(gamedir);
+        FileUtils.ensureDirectorySilently(new File(gamedir, "mods"));
+        FileUtils.ensureDirectorySilently(new File(gamedir, "resourcepacks"));
+        FileUtils.ensureDirectorySilently(new File(gamedir, "saves"));
+        FileUtils.ensureDirectorySilently(new File(gamedir, "shaderpacks"));
+        FileUtils.ensureDirectorySilently(new File(gamedir, "config"));
+        return gamedir;
+    }
+
+    /**
+     * Check if a profile is configured as an isolated instance (separate directory)
+     */
+    public static boolean isIsolatedInstance(@Nullable MinecraftProfile profile) {
+        if (profile == null || profile.gameDir == null || profile.gameDir.trim().isEmpty()) {
+            return false;
+        }
+        String path = profile.gameDir.trim();
+        return !path.equals(".minecraft") && !path.equals("./.minecraft") && !path.endsWith("/.minecraft");
+    }
+
+    /**
+     * Generate an isolated instance relative path for a profile name
+     */
+    public static String generateInstancePath(String profileName) {
+        String safeName;
+        if (profileName == null || profileName.trim().isEmpty()) {
+            safeName = "Instance";
+        } else {
+            safeName = profileName.trim().replaceAll("[^a-zA-Z0-9._ -]", "_");
+        }
+        return "./instances/" + safeName;
     }
 
     public static void buildNotificationChannel(Context context){

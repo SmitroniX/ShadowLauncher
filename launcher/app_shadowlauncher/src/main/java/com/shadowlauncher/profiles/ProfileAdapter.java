@@ -105,16 +105,23 @@ public class ProfileAdapter extends BaseAdapter {
         else if (MinecraftProfile.LATEST_SNAPSHOT.equalsIgnoreCase(versionName))
             versionName = v.getContext().getString(R.string.profiles_latest_snapshot);
 
+        String label;
         if (versionName == null && profileName != null)
-            extendedTextView.setText(profileName);
+            label = profileName;
         else if (versionName != null && profileName == null)
-            extendedTextView.setText(versionName);
-        else extendedTextView.setText(String.format("%s - %s", profileName, versionName));
+            label = versionName;
+        else label = String.format("%s - %s", profileName, versionName);
+
+        if (Tools.isIsolatedInstance(minecraftProfile)) {
+            extendedTextView.setText("⚡ " + label);
+        } else {
+            extendedTextView.setText(label);
+        }
 
         // Set selected background if needed
         if(displaySelection){
             String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
-            extendedTextView.setBackgroundColor(selectedProfile.equals(nm) ? ColorUtils.setAlphaComponent(Color.WHITE,60) : Color.TRANSPARENT);
+            extendedTextView.setBackgroundColor(selectedProfile.equals(nm) ? Color.parseColor("#2500F0FF") : Color.TRANSPARENT);
         }else extendedTextView.setBackgroundColor(Color.TRANSPARENT);
     }
 
