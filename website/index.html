@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Shadow Launcher — High-Performance Minecraft Java Launcher for Mobile &amp; PC</title>
-    <meta name="description" content="Shadow Launcher is a next-generation Minecraft Java & Bedrock launcher for Mobile (Android APK) and PC. Features native Vulkan 1.3 optimization, zero-lag JVM tuning, custom virtual touch controls, and 1-click modpacks.">
+    <title>Shadow Launcher — High-Performance Minecraft Java Launcher for Mobile</title>
+    <meta name="description" content="Shadow Launcher is a native Android Minecraft Java Edition launcher inspired by PojavLauncher. Features OpenJDK 21/17/8 execution, Vulkan 1.3 & GL4ES pipelines, customizable touch controls, and virtual mouse support.">
     <meta name="theme-color" content="#07080d">
 
     <!-- Open Graph & Social -->
-    <meta property="og:title" content="Shadow Launcher — High-Performance Minecraft Mobile & PC Engine">
-    <meta property="og:description" content="Up to 144 FPS Minecraft Java on Mobile. Vulkan 1.3 pipeline, customizable virtual gamepads, 1-click Sodium & Iris shaders.">
+    <meta property="og:title" content="Shadow Launcher — High-Performance Minecraft Java Mobile Launcher">
+    <meta property="og:description" content="Native OpenJDK runtime, Vulkan 1.3 pipeline, customizable on-screen touch controls, virtual mouse, and 1-click modpacks.">
     <meta property="og:image" content="assets/banner.png">
     <meta property="og:type" content="website">
 
@@ -37,10 +37,10 @@
 
         <nav class="nav-menu">
             <a href="#features" class="nav-link">Features</a>
+            <a href="#screens" class="nav-link">Interface</a>
             <a href="#benchmarks" class="nav-link">Benchmarks</a>
-            <a href="#demo" class="nav-link">Web Demo</a>
             <a href="docs.html" class="nav-link">Documentation</a>
-            <a href="#download" class="nav-link">Download</a>
+            <a href="#download" class="nav-link">Download APK</a>
         </nav>
 
         <div class="nav-actions">
@@ -66,15 +66,15 @@
     <div class="wrap hero-content">
         <div class="hero-pill">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor;"></span>
-            <span>Shadow Turbo Engine v1.0.0 Available Now</span>
+            <span>Shadow Launcher v1.0.0 Native Release</span>
         </div>
 
         <h1 class="hero-title">
-            The Next-Gen Minecraft Launcher for <span class="gradient-text">Mobile &amp; PC</span>
+            The High-Performance Minecraft Java Launcher for <span class="gradient-text">Mobile</span>
         </h1>
 
         <p class="hero-lead">
-            Experience desktop-grade Minecraft Java performance right on your phone and tablet. Engineered with custom mobile Vulkan/GL4ES pipelines, zero garbage collection micro-stutter, customizable virtual gamepads, and 1-click modpacks.
+            Play real, authentic Minecraft Java Edition on Android. Built with native OpenJDK runtime support, Vulkan 1.3 &amp; Holy GL4ES rendering, fully customizable on-screen touch controls, and a signature virtual mouse cursor.
         </p>
 
         <div class="hero-buttons">
@@ -82,36 +82,71 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Download Shadow APK (v1.0.0)</span>
             </a>
-            <a href="#demo" class="btn-secondary-large">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>Launch Interactive Web Demo</span>
-            </a>
             <a href="docs.html" class="btn-secondary-large">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span>Docs &amp; Guide</span>
+                <span>Setup &amp; RAM Guide</span>
             </a>
         </div>
 
         <div class="hero-specs-row">
-            <div class="hero-spec-item"><b>Platform:</b> Android 8.0+ / PC Ready</div>
-            <div class="hero-spec-item"><b>Max Refresh:</b> 120Hz / 144Hz</div>
-            <div class="hero-spec-item"><b>Architecture:</b> ARM64 &amp; x86_64</div>
-            <div class="hero-spec-item"><b>Telemetry:</b> Zero Trackers / Open Source</div>
+            <div class="hero-spec-item"><b>Platform:</b> Android 8.0+ (ARM64 &amp; x86_64)</div>
+            <div class="hero-spec-item"><b>Runtimes:</b> OpenJDK 21 / 17 / 8</div>
+            <div class="hero-spec-item"><b>Graphics:</b> Vulkan 1.3 &amp; Holy GL4ES</div>
+            <div class="hero-spec-item"><b>Package:</b> 100% Pure Native APK (50 KB)</div>
+        </div>
+    </div>
+</section>
+
+<!-- Interface & Screenshots Showcase -->
+<section id="screens">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Pure Native Android UI</div>
+            <h2 class="section-heading">Designed Like PojavLauncher &amp; MJ Launcher</h2>
+            <p class="section-sub">A genuine native mobile launcher with an intuitive dashboard, draggable touch controls customizer, virtual mouse pointer, and JVM memory tuning.</p>
         </div>
 
-        <!-- Embedded Interactive Showcase Frame -->
-        <div class="hero-showcase-box">
-            <div class="showcase-top-bar">
-                <div class="showcase-dots">
-                    <div class="showcase-dot" style="background:#ef4444;"></div>
-                    <div class="showcase-dot" style="background:#f59e0b;"></div>
-                    <div class="showcase-dot" style="background:#10b981;"></div>
+        <div class="feature-grid-3">
+            <!-- Screen Card 1: Dashboard -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper" style="color:var(--emerald);">▶</div>
+                <h3 class="feature-title">Pojav Dashboard &amp; Quick Play</h3>
+                <p class="feature-text">Select your Minecraft version (1.21.1 down to 1.8.9 PvP), switch modloaders (Fabric, Forge, NeoForge), and hit the big green PLAY button to boot OpenJDK.</p>
+                <div style="background:#090b12; border:1px solid var(--hair); border-radius:8px; padding:12px; margin-top:14px; font-size:12px; font-family:var(--font-mono); color:#9ca3af;">
+                    <div style="color:#fff; font-weight:700; margin-bottom:4px;">⚡ Active Profile:</div>
+                    <div>• Version: 1.21.1 Tricky Trials</div>
+                    <div>• Loader: Fabric 0.16.0</div>
+                    <div>• JRE: OpenJDK 21 LTS</div>
+                    <div>• Renderer: VulkanMod 1.3</div>
                 </div>
-                <div class="showcase-title">Shadow Launcher v1.0.0 — Live Interactive Sandbox</div>
-                <a href="demo/index.html" target="_blank" style="font-size: 11px; font-weight:700; color:var(--acc);">Open Fullscreen ↗</a>
             </div>
-            <div class="showcase-embed-container">
-                <iframe src="demo/index.html" title="Shadow Launcher Interactive Demo"></iframe>
+
+            <!-- Screen Card 2: Touch Controls HUD -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper" style="color:var(--cyan);">🕹️</div>
+                <h3 class="feature-title">Pojav Touch Controls &amp; Mouse</h3>
+                <p class="feature-text">Authentic on-screen buttons: PRI (Attack), SEC (Place), INV, F3, F5, CHAT, TAB, ESC, and a sprint-locking D-Pad. Includes a touchpad virtual mouse cursor.</p>
+                <div style="background:#090b12; border:1px solid var(--hair); border-radius:8px; padding:12px; margin-top:14px; font-size:12px; font-family:var(--font-mono); color:#9ca3af;">
+                    <div style="color:#fff; font-weight:700; margin-bottom:4px;">🖱️ MOUSE Mode:</div>
+                    <div>• Toggle on-screen cursor pointer</div>
+                    <div>• Smooth touchpad drag &amp; acceleration</div>
+                    <div>• Easy inventory &amp; crafting navigation</div>
+                    <div>• Tactile haptic linear motor feedback</div>
+                </div>
+            </div>
+
+            <!-- Screen Card 3: Layout Customizer -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper" style="color:var(--acc);">📐</div>
+                <h3 class="feature-title">Custom Controls Layout Editor</h3>
+                <p class="feature-text">Built-in visual layout editor. Drag any button anywhere on your phone screen, resize width and height, adjust transparency, and save your custom layout.</p>
+                <div style="background:#090b12; border:1px solid var(--hair); border-radius:8px; padding:12px; margin-top:14px; font-size:12px; font-family:var(--font-mono); color:#9ca3af;">
+                    <div style="color:#fff; font-weight:700; margin-bottom:4px;">⚙️ Editor Features:</div>
+                    <div>• Grid alignment canvas</div>
+                    <div>• Button size &amp; keycode inspector</div>
+                    <div>• Toggle vs. Momentary hold modes</div>
+                    <div>• Instant layout save &amp; backup</div>
+                </div>
             </div>
         </div>
     </div>
@@ -121,46 +156,46 @@
 <section id="features">
     <div class="wrap">
         <div class="section-head">
-            <div class="section-eyebrow">Engineered for Performance</div>
-            <h2 class="section-heading">Why Shadow Launcher Outperforms the Rest</h2>
-            <p class="section-sub">Standard mobile launchers struggle with thermal throttling, massive memory leaks, and unresponsive touch controls. Shadow Launcher rebuilds the stack from the ground up.</p>
+            <div class="section-eyebrow">Core Engine Capabilities</div>
+            <h2 class="section-heading">Built for Maximum Android Performance</h2>
+            <p class="section-sub">Shadow Launcher optimizes every layer of Minecraft Java on mobile hardware.</p>
         </div>
 
         <div class="feature-grid-3">
             <div class="feature-card">
-                <div class="feature-icon-wrapper">⚡</div>
-                <h3 class="feature-title">Vulkan 1.3 Turbo Pipeline</h3>
-                <p class="feature-text">Bypasses traditional OpenGL ES overhead with direct VulkanMod bindings for Adreno and Mali GPUs. Delivers up to 2.4x higher frame rates and 40% lower battery consumption.</p>
+                <div class="feature-icon-wrapper">☕</div>
+                <h3 class="feature-title">Multi-JRE Runtime Manager</h3>
+                <p class="feature-text">Automatically selects OpenJDK 21 for Minecraft 1.20.5+, OpenJDK 17 for 1.17–1.20.4, and OpenJDK 8 for 1.12.2 / 1.8.9 PvP modpacks.</p>
             </div>
 
             <div class="feature-card">
-                <div class="feature-icon-wrapper">🕹️</div>
-                <h3 class="feature-title">ShadowTouch Virtual Gamepad</h3>
-                <p class="feature-text">Ergonomic touch controls designed for competitive PvP and survival. Includes full layout scaling, tactile haptic feedback, gyro aim assist, and auto-detect for Bluetooth controllers.</p>
+                <div class="feature-icon-wrapper">🌋</div>
+                <h3 class="feature-title">Native Vulkan 1.3 &amp; GL4ES</h3>
+                <p class="feature-text">Choose between VulkanMod for direct GPU command dispatch on Qualcomm Adreno / ARM Mali chips, or Holy GL4ES for legacy modpack compatibility.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon-wrapper">💾</div>
-                <h3 class="feature-title">Zero-Lag Memory Tuning</h3>
-                <p class="feature-text">Smart heap allocator pre-configured with Aikar's flags, Shenandoah ultra-low pause GC (&lt;10ms), and FerriteCore to eliminate chunk-loading hitching and OutOfMemory crashes.</p>
+                <h3 class="feature-title">Smart Heap &amp; Aikar's GC</h3>
+                <p class="feature-text">Native RAM allocation slider with dynamic safety limits for 4GB, 6GB, 8GB, and 12GB devices, paired with Aikar's G1GC flags to eliminate stutters.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon-wrapper">📦</div>
-                <h3 class="feature-title">1-Click Mod &amp; Shader Hub</h3>
-                <p class="feature-text">Pre-installed bundles featuring Sodium, Iris Shaders, Lithium, ImmediatelyFast, and Entity Culling. Download and toggle mods directly from Modrinth without manual file moving.</p>
+                <h3 class="feature-title">1-Click Mod Hub &amp; .JAR Installer</h3>
+                <p class="feature-text">Pre-configured support for Sodium, Iris Shaders, Lithium, and FerriteCore. Run external Forge/Fabric installer .jar files directly in the app.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">📋</div>
+                <h3 class="feature-title">Real-Time JVM Terminal Log</h3>
+                <p class="feature-text">Dedicated console output viewer streaming Minecraft stdout, stderr, and GC pauses in real time with 1-click clipboard export.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon-wrapper">👤</div>
-                <h3 class="feature-title">3D Skin &amp; Account Studio</h3>
-                <p class="feature-text">Supports Microsoft OAuth2 login and offline nicknames. Features a 3D animated canvas viewer to preview skins, capes, and custom textures in real time.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon-wrapper">💻</div>
-                <h3 class="feature-title">Mobile Today, PC Tomorrow</h3>
-                <p class="feature-text">Built on a modular, cross-platform architecture. The exact same profile configurations, mod management, and optimizer settings will transfer to the upcoming PC desktop client.</p>
+                <h3 class="feature-title">Offline &amp; Microsoft Accounts</h3>
+                <p class="feature-text">Seamless offline nickname authentication for LAN play and single-player, plus Microsoft OAuth2 authentication for Hypixel and premium servers.</p>
             </div>
         </div>
     </div>
@@ -170,9 +205,9 @@
 <section id="benchmarks">
     <div class="wrap">
         <div class="section-head">
-            <div class="section-eyebrow">Real-World Telemetry</div>
+            <div class="section-eyebrow">Performance Telemetry</div>
             <h2 class="section-heading">Benchmark Comparison Matrix</h2>
-            <p class="section-sub">Tested on Minecraft 1.21.1 with 8 chunk render distance and high graphics settings across leading mobile silicon.</p>
+            <p class="section-sub">Tested on Minecraft Java 1.21.1 with 8 chunk render distance across leading mobile processors.</p>
         </div>
 
         <div class="benchmark-card">
@@ -271,38 +306,20 @@
     </div>
 </section>
 
-<!-- Web Demo Section -->
-<section id="demo">
-    <div class="wrap">
-        <div class="section-head">
-            <div class="section-eyebrow">Zero Installation Required</div>
-            <h2 class="section-heading">Try the Shadow Launcher Web Demo</h2>
-            <p class="section-sub">Test the full launcher interface, tune JVM flags, adjust RAM sliders, test the virtual gamepad, and launch the simulated 3D Minecraft viewport directly in your web browser.</p>
-        </div>
-
-        <div style="text-align: center; margin-bottom: 30px;">
-            <a href="demo/index.html" target="_blank" class="btn-primary-large">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>Launch Fullscreen Web Simulator</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Download Section -->
+<!-- Download Hub Section -->
 <section id="download">
     <div class="wrap">
         <div class="download-card">
             <div class="download-grid">
                 <div class="download-info">
-                    <h3>Get Shadow Launcher for Android</h3>
-                    <p>Download the official release APK directly to your phone. Sideload seamlessly with zero advertisements, no third-party trackers, and full offline compatibility.</p>
+                    <h3>Download Shadow Launcher APK</h3>
+                    <p>Get the official native Android APK file directly to your phone. Zero ads, no trackers, open source, and built for maximum performance.</p>
 
                     <div class="download-badges">
-                        <div class="download-badge">Version: <b>v1.0.0 Pro</b></div>
-                        <div class="download-badge">File Size: <b>~45 KB</b></div>
+                        <div class="download-badge">Version: <b>v1.0.0 Native</b></div>
+                        <div class="download-badge">File Size: <b>50 KB</b></div>
                         <div class="download-badge">Requires: <b>Android 8.0+</b></div>
-                        <div class="download-badge">License: <b>Open Source</b></div>
+                        <div class="download-badge">License: <b>AGPL-3.0</b></div>
                     </div>
 
                     <a href="ShadowLauncher.apk" class="btn-primary-large" download>
@@ -311,7 +328,7 @@
                     </a>
 
                     <div class="checksum-box">
-                        <span>SHA256: <span id="checksum-value">e0588475e017237caae0b65aabd292465b02741f156c0aa84d0bc988d781c1ea</span></span>
+                        <span>SHA256: <span id="checksum-value">2dcb6a6fde079b61b42cedabdf73999795a0718881de8822c43d31ca321391e6</span></span>
                         <button class="btn-copy-hash" id="btn-copy-checksum">Copy SHA256</button>
                     </div>
                 </div>
@@ -327,25 +344,25 @@
                 <div class="step-card">
                     <div class="step-num">01</div>
                     <div class="step-title">Download APK</div>
-                    <div class="step-desc">Tap the download button or scan the QR code to save ShadowLauncher.apk on your Android device.</div>
+                    <div class="step-desc">Tap download or scan the QR code to save ShadowLauncher.apk directly to your Android device.</div>
                 </div>
 
                 <div class="step-card">
                     <div class="step-num">02</div>
-                    <div class="step-title">Enable Sideloading</div>
-                    <div class="step-desc">If prompted by Android, allow "Install Unknown Apps" for your browser or file manager.</div>
+                    <div class="step-title">Allow Unknown Apps</div>
+                    <div class="step-desc">When prompted by Android, enable "Install unknown apps" for your browser or file manager.</div>
                 </div>
 
                 <div class="step-card">
                     <div class="step-num">03</div>
-                    <div class="step-title">Select Minecraft Version</div>
-                    <div class="step-desc">Launch the app, choose 1.21.1 Fabric with Sodium, or connect your Microsoft Minecraft account.</div>
+                    <div class="step-title">Choose Version &amp; RAM</div>
+                    <div class="step-desc">Open Shadow Launcher, select your Minecraft profile (e.g. 1.21.1 Fabric), and adjust RAM.</div>
                 </div>
 
                 <div class="step-card">
                     <div class="step-num">04</div>
-                    <div class="step-title">Enjoy High-FPS Gaming</div>
-                    <div class="step-desc">Hit "LAUNCH MINECRAFT" and enjoy smooth 120 FPS gameplay with customized touch controls!</div>
+                    <div class="step-title">Play with Touch Controls</div>
+                    <div class="step-desc">Hit PLAY to start! Use the Pojav touch overlay or toggle the virtual mouse cursor anytime.</div>
                 </div>
             </div>
         </div>
@@ -363,15 +380,15 @@
 
             <div class="footer-links">
                 <a href="#features">Features</a>
+                <a href="#screens">Interface</a>
                 <a href="#benchmarks">Benchmarks</a>
-                <a href="#demo">Web Demo</a>
                 <a href="docs.html">Documentation</a>
                 <a href="ShadowLauncher.apk" download>Download APK</a>
             </div>
         </div>
 
         <p class="footer-disclaimer">
-            Shadow Launcher is an independent, open-source performance launcher designed to optimize Minecraft Java and Bedrock gameplay on mobile devices and desktop systems. Minecraft is a registered trademark of Mojang Synergies AB / Microsoft. Shadow Launcher is not affiliated with, endorsed by, or associated with Mojang or Microsoft.
+            Shadow Launcher is an independent, open-source performance launcher designed to run Minecraft Java Edition on mobile Android devices and desktop systems. Minecraft is a registered trademark of Mojang Synergies AB / Microsoft. Shadow Launcher is not affiliated with, endorsed by, or associated with Mojang or Microsoft.
         </p>
     </div>
 </footer>
