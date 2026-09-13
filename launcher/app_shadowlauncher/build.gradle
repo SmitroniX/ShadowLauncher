@@ -123,14 +123,13 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix '.debug'
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'com.shadowlauncher.debug'
-            resValue 'string', 'storageProviderAuthorities', 'com.shadowlauncher.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'com.shadowlauncher.scoped.controlfolder.debug'
+            resValue 'string', 'application_package', 'com.shadowlauncher'
+            resValue 'string', 'storageProviderAuthorities', 'com.shadowlauncher.scoped.gamefolder'
+            resValue 'string', 'shareProviderAuthority', 'com.shadowlauncher.scoped.controlfolder'
         }
         proguard {
             initWith debug
