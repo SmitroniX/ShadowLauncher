@@ -364,6 +364,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         Tools.printLauncherInfo(versionId, Tools.isValidString(minecraftProfile.javaArgs) ? minecraftProfile.javaArgs : LauncherPreferences.PREF_CUSTOM_JAVA_ARGS);
         JREUtils.redirectAndPrintJRELog();
         LauncherProfiles.load();
+        minecraftProfile = LauncherProfiles.getCurrentProfile();
+        Tools.ensureInstanceDirectoryStructure(minecraftProfile);
         int requiredJavaVersion = NewJREUtil.detectRequiredJavaVersion(version, versionId);
         Tools.launchMinecraft(this, minecraftAccount, minecraftProfile, versionId, requiredJavaVersion);
         //Note that we actually stall in the above function, even if the game crashes. But let's be safe.

@@ -130,6 +130,7 @@ public class MainMenuFragment extends Fragment {
             }
             if(!target.exists()) target.mkdirs();
             openPath(context, target, false);
+            Toast.makeText(context, target.getAbsolutePath(), Toast.LENGTH_LONG).show();
         });
         builder.setNegativeButton(android.R.string.cancel, null);
         builder.show();

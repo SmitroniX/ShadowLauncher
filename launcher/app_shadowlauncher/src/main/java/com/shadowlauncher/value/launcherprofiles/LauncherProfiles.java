@@ -40,7 +40,12 @@ public class LauncherProfiles {
         for (Map.Entry<String, MinecraftProfile> entry : mainProfileJson.profiles.entrySet()) {
             MinecraftProfile p = entry.getValue();
             if (p != null) {
-                if (p.gameDir == null || p.gameDir.trim().isEmpty() || p.gameDir.equals(".minecraft") || p.gameDir.equals("./.minecraft")) {
+                boolean needsInstancePath = p.gameDir == null || p.gameDir.trim().isEmpty() 
+                        || p.gameDir.equals(".minecraft") || p.gameDir.equals("./.minecraft")
+                        || p.gameDir.equals("./instances/Default") || p.gameDir.equals("./instances/Instance")
+                        || p.gameDir.equals("./instances/forge") || p.gameDir.equals("./instances/Fabric_Loader")
+                        || p.gameDir.equals("./instances/latest-release");
+                if (needsInstancePath) {
                     p.gameDir = Tools.generateInstancePath(p.name, p.lastVersionId);
                     instanceUpdated = true;
                 }
@@ -122,9 +127,11 @@ public class LauncherProfiles {
         for(String profileKey : keys){
             MinecraftProfile currentProfile = launcherProfiles.profiles.get(profileKey);
             if (currentProfile != null) {
-                if (currentProfile.gameDir == null || currentProfile.gameDir.trim().isEmpty() || currentProfile.gameDir.equals(".minecraft") || currentProfile.gameDir.equals("./.minecraft")) {
-                    currentProfile.gameDir = Tools.generateInstancePath(currentProfile.name, currentProfile.lastVersionId);
+                String cleanName = Tools.formatVersionInstanceName(currentProfile.lastVersionId != null ? currentProfile.lastVersionId : currentProfile.name);
+                if (currentProfile.name == null || "forge".equalsIgnoreCase(currentProfile.name) || "fabric".equalsIgnoreCase(currentProfile.name) || "Default".equalsIgnoreCase(currentProfile.name)) {
+                    currentProfile.name = cleanName;
                 }
+                currentProfile.gameDir = Tools.generateInstancePath(currentProfile.name, currentProfile.lastVersionId);
                 Tools.ensureInstanceDirectoryStructure(currentProfile);
                 insertMinecraftProfile(currentProfile);
             }

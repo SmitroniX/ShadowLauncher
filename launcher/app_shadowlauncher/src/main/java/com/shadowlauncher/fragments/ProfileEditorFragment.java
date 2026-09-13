@@ -224,14 +224,17 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         return v -> VersionSelectorDialog.open(v.getContext(), false, (id, snapshot)-> {
             mTempProfile.lastVersionId = id;
             mDefaultVersion.setText(id);
-            if(mDefaultName.getText().toString().trim().isEmpty() || "Default".equalsIgnoreCase(mDefaultName.getText().toString().trim()) || "New".equalsIgnoreCase(mDefaultName.getText().toString().trim())) {
-                mDefaultName.setText(id);
-                mTempProfile.name = id;
+            String curName = mDefaultName.getText().toString().trim();
+            if(curName.isEmpty() || "Default".equalsIgnoreCase(curName) || "New".equalsIgnoreCase(curName) || "Instance".equalsIgnoreCase(curName)) {
+                String cleanName = Tools.formatVersionInstanceName(id);
+                mDefaultName.setText(cleanName);
+                mTempProfile.name = cleanName;
             }
             if(mInstanceSwitch != null && mInstanceSwitch.isChecked()) {
                 String newPath = Tools.generateInstancePath(mDefaultName.getText().toString(), id);
                 mDefaultPath.setText(newPath);
                 mTempProfile.gameDir = newPath;
+                Tools.ensureInstanceDirectoryStructure(mTempProfile);
             }
             if (mDefaultRuntime != null && mDefaultRuntime.getAdapter() instanceof RTSpinnerAdapter) {
                 int detected = NewJREUtil.detectRequiredJavaVersion(null, id);
@@ -285,8 +288,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         boolean isInstance = Tools.isIsolatedInstance(mTempProfile) || (getArguments() != null) || mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty();
         mInstanceSwitch.setChecked(isInstance);
         mInstanceShortcutsContainer.setVisibility(isInstance ? View.VISIBLE : View.GONE);
-        if (isInstance && (mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty() || mTempProfile.gameDir.equals(".minecraft") || mTempProfile.gameDir.equals("./.minecraft"))) {
+        boolean needsInstancePath = mTempProfile.gameDir == null || mTempProfile.gameDir.trim().isEmpty()
+                || mTempProfile.gameDir.equals(".minecraft") || mTempProfile.gameDir.equals("./.minecraft")
+                || mTempProfile.gameDir.equals("./instances/Default") || mTempProfile.gameDir.equals("./instances/Instance")
+                || mTempProfile.gameDir.equals("./instances/forge") || mTempProfile.gameDir.equals("./instances/latest-release");
+        if (isInstance && needsInstancePath) {
             mTempProfile.gameDir = Tools.generateInstancePath(mTempProfile.name, mTempProfile.lastVersionId);
+            Tools.ensureInstanceDirectoryStructure(mTempProfile);
         }
         mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
     }
@@ -303,8 +311,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             minecraftProfile = MinecraftProfile.createTemplate();
             mProfileKey = LauncherProfiles.getFreeProfileKey();
         }
-        if (minecraftProfile.gameDir == null || minecraftProfile.gameDir.trim().isEmpty() || minecraftProfile.gameDir.equals(".minecraft") || minecraftProfile.gameDir.equals("./.minecraft")) {
+        boolean needsInstancePath = minecraftProfile.gameDir == null || minecraftProfile.gameDir.trim().isEmpty()
+                || minecraftProfile.gameDir.equals(".minecraft") || minecraftProfile.gameDir.equals("./.minecraft")
+                || minecraftProfile.gameDir.equals("./instances/Default") || minecraftProfile.gameDir.equals("./instances/Instance")
+                || minecraftProfile.gameDir.equals("./instances/forge") || minecraftProfile.gameDir.equals("./instances/latest-release");
+        if (needsInstancePath) {
             minecraftProfile.gameDir = Tools.generateInstancePath(minecraftProfile.name, minecraftProfile.lastVersionId);
+            Tools.ensureInstanceDirectoryStructure(minecraftProfile);
         }
         return minecraftProfile;
     }

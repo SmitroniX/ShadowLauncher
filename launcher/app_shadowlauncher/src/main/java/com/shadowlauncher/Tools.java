@@ -406,21 +406,98 @@ public final class Tools {
     }
 
     /**
-     * Generate an isolated instance relative path for a profile name and version
+     * Clean and format a version string into a recognizable instance directory name.
+     * E.g. "1.20.1-forge-47.2.0" -> "1.20.1-Forge"
+     *      "fabric-loader-0.15.7-1.20.4" -> "1.20.4-Fabric"
+     *      "1.20.1-OptiFine_HD_U_I6" -> "1.20.1-OptiFine"
+     */
+    public static String formatVersionInstanceName(@Nullable String versionId) {
+        if (versionId == null || versionId.trim().isEmpty()) {
+            return "Default";
+        }
+        String v = versionId.trim();
+        if ("latest-release".equalsIgnoreCase(v) || "latest-snapshot".equalsIgnoreCase(v)) {
+            return "Latest";
+        }
+        // Fabric: fabric-loader-0.15.7-1.20.4 -> 1.20.4-Fabric
+        if (v.startsWith("fabric-loader-")) {
+            int lastDash = v.lastIndexOf('-');
+            if (lastDash != -1 && lastDash < v.length() - 1) {
+                String mcVer = v.substring(lastDash + 1);
+                return mcVer + "-Fabric";
+            }
+        }
+        // Quilt: quilt-loader-0.23.1-1.20.1 -> 1.20.1-Quilt
+        if (v.startsWith("quilt-loader-")) {
+            int lastDash = v.lastIndexOf('-');
+            if (lastDash != -1 && lastDash < v.length() - 1) {
+                String mcVer = v.substring(lastDash + 1);
+                return mcVer + "-Quilt";
+            }
+        }
+        // Forge: 1.20.1-forge-47.2.0 or 1.16.5-forge-36.2.39 -> 1.20.1-Forge
+        if (v.toLowerCase(java.util.Locale.ROOT).contains("-forge-") || v.toLowerCase(java.util.Locale.ROOT).contains("-forge_")) {
+            int forgeIdx = v.toLowerCase(java.util.Locale.ROOT).indexOf("-forge");
+            if (forgeIdx > 0) {
+                String mcVer = v.substring(0, forgeIdx);
+                return mcVer + "-Forge";
+            }
+        }
+        // OptiFine: 1.20.1-OptiFine_HD_U_I6 -> 1.20.1-OptiFine
+        if (v.contains("-OptiFine") || v.contains("-optifine")) {
+            int optiIdx = v.toLowerCase(java.util.Locale.ROOT).indexOf("-optifine");
+            if (optiIdx > 0) {
+                String mcVer = v.substring(0, optiIdx);
+                return mcVer + "-OptiFine";
+            }
+        }
+        // NeoForge: 1.20.4-neoforge-20.4.167 -> 1.20.4-NeoForge
+        if (v.toLowerCase(java.util.Locale.ROOT).contains("-neoforge")) {
+            int neoIdx = v.toLowerCase(java.util.Locale.ROOT).indexOf("-neoforge");
+            if (neoIdx > 0) {
+                String mcVer = v.substring(0, neoIdx);
+                return mcVer + "-NeoForge";
+            }
+        }
+        return v;
+    }
+
+    /**
+     * Generate an isolated instance relative path for a profile name and version.
+     * Automatically prioritizes version name so that instance folders are named after their version!
      */
     public static String generateInstancePath(@Nullable String profileName, @Nullable String versionId) {
         String baseName = null;
-        if (profileName != null && !profileName.trim().isEmpty() && !"Default".equalsIgnoreCase(profileName.trim()) && !"New".equalsIgnoreCase(profileName.trim())) {
+
+        String formattedVersion = (versionId != null && !versionId.trim().isEmpty())
+                ? formatVersionInstanceName(versionId) : null;
+
+        // Check if profileName is a distinct user-assigned custom nickname
+        boolean isGeneric = profileName == null
+                || profileName.trim().isEmpty()
+                || "Default".equalsIgnoreCase(profileName.trim())
+                || "New".equalsIgnoreCase(profileName.trim())
+                || "Instance".equalsIgnoreCase(profileName.trim())
+                || "forge".equalsIgnoreCase(profileName.trim())
+                || "fabric".equalsIgnoreCase(profileName.trim())
+                || "quilt".equalsIgnoreCase(profileName.trim())
+                || "optifine".equalsIgnoreCase(profileName.trim())
+                || "Fabric-Loader".equalsIgnoreCase(profileName.trim())
+                || (formattedVersion != null && profileName.trim().equalsIgnoreCase(formattedVersion))
+                || (versionId != null && profileName.trim().equalsIgnoreCase(versionId.trim()));
+
+        if (!isGeneric) {
             baseName = profileName.trim();
-        } else if (versionId != null && !versionId.trim().isEmpty()) {
-            baseName = versionId.trim();
+        } else if (formattedVersion != null) {
+            baseName = formattedVersion;
         } else if (profileName != null && !profileName.trim().isEmpty()) {
             baseName = profileName.trim();
         } else {
             baseName = "Default";
         }
+
         String safeName = baseName.replaceAll("[^a-zA-Z0-9._ -]", "_").trim();
-        if (safeName.isEmpty()) safeName = "Instance";
+        if (safeName.isEmpty()) safeName = "Default";
         return "./instances/" + safeName;
     }
 
