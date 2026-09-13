@@ -31,7 +31,7 @@
 ```
 ShadowLauncher/
 ├── launcher/                        # Native Android Pojav-based Core
-│   ├── app_pojavlauncher/           # Android application module, UI, & native JNI
+│   ├── app_shadowlauncher/           # Android application module, UI, & native JNI
 │   │   ├── src/main/java/           # Launcher activities, preferences, & runtime managers
 │   │   ├── src/main/jni/            # Native C/C++ bridges (GL4ES, LWJGL3, hooks)
 │   │   ├── src/main/res/            # Layouts, themes, & localized strings (40+ languages)
@@ -70,18 +70,18 @@ Run the automated build script to compile the native C/C++ libraries and Java cl
 ./scripts/build-shadow-pojav.sh
 ```
 
-The script builds `:app_pojavlauncher:assembleDebug`, copies the output to `website/ShadowLauncher.apk`, and generates the matching SHA256 checksum.
+The script builds `:app_shadowlauncher:assembleDebug`, copies the output to `website/ShadowLauncher.apk`, and generates the matching SHA256 checksum.
 
 Alternatively, build directly via Gradle:
 
 ```bash
 cd launcher
 export ANDROID_HOME=/path/to/android-sdk
-./gradlew :app_pojavlauncher:assembleDebug
+./gradlew :app_shadowlauncher:assembleDebug
 ```
 
 Output APK will be located at:
-- `launcher/app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk`
+- `launcher/app_shadowlauncher/build/outputs/apk/debug/app_shadowlauncher-debug.apk`
 - `website/ShadowLauncher.apk`
 
 ---

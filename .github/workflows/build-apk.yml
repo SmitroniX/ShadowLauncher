@@ -78,20 +78,20 @@ jobs:
           echo "=== Downloading Full Offline OpenJDK Runtimes (JRE 8, 17, 21) ==="
           curl -L -o /tmp/pojav_official.apk "https://github.com/PojavLauncherTeam/PojavLauncher/releases/download/gladiolus/PojavLauncher.apk"
           unzip -q -o /tmp/pojav_official.apk "assets/components/jre*/*" "assets/components/cacio*/*" "assets/components/security/*" -d /tmp/pojav_extracted
-          rsync -a /tmp/pojav_extracted/assets/components/ launcher/app_pojavlauncher/src/main/assets/components/
+          rsync -a /tmp/pojav_extracted/assets/components/ launcher/app_shadowlauncher/src/main/assets/components/
           rm -rf /tmp/pojav_official.apk /tmp/pojav_extracted
           echo "=== Offline JREs Successfully Bundled ==="
-          ls -la launcher/app_pojavlauncher/src/main/assets/components/
+          ls -la launcher/app_shadowlauncher/src/main/assets/components/
 
       - name: Compile & Assemble Shadow Launcher APK
         run: |
           cd launcher
-          ./gradlew :app_pojavlauncher:assembleDebug --no-daemon --stacktrace
+          ./gradlew :app_shadowlauncher:assembleDebug --no-daemon --stacktrace
 
       - name: Prepare Output Artifacts
         run: |
           mkdir -p dist
-          BUILT_APK="launcher/app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk"
+          BUILT_APK="launcher/app_shadowlauncher/build/outputs/apk/debug/app_shadowlauncher-debug.apk"
           FINAL_APK="dist/ShadowLauncher.apk"
           cp "$BUILT_APK" "$FINAL_APK"
           cd dist

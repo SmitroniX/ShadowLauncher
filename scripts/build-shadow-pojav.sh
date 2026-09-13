@@ -14,9 +14,9 @@ echo "=== Building Shadow Launcher Full Offline Bundle ==="
 export ANDROID_HOME=/home/ubuntu/android-sdk
 
 cd "$SOURCE_DIR"
-./gradlew :app_pojavlauncher:assembleDebug
+./gradlew :app_shadowlauncher:assembleDebug
 
-OUTPUT_APK="$SOURCE_DIR/app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk"
+OUTPUT_APK="$SOURCE_DIR/app_shadowlauncher/build/outputs/apk/debug/app_shadowlauncher-debug.apk"
 TARGET_APK="$WEBSITE_DIR/ShadowLauncher.apk"
 
 if [ -f "$OUTPUT_APK" ]; then

@@ -521,7 +521,7 @@ public class GLFW
 
     static {
         try {
-            System.loadLibrary("pojavexec");
+            System.loadLibrary("shadowexec");
         } catch (UnsatisfiedLinkError e) {
             e.printStackTrace();
         }
@@ -595,7 +595,7 @@ public class GLFW
         throw new UnsupportedOperationException();
     }
 
-    private static final SharedLibrary GLFW = Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libpojavexec.so", true);
+    private static final SharedLibrary GLFW = Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libshadowexec.so", true);
 
     /** Contains the function pointers loaded from the glfw {@link SharedLibrary}. */
     public static final class Functions {

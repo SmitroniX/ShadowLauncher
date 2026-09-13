@@ -13,8 +13,8 @@ jar {
                 "PreMain-Class": "git.artdeell.arcdns.ArcDNSInjectorAgent")
     }
     if (gitUsed()){
-      File versionFile = file("../app_pojavlauncher/src/main/assets/components/arc_dns_injector/version")
+      File versionFile = file("../app_shadowlauncher/src/main/assets/components/arc_dns_injector/version")
       versionFile.write(getGitHash(project.name))
     }
-    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/arc_dns_injector/"))
+    destinationDirectory.set(file("../app_shadowlauncher/src/main/assets/components/arc_dns_injector/"))
 }

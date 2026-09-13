@@ -1,6 +1,6 @@
 <h1 align="center">PojavLauncher</h1>
 
-<img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
+<img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_shadowlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
 [![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/PojavLauncherTeam/PojavLauncher)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
@@ -56,9 +56,9 @@ You can get PojavLauncher via three methods:
 The easiest way to build PojavLauncher is to use the pre-built JREs provided by our CI.
 
 1. Clone the repository: `git clone https://github.com/PojavLauncherTeam/PojavLauncher.git`
-2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
+2. Build the launcher: `./gradlew :app_shadowlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
 
-The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
+The built APK will be located in `app_shadowlauncher/build/outputs/apk/debug/`.
 
 ### Detailed Build
 
@@ -81,7 +81,7 @@ If you need more control over the build process, follow these steps:
 
 4. **Build GLFW stub:** `./gradlew :jre_lwjgl3glfw:build`
 
-5. **Build the launcher:** `./gradlew :app_pojavlauncher:assembleDebug` (Replace `gradlew` with `gradlew.bat` on Windows).
+5. **Build the launcher:** `./gradlew :app_shadowlauncher:assembleDebug` (Replace `gradlew` with `gradlew.bat` on Windows).
 
 ## Current Status
 
