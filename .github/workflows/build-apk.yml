@@ -10,12 +10,6 @@ on:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-      bundle_runtimes:
-        description: 'Bundle offline OpenJDK runtimes (~148MB APK)'
-        required: false
-        type: boolean
-        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -79,18 +73,15 @@ jobs:
           cd launcher
           ./gradlew :forge_installer:jar :arc_dns_injector:jar :jre_lwjgl3glfw:jar --no-daemon
 
-      - name: Optional - Bundle Offline OpenJDK Runtimes
-        if: ${{ github.event.inputs.bundle_runtimes == 'true' }}
+      - name: Download & Bundle Full Offline Multiarch JRE Runtimes
         run: |
-          echo "=== Downloading OpenJDK Runtimes for All-In-One APK ==="
-          mkdir -p launcher/app_pojavlauncher/src/main/assets/components/jre
-          mkdir -p launcher/app_pojavlauncher/src/main/assets/components/jre-new
-
-          curl -L -o /tmp/jre8-arm64.tar.xz "https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/releases/download/jre8-40df388/jre8-arm64-20220811-release.tar.xz"
-          tar -xf /tmp/jre8-arm64.tar.xz -C launcher/app_pojavlauncher/src/main/assets/components/jre/
-
-          curl -L -o /tmp/jre17-arm64.tar.xz "https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/releases/download/jre17-ca01427/jre17-arm64-20220817-release.tar.xz"
-          tar -xf /tmp/jre17-arm64.tar.xz -C launcher/app_pojavlauncher/src/main/assets/components/jre-new/
+          echo "=== Downloading Full Offline OpenJDK Runtimes (JRE 8, 17, 21) ==="
+          curl -L -o /tmp/pojav_official.apk "https://github.com/PojavLauncherTeam/PojavLauncher/releases/download/gladiolus/PojavLauncher.apk"
+          unzip -q -o /tmp/pojav_official.apk "assets/components/jre*/*" "assets/components/cacio*/*" "assets/components/security/*" -d /tmp/pojav_extracted
+          rsync -a /tmp/pojav_extracted/assets/components/ launcher/app_pojavlauncher/src/main/assets/components/
+          rm -rf /tmp/pojav_official.apk /tmp/pojav_extracted
+          echo "=== Offline JREs Successfully Bundled ==="
+          ls -la launcher/app_pojavlauncher/src/main/assets/components/
 
       - name: Compile & Assemble Shadow Launcher APK
         run: |

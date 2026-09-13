@@ -6,18 +6,18 @@
 [![Release](https://img.shields.io/badge/Release-v1.0.0--Native-8b5cf6.svg)](https://github.com/SmitroniX/ShadowLauncher/releases)
 [![Platform](https://img.shields.io/badge/Platform-Android%205.0%2B%20%28API%2021--34%29-06b6d4.svg)](#)
 [![Renderer](https://img.shields.io/badge/Renderer-Vulkan%201.3%20%7C%20GL4ES-10b981.svg)](#)
-[![Package](https://img.shields.io/badge/Package-Native%20APK%20(36.6%20MB)-ec4899.svg)](#)
+[![Package](https://img.shields.io/badge/Package-Full%20Offline%20Bundle%20(~150%20MB)-ec4899.svg)](#)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-amber.svg)](LICENSE)
 
 ---
 
 ## 🌟 Overview
 
-**Shadow Launcher** is an advanced, ultra-optimized Minecraft: Java Edition launcher for Android devices based on the battle-tested **PojavLauncher** engine. It bridges desktop Minecraft Java directly to mobile touchscreens with desktop OpenGL compatibility, custom touch HUDs, virtual mouse pointer emulation, and multi-version OpenJDK runtimes.
+**Shadow Launcher** is an advanced, ultra-optimized Minecraft: Java Edition launcher for Android devices based on the battle-tested PojavLauncher engine. It bridges desktop Minecraft Java directly to mobile touchscreens with desktop OpenGL compatibility, custom touch HUDs, virtual mouse pointer emulation, and multi-version OpenJDK runtimes.
 
 ### Key Features
 - **Native Android Engine**: Built with Android SDK 34 and NDK 25.2, featuring high-speed C/C++ native libraries (`GL4ES`, `LWJGL3`, `OpenAL`, `GLFW`, `Bytehook`, and `Linkerhook`).
-- **Pojav Touch Controls HUD**: Authentic on-screen controls including `PRI` (attack/mine), `SEC` (place/use), `INV`, `F3`, `F5`, `CHAT`, `TAB`, `ESC`, and custom sprint locking.
+- **Shadow Touch Controls HUD**: Authentic on-screen controls including `PRI` (attack/mine), `SEC` (place/use), `INV`, `F3`, `F5`, `CHAT`, `TAB`, `ESC`, and custom sprint locking.
 - **Virtual Mouse System (`MOUSE`)**: Intuitive touchpad virtual mouse cursor for smooth inventory management, crafting, and mod menus.
 - **Visual Controls Layout Editor**: Full in-app visual canvas allowing players to drag, resize, opacity-tune, and remap buttons to any keybind.
 - **Smart Dynamic RAM Allocation**: Automatically detects physical device RAM and dynamically scales allocations (from 1.5 GB on 4 GB phones up to 5 GB on 12 GB+ gaming phones) to eliminate garbage collection micro-stutters.
@@ -46,7 +46,7 @@ ShadowLauncher/
 │   ├── docs.html                    # Deep-dive documentation (RAM, GC, Vulkan vs GL4ES)
 │   ├── styles.css                   # Obsidian glow theme with accent switcher
 │   ├── site.js                      # Dynamic benchmark charts & interactive controls
-│   ├── ShadowLauncher.apk           # Compiled official release APK (36.6 MB)
+│   ├── ShadowLauncher.apk           # Compiled official release APK (Full Offline Bundle ~150 MB)
 │   ├── ShadowLauncher.apk.sha256    # Cryptographic SHA256 checksum
 │   └── assets/                      # High-res logos, screenshots, and QR codes
 └── scripts/                         # Automation Scripts

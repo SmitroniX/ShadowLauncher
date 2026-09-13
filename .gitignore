@@ -19,3 +19,4 @@ local.properties
 # Temporary logs
 *.log
 website_server.log
+*.apk

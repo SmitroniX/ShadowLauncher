@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Wybierz instalator modyfikacji</string>
     <!-- Error messages -->
-    <string name="error_fatal">PojavLauncher uległ nieoczekiwanej awarii</string>
+    <string name="error_fatal">Shadow Launcher uległ nieoczekiwanej awarii</string>
     <string name="error_no_version">Brak wersji!</string>
     <string name="error_show_more">Pokaż więcej</string>
     <string name="error_show_less">Pokaż mniej</string>
@@ -206,7 +206,7 @@
     <string name="arc_capes_title">Peleryny Cosmetica</string>
     <string name="arc_capes_desc">Aktywuje peleryny z Cosmetica (wcześniej Arc). Aby dowiedzieć się więcej, odwiedź https://cosmetica.cc. Wymaga OptiFine.</string>
     <string name="notif_channel_name">Ogólne</string>
-    <string name="lazy_service_default_title">Usługa Pojav Foreground</string>
+    <string name="lazy_service_default_title">Usługa Shadow Foreground</string>
     <string name="mcl_setting_veroption_installed">Zainstalowane</string>
     <string name="use_global_default">(Użyj ustawień domyślnych)</string>
     <string name="default_control">Domyślne sterowanie</string>
@@ -236,7 +236,7 @@
     <string name="preference_gyro_sample_rate_title">Częstotliwość próbkowania żyroskopu</string>
     <string name="preference_gyro_sample_rate_description">Jeśli masz problemy z wydajnością sterowania żyroskopowego, zwiększ tę wartość.</string>
     <string name="microsoft_login_retry_later">Zbyt wiele zapytań. Spróbuj ponownie później.</string>
-    <string name="storage_required">PojavLauncher wymaga podłączonej pamięci zewnętrznej. Podłącz ją ponownie i zrestartuj aplikację.</string>
+    <string name="storage_required">Shadow Launcher wymaga podłączonej pamięci zewnętrznej. Podłącz ją ponownie i zrestartuj aplikację.</string>
     <string name="mcl_setting_title_buttonallcaps">Używaj tylko dużych liter w etykietach przycisków</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Wyłącz tę opcję, jeśli chcesz używać małych liter w sterowaniu dotykowym.</string>
     <string name="create_profile">Utwórz nowy profil</string>
@@ -293,7 +293,7 @@
     <string name="modpack_download_downloading_mods" formatted="false">Pobieranie modyfikacji (%.2f MB / %.2f MB)</string>
     <string name="modpack_download_downloading_mods_fc" formatted="false">Pobieranie modów (%d z %d)</string>
     <string name="modpack_download_applying_overrides" formatted="false">Stosowanie nadpisania (%d/%d)</string>
-    <string name="modpack_install_notification_title">Instalator paczek modów Pojav</string>
+    <string name="modpack_install_notification_title">Instalator paczek modów Shadow</string>
     <string name="modpack_install_notification_success">Kliknij tutaj, aby zakończyć instalację paczki modów</string>
     <string name="modpack_install_notification_data_not_available">Nie udało się pobrać informacji o ładowarce modyfikacji</string>
     <string name="modpack_install_modloader_download_failed">Nie udało się pobrać plików ładowarki modyfikacji</string>
@@ -323,7 +323,7 @@
     <string name="preference_category_miscellaneous">Pozostałe ustawienia</string>
     <string name="preference_category_video">Ustawienia wideo</string>
     <string name="notification_permission_dialog_title">Prośba o pozwolenie</string>
-    <string name="notification_permission_dialog_text">PojavLauncher wymaga uprawnień do wysyłania powiadomień, aby zapobiec zatrzymaniu pobierania po opuszczeniu aplikacji. Bez tego zezwolenia Android może zatrzymać pobieranie po opuszczeniu PojavLauncher.</string>
+    <string name="notification_permission_dialog_text">Shadow Launcher wymaga uprawnień do wysyłania powiadomień, aby zapobiec zatrzymaniu pobierania po opuszczeniu aplikacji. Bez tego zezwolenia Android może zatrzymać pobieranie po opuszczeniu Shadow Launcher.</string>
     <string name="notification_permission_toast">Zawsze możesz zmienić to później przechodząc do Ustawień</string>
     <string name="preference_ask_for_notification_title">Zezwól na powiadomienia</string>
     <string name="preference_ask_for_notification_description">Kliknij, aby ponownie poprosić o uprawnienia do powiadomień, wymagane do poprawnego działania pobierania w tle.</string>

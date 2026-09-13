@@ -9,7 +9,7 @@ if [ ! -d "$SOURCE_DIR" ]; then
 fi
 WEBSITE_DIR="$BASE_DIR/website"
 
-echo "=== Building Shadow Launcher (Pojav Native Core) ==="
+echo "=== Building Shadow Launcher Full Offline Bundle ==="
 
 export ANDROID_HOME=/home/ubuntu/android-sdk
 
