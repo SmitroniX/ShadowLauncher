@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Shadow Launcher — Complete Performance &amp; Setup Documentation</title>
+    <meta name="description" content="Complete documentation, RAM tuning formula, JVM flags, Vulkan setup, and troubleshooting guide for Shadow Launcher on Android & PC.">
+    <meta name="theme-color" content="#07080d">
+
+    <link rel="icon" type="image/png" sizes="180x180" href="icon-180.png">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            padding: 40px 0 80px;
+        }
+
+        .docs-sidebar {
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--hair);
+            border-radius: var(--r-m);
+            padding: 20px;
+        }
+
+        .docs-sidebar-title {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--acc);
+            margin-bottom: 8px;
+        }
+
+        .docs-nav-link {
+            font-size: 14px;
+            color: var(--fg-2);
+            padding: 8px 12px;
+            border-radius: var(--r-s);
+            transition: all 0.2s ease;
+        }
+
+        .docs-nav-link:hover {
+            background: var(--surface-2);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .docs-content h2 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            margin: 40px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--hair);
+        }
+
+        .docs-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .docs-content h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            margin: 24px 0 12px;
+        }
+
+        .docs-content p {
+            font-size: 15px;
+            color: var(--fg-2);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .docs-content ul, .docs-content ol {
+            margin-bottom: 20px;
+            padding-left: 24px;
+            color: var(--fg-2);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .docs-content li {
+            margin-bottom: 8px;
+        }
+
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--surface);
+            border-radius: var(--r-s);
+            overflow: hidden;
+            border: 1px solid var(--hair);
+        }
+
+        .docs-table th, .docs-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--hair);
+            font-size: 14px;
+        }
+
+        .docs-table th {
+            background: var(--surface-2);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .docs-table td {
+            color: var(--fg-2);
+        }
+
+        .code-block {
+            background: #040508;
+            border: 1px solid var(--hair);
+            border-radius: var(--r-s);
+            padding: 16px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: #a78bfa;
+            overflow-x: auto;
+            margin: 16px 0;
+            line-height: 1.5;
+        }
+
+        .alert-box {
+            background: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--acc);
+            border-radius: 4px;
+            padding: 14px 18px;
+            margin: 20px 0;
+            color: var(--fg);
+            font-size: 14px;
+        }
+
+        .alert-box b {
+            color: #fff;
+        }
+
+        @media (max-width: 860px) {
+            .docs-layout {
+                grid-template-columns: 1fr;
+            }
+            .docs-sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-nav">
+    <div class="wrap nav-container">
+        <a href="index.html" class="brand-link">
+            <img src="icon-180.png" alt="Shadow Launcher Logo" width="32" height="32">
+            <span>Shadow Launcher</span>
+        </a>
+
+        <nav class="nav-menu">
+            <a href="index.html#features" class="nav-link">Features</a>
+            <a href="index.html#benchmarks" class="nav-link">Benchmarks</a>
+            <a href="demo/index.html" class="nav-link">Web Demo</a>
+            <a href="docs.html" class="nav-link" style="color:#fff; font-weight:700;">Documentation</a>
+            <a href="index.html#download" class="nav-link">Download</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="ShadowLauncher.apk" class="cta-btn" download>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download APK</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Documentation Layout -->
+<div class="wrap docs-layout">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+        <div class="docs-sidebar-title">Getting Started</div>
+        <a href="#install" class="docs-nav-link">Android Installation</a>
+        <a href="#requirements" class="docs-nav-link">System Requirements</a>
+        
+        <div class="docs-sidebar-title" style="margin-top:16px;">Performance Tuning</div>
+        <a href="#ram-tuning" class="docs-nav-link">RAM &amp; Heap Formula</a>
+        <a href="#jvm-flags" class="docs-nav-link">Aikar's &amp; Shenandoah GC</a>
+        <a href="#renderers" class="docs-nav-link">VulkanMod vs GL4ES</a>
+
+        <div class="docs-sidebar-title" style="margin-top:16px;">Controls &amp; Shaders</div>
+        <a href="#controls" class="docs-nav-link">ShadowTouch Gamepad</a>
+        <a href="#shaders" class="docs-nav-link">Iris Shaders Setup</a>
+        <a href="#troubleshooting" class="docs-nav-link">Troubleshooting Crashes</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+        <h2 id="install">Android Installation &amp; Permissions</h2>
+        <p>Shadow Launcher is distributed as a standalone, signed APK without third-party app store dependencies. Follow these steps to install:</p>
+        
+        <ol>
+            <li>Download the official <a href="ShadowLauncher.apk" download><b>ShadowLauncher.apk</b></a> to your phone or tablet.</li>
+            <li>Open your Android file manager or notification shade and tap the downloaded APK.</li>
+            <li>If prompted with <i>"Install unknown apps"</i>, tap <b>Settings</b> and toggle <b>Allow from this source</b>.</li>
+            <li>Tap <b>Install</b> and launch Shadow Launcher from your home screen.</li>
+        </ol>
+
+        <div class="alert-box">
+            <b>Note on Android 11+ Scoped Storage:</b> Shadow Launcher stores isolated Minecraft files in <code>/Android/data/com.shadow.launcher/files/.minecraft</code> by default, requiring no sensitive root or full disk access.
+        </div>
+
+        <h2 id="requirements">System Requirements</h2>
+        <table class="docs-table">
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Minimum Specification</th>
+                    <th>Recommended for 120 FPS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Operating System</td>
+                    <td>Android 8.0 (Oreo) 64-bit</td>
+                    <td>Android 12, 13, 14, or 15</td>
+                </tr>
+                <tr>
+                    <td>Processor (SoC)</td>
+                    <td>ARM64 Octa-Core (e.g. Helio G85 / Snapdragon 665)</td>
+                    <td>Snapdragon 8 Gen 2/3, Dimensity 9200+, Tensor G3</td>
+                </tr>
+                <tr>
+                    <td>RAM</td>
+                    <td>3 GB</td>
+                    <td>8 GB or 12 GB LPDDR5X</td>
+                </tr>
+                <tr>
+                    <td>Graphics API</td>
+                    <td>OpenGL ES 3.2</td>
+                    <td>Vulkan 1.2 or Vulkan 1.3 Native</td>
+                </tr>
+                <tr>
+                    <td>Display Refresh</td>
+                    <td>60 Hz</td>
+                    <td>120 Hz or 144 Hz AMOLED</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="ram-tuning">RAM &amp; Heap Allocation Formula</h2>
+        <p>A common mistake is assigning all available device RAM to Java. Android requires substantial RAM for the OS, surface flinger, audio server, and GPU textures. If you assign too much RAM, Android's Low Memory Killer (LMK) will force-close the game.</p>
+
+        <table class="docs-table">
+            <thead>
+                <tr>
+                    <th>Device Physical RAM</th>
+                    <th>Optimal Shadow Heap</th>
+                    <th>Recommended Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4 GB Device</td>
+                    <td>1536 MB – 2048 MB</td>
+                    <td>Vanilla 1.21 or Fabric + Sodium (6 Chunks)</td>
+                </tr>
+                <tr>
+                    <td>6 GB Device</td>
+                    <td>2560 MB – 3072 MB</td>
+                    <td>Fabric + Sodium + Lithium (8 Chunks)</td>
+                </tr>
+                <tr>
+                    <td>8 GB Device</td>
+                    <td>4096 MB (Sweet Spot)</td>
+                    <td>Sodium + Iris Shaders (10 Chunks @ 120 FPS)</td>
+                </tr>
+                <tr>
+                    <td>12 GB+ Device</td>
+                    <td>4096 MB – 6144 MB</td>
+                    <td>Heavy Modpacks (Create, Distant Horizons, Shaders)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="jvm-flags">Aikar's Flags &amp; Garbage Collection</h2>
+        <p>Garbage collection pauses are the #1 cause of frame drops in Minecraft Java. Shadow Launcher provides tuned GC presets:</p>
+
+        <h3>1. Aikar's High-Performance G1GC (Default)</h3>
+        <p>Best for general survival, Hypixel PvP, and modded play. Ensures predictable heap collection without sudden stutter spikes.</p>
+        <div class="code-block">-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1ReservePercent=20</div>
+
+        <h3>2. Shenandoah Low-Pause GC</h3>
+        <p>Performs concurrent compaction, resulting in pause times strictly under 10 milliseconds. Highly recommended for high-refresh 120Hz/144Hz displays.</p>
+        <div class="code-block">-XX:+UseShenandoahGC -XX:ShenandoahGCHeuristics=compact -XX:ShenandoahAllocationThreshold=70 -XX:+AlwaysPreTouch</div>
+
+        <h2 id="renderers">Renderer Pipeline Comparison</h2>
+        <ul>
+            <li><b>VulkanMod:</b> Renders Minecraft using modern Vulkan 1.3 commands. Eliminates CPU driver bottlenecks and delivers the highest sustained FPS on Adreno 6xx/7xx and Mali-G series.</li>
+            <li><b>Holy GL4ES:</b> Highly-optimized OpenGL ES 3.2 translation layer. Best compatibility for older Forge modpacks (1.12.2 and 1.16.5).</li>
+            <li><b>ANGLE:</b> Google's WebGL / GLES engine. Outstanding stability on devices with non-standard GPU drivers.</li>
+        </ul>
+
+        <h2 id="controls">ShadowTouch Virtual Controls &amp; Gamepads</h2>
+        <p>Shadow Launcher features a complete on-screen virtual controller with custom touch zones:</p>
+        <ul>
+            <li><b>Sprint Lock:</b> Double tap the center D-Pad button or tap once while walking forward.</li>
+            <li><b>Tactile Haptic Feedback:</b> Shadow Launcher utilizes Android's internal linear vibration motor for haptic clicks on jump, attack, and block place.</li>
+            <li><b>Bluetooth Controllers:</b> Pair an Xbox Wireless Controller, PlayStation DualSense, or connect USB-C controllers (Razer Kishi / Backbone One). Shadow Launcher automatically maps analog sticks and bumpers without third-party keymappers.</li>
+        </ul>
+
+        <h2 id="shaders">Installing Iris Shaders on Mobile</h2>
+        <p>Thanks to the pre-bundled Iris Shaders pipeline, running shaders on your phone takes just seconds:</p>
+        <ol>
+            <li>Download any lightweight shaderpack <code>.zip</code> (such as <i>Complementary Reimagined</i> or <i>MakeUp UltraFast</i>).</li>
+            <li>Place the <code>.zip</code> into <code>/Android/data/com.shadow.launcher/files/.minecraft/shaderpacks/</code> or click <b>Install Shader</b> in the Mod Hub.</li>
+            <li>In-game, navigate to <b>Video Settings &gt; Shader Packs</b> and select the pack.</li>
+            <li>For smooth 60-120 FPS, set shader profile to <b>Medium</b> or <b>Low</b> with <b>Shadow Distance: 6 Chunks</b>.</li>
+        </ol>
+
+        <h2 id="troubleshooting">Troubleshooting &amp; FAQs</h2>
+        <h3>Game closes immediately upon clicking launch?</h3>
+        <p>Ensure you have allocated at least 1536MB of RAM. If you are on an older Mali GPU device and experiencing a black screen with VulkanMod, switch the graphics renderer in the <b>Turbo Optimizer</b> tab to <b>Holy GL4ES 1.1.5</b>.</p>
+
+        <h3>How to backup worlds and screenshots?</h3>
+        <p>Your worlds are located in <code>.minecraft/saves/</code>. You can copy the entire folder using any Android file explorer (like ZArchiver or MiXplorer) or export them via the launcher settings.</p>
+    </main>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="wrap">
+        <p class="footer-disclaimer">
+            Shadow Launcher Documentation · Released under AGPL-3.0 / Open Source · Not affiliated with Mojang or Microsoft.
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

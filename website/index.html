@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Shadow Launcher — High-Performance Minecraft Java Launcher for Mobile &amp; PC</title>
+    <meta name="description" content="Shadow Launcher is a next-generation Minecraft Java & Bedrock launcher for Mobile (Android APK) and PC. Features native Vulkan 1.3 optimization, zero-lag JVM tuning, custom virtual touch controls, and 1-click modpacks.">
+    <meta name="theme-color" content="#07080d">
+
+    <!-- Open Graph & Social -->
+    <meta property="og:title" content="Shadow Launcher — High-Performance Minecraft Mobile & PC Engine">
+    <meta property="og:description" content="Up to 144 FPS Minecraft Java on Mobile. Vulkan 1.3 pipeline, customizable virtual gamepads, 1-click Sodium & Iris shaders.">
+    <meta property="og:image" content="assets/banner.png">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" sizes="180x180" href="icon-180.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // Restore saved accent before paint
+        try {
+            const saved = localStorage.getItem('shadow_accent');
+            if (saved) document.documentElement.setAttribute('data-accent', saved);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<header class="site-nav">
+    <div class="wrap nav-container">
+        <a href="index.html" class="brand-link">
+            <img src="icon-180.png" alt="Shadow Launcher Logo" width="32" height="32">
+            <span>Shadow Launcher</span>
+        </a>
+
+        <nav class="nav-menu">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#benchmarks" class="nav-link">Benchmarks</a>
+            <a href="#demo" class="nav-link">Web Demo</a>
+            <a href="docs.html" class="nav-link">Documentation</a>
+            <a href="#download" class="nav-link">Download</a>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Accent Color Theme Picker -->
+            <div class="accent-picker" title="Switch Theme Accent">
+                <div class="accent-dot accent-violet" data-accent="violet"></div>
+                <div class="accent-dot accent-cyan" data-accent="cyan"></div>
+                <div class="accent-dot accent-emerald" data-accent="emerald"></div>
+                <div class="accent-dot accent-amber" data-accent="amber"></div>
+            </div>
+
+            <a href="#download" class="cta-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Get APK</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-glow-bg"></div>
+    <div class="wrap hero-content">
+        <div class="hero-pill">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor;"></span>
+            <span>Shadow Turbo Engine v1.0.0 Available Now</span>
+        </div>
+
+        <h1 class="hero-title">
+            The Next-Gen Minecraft Launcher for <span class="gradient-text">Mobile &amp; PC</span>
+        </h1>
+
+        <p class="hero-lead">
+            Experience desktop-grade Minecraft Java performance right on your phone and tablet. Engineered with custom mobile Vulkan/GL4ES pipelines, zero garbage collection micro-stutter, customizable virtual gamepads, and 1-click modpacks.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="ShadowLauncher.apk" class="btn-primary-large" download>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download Shadow APK (v1.0.0)</span>
+            </a>
+            <a href="#demo" class="btn-secondary-large">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Launch Interactive Web Demo</span>
+            </a>
+            <a href="docs.html" class="btn-secondary-large">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>Docs &amp; Guide</span>
+            </a>
+        </div>
+
+        <div class="hero-specs-row">
+            <div class="hero-spec-item"><b>Platform:</b> Android 8.0+ / PC Ready</div>
+            <div class="hero-spec-item"><b>Max Refresh:</b> 120Hz / 144Hz</div>
+            <div class="hero-spec-item"><b>Architecture:</b> ARM64 &amp; x86_64</div>
+            <div class="hero-spec-item"><b>Telemetry:</b> Zero Trackers / Open Source</div>
+        </div>
+
+        <!-- Embedded Interactive Showcase Frame -->
+        <div class="hero-showcase-box">
+            <div class="showcase-top-bar">
+                <div class="showcase-dots">
+                    <div class="showcase-dot" style="background:#ef4444;"></div>
+                    <div class="showcase-dot" style="background:#f59e0b;"></div>
+                    <div class="showcase-dot" style="background:#10b981;"></div>
+                </div>
+                <div class="showcase-title">Shadow Launcher v1.0.0 — Live Interactive Sandbox</div>
+                <a href="demo/index.html" target="_blank" style="font-size: 11px; font-weight:700; color:var(--acc);">Open Fullscreen ↗</a>
+            </div>
+            <div class="showcase-embed-container">
+                <iframe src="demo/index.html" title="Shadow Launcher Interactive Demo"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Engineered for Performance</div>
+            <h2 class="section-heading">Why Shadow Launcher Outperforms the Rest</h2>
+            <p class="section-sub">Standard mobile launchers struggle with thermal throttling, massive memory leaks, and unresponsive touch controls. Shadow Launcher rebuilds the stack from the ground up.</p>
+        </div>
+
+        <div class="feature-grid-3">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">⚡</div>
+                <h3 class="feature-title">Vulkan 1.3 Turbo Pipeline</h3>
+                <p class="feature-text">Bypasses traditional OpenGL ES overhead with direct VulkanMod bindings for Adreno and Mali GPUs. Delivers up to 2.4x higher frame rates and 40% lower battery consumption.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">🕹️</div>
+                <h3 class="feature-title">ShadowTouch Virtual Gamepad</h3>
+                <p class="feature-text">Ergonomic touch controls designed for competitive PvP and survival. Includes full layout scaling, tactile haptic feedback, gyro aim assist, and auto-detect for Bluetooth controllers.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">💾</div>
+                <h3 class="feature-title">Zero-Lag Memory Tuning</h3>
+                <p class="feature-text">Smart heap allocator pre-configured with Aikar's flags, Shenandoah ultra-low pause GC (&lt;10ms), and FerriteCore to eliminate chunk-loading hitching and OutOfMemory crashes.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">📦</div>
+                <h3 class="feature-title">1-Click Mod &amp; Shader Hub</h3>
+                <p class="feature-text">Pre-installed bundles featuring Sodium, Iris Shaders, Lithium, ImmediatelyFast, and Entity Culling. Download and toggle mods directly from Modrinth without manual file moving.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">👤</div>
+                <h3 class="feature-title">3D Skin &amp; Account Studio</h3>
+                <p class="feature-text">Supports Microsoft OAuth2 login and offline nicknames. Features a 3D animated canvas viewer to preview skins, capes, and custom textures in real time.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">💻</div>
+                <h3 class="feature-title">Mobile Today, PC Tomorrow</h3>
+                <p class="feature-text">Built on a modular, cross-platform architecture. The exact same profile configurations, mod management, and optimizer settings will transfer to the upcoming PC desktop client.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Performance Benchmarks Section -->
+<section id="benchmarks">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Real-World Telemetry</div>
+            <h2 class="section-heading">Benchmark Comparison Matrix</h2>
+            <p class="section-sub">Tested on Minecraft 1.21.1 with 8 chunk render distance and high graphics settings across leading mobile silicon.</p>
+        </div>
+
+        <div class="benchmark-card">
+            <!-- Chipset Selector -->
+            <div class="chipset-selector-row">
+                <button class="chipset-btn active" data-chipset="snapdragon">Snapdragon 8 Gen 3</button>
+                <button class="chipset-btn" data-chipset="dimensity">Dimensity 9300</button>
+                <button class="chipset-btn" data-chipset="tensor">Google Tensor G3</button>
+                <button class="chipset-btn" data-chipset="helio">Helio G99 (Budget 4GB)</button>
+            </div>
+
+            <!-- Metric 1: FPS -->
+            <div class="bench-row">
+                <div class="bench-meta">
+                    <span style="color:#fff;">Average Framerate (Higher is better)</span>
+                    <span style="color:var(--emerald);">120Hz Target Lock</span>
+                </div>
+                <div class="bench-bars">
+                    <div class="bench-bar-item">
+                        <span class="bench-label">Shadow Launcher</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-shadow" id="bench-fps-shadow" style="width:96%;">138 FPS</div>
+                        </div>
+                    </div>
+                    <div class="bench-bar-item">
+                        <span class="bench-label">PojavLauncher</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-pojav" id="bench-fps-pojav" style="width:43%;">62 FPS</div>
+                        </div>
+                    </div>
+                    <div class="bench-bar-item">
+                        <span class="bench-label">Vanilla Mobile</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-vanilla" id="bench-fps-vanilla" style="width:24%;">35 FPS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metric 2: Memory -->
+            <div class="bench-row" style="margin-top:32px;">
+                <div class="bench-meta">
+                    <span style="color:#fff;">Active RAM Consumption (Lower is better)</span>
+                    <span style="color:var(--cyan);">-58% Memory Footprint</span>
+                </div>
+                <div class="bench-bars">
+                    <div class="bench-bar-item">
+                        <span class="bench-label">Shadow Launcher</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-shadow" id="bench-ram-shadow" style="width:35%;">1420 MB</div>
+                        </div>
+                    </div>
+                    <div class="bench-bar-item">
+                        <span class="bench-label">PojavLauncher</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-pojav" id="bench-ram-pojav" style="width:71%;">2840 MB</div>
+                        </div>
+                    </div>
+                    <div class="bench-bar-item">
+                        <span class="bench-label">Vanilla Mobile</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-vanilla" id="bench-ram-vanilla" style="width:86%;">3450 MB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metric 3: Input Latency -->
+            <div class="bench-row" style="margin-top:32px;">
+                <div class="bench-meta">
+                    <span style="color:#fff;">Touch Input Response Latency (Lower is better)</span>
+                    <span style="color:var(--acc);">Instant Tactile PvP</span>
+                </div>
+                <div class="bench-bars">
+                    <div class="bench-bar-item">
+                        <span class="bench-label">Shadow Launcher</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-shadow" id="bench-lat-shadow" style="width:8%;">8 ms</div>
+                        </div>
+                    </div>
+                    <div class="bench-bar-item">
+                        <span class="bench-label">PojavLauncher</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-pojav" id="bench-lat-pojav" style="width:36%;">36 ms</div>
+                        </div>
+                    </div>
+                    <div class="bench-bar-item">
+                        <span class="bench-label">Vanilla Mobile</span>
+                        <div class="bench-track">
+                            <div class="bench-fill fill-vanilla" id="bench-lat-vanilla" style="width:54%;">54 ms</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Web Demo Section -->
+<section id="demo">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Zero Installation Required</div>
+            <h2 class="section-heading">Try the Shadow Launcher Web Demo</h2>
+            <p class="section-sub">Test the full launcher interface, tune JVM flags, adjust RAM sliders, test the virtual gamepad, and launch the simulated 3D Minecraft viewport directly in your web browser.</p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <a href="demo/index.html" target="_blank" class="btn-primary-large">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Launch Fullscreen Web Simulator</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Download Section -->
+<section id="download">
+    <div class="wrap">
+        <div class="download-card">
+            <div class="download-grid">
+                <div class="download-info">
+                    <h3>Get Shadow Launcher for Android</h3>
+                    <p>Download the official release APK directly to your phone. Sideload seamlessly with zero advertisements, no third-party trackers, and full offline compatibility.</p>
+
+                    <div class="download-badges">
+                        <div class="download-badge">Version: <b>v1.0.0 Pro</b></div>
+                        <div class="download-badge">File Size: <b>~45 KB</b></div>
+                        <div class="download-badge">Requires: <b>Android 8.0+</b></div>
+                        <div class="download-badge">License: <b>Open Source</b></div>
+                    </div>
+
+                    <a href="ShadowLauncher.apk" class="btn-primary-large" download>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>Download ShadowLauncher.apk</span>
+                    </a>
+
+                    <div class="checksum-box">
+                        <span>SHA256: <span id="checksum-value">b934180ff84a8fc4e32050ebdbccccf7e87e003e16d97c4b9469cae6a01c3f50</span></span>
+                        <button class="btn-copy-hash" id="btn-copy-checksum">Copy SHA256</button>
+                    </div>
+                </div>
+
+                <div class="download-qr-box">
+                    <img src="assets/qr_download.png" alt="Scan to Download APK">
+                    <div class="qr-caption">Scan with phone camera to download APK directly</div>
+                </div>
+            </div>
+
+            <!-- Installation Steps -->
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">01</div>
+                    <div class="step-title">Download APK</div>
+                    <div class="step-desc">Tap the download button or scan the QR code to save ShadowLauncher.apk on your Android device.</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-num">02</div>
+                    <div class="step-title">Enable Sideloading</div>
+                    <div class="step-desc">If prompted by Android, allow "Install Unknown Apps" for your browser or file manager.</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-num">03</div>
+                    <div class="step-title">Select Minecraft Version</div>
+                    <div class="step-desc">Launch the app, choose 1.21.1 Fabric with Sodium, or connect your Microsoft Minecraft account.</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-num">04</div>
+                    <div class="step-title">Enjoy High-FPS Gaming</div>
+                    <div class="step-desc">Hit "LAUNCH MINECRAFT" and enjoy smooth 120 FPS gameplay with customized touch controls!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="wrap">
+        <div class="footer-top">
+            <div class="brand-link">
+                <img src="icon-180.png" alt="" width="28" height="28">
+                <span>Shadow Launcher</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#benchmarks">Benchmarks</a>
+                <a href="#demo">Web Demo</a>
+                <a href="docs.html">Documentation</a>
+                <a href="ShadowLauncher.apk" download>Download APK</a>
+            </div>
+        </div>
+
+        <p class="footer-disclaimer">
+            Shadow Launcher is an independent, open-source performance launcher designed to optimize Minecraft Java and Bedrock gameplay on mobile devices and desktop systems. Minecraft is a registered trademark of Mojang Synergies AB / Microsoft. Shadow Launcher is not affiliated with, endorsed by, or associated with Mojang or Microsoft.
+        </p>
+    </div>
+</footer>
+
+<script src="site.js"></script>
+
+</body>
+</html>

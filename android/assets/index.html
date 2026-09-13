@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Shadow Launcher — Interactive Launcher &amp; Simulator</title>
+    <meta name="description" content="Next-Gen High-Performance Minecraft Java &amp; Bedrock Launcher for Mobile &amp; PC">
+    <meta name="theme-color" content="#06070a">
+    <link rel="icon" type="image/png" href="../icon-180.png">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div id="app-root">
+    <!-- Top Bar -->
+    <header class="app-header">
+        <div class="brand-wrapper">
+            <img src="../icon-180.png" alt="Shadow Launcher" class="brand-logo">
+            <span class="brand-title">SHADOW LAUNCHER</span>
+            <span class="brand-version">v1.0.0 PRO</span>
+        </div>
+
+        <div class="header-telemetry">
+            <div class="telemetry-item">
+                <span class="dot"></span>
+                <span>Vulkan 1.3 Active</span>
+            </div>
+            <div class="telemetry-item device-badge">
+                <span id="device-model-text">⚡ Snapdragon 8 Gen 3 (Octa-Core)</span>
+            </div>
+        </div>
+
+        <div class="account-pill" id="account-pill-btn">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f1b2e'/%3E%3Crect x='6' y='6' width='20' height='20' fill='%23c79c7b'/%3E%3Crect x='6' y='6' width='20' height='7' fill='%232d1b4e'/%3E%3Crect x='10' y='16' width='4' height='4' fill='%2306b6d4'/%3E%3Crect x='18' y='16' width='4' height='4' fill='%2306b6d4'/%3E%3C/svg%3E" alt="Avatar" class="player-avatar">
+            <span class="player-name" id="header-username">ShadowPlayer_99</span>
+        </div>
+    </header>
+
+    <div class="app-body">
+        <!-- Sidebar Navigation -->
+        <nav class="app-sidebar">
+            <div class="nav-links">
+                <button class="nav-btn active" data-tab="play">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span>Play &amp; Launch</span>
+                </button>
+                <button class="nav-btn" data-tab="optimizer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>Turbo Optimizer</span>
+                </button>
+                <button class="nav-btn" data-tab="controls">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="13" r="1"/></svg>
+                    <span>Virtual Gamepad</span>
+                </button>
+                <button class="nav-btn" data-tab="mods">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    <span>Mods &amp; Shaders</span>
+                </button>
+                <button class="nav-btn" data-tab="skins">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a8.38 8.38 0 0 1 13 0"/></svg>
+                    <span>Skin &amp; Account</span>
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="ram-quick-meter">
+                    <div class="ram-label-row">
+                        <span>Allocated RAM</span>
+                        <span id="sidebar-ram-text">4096 / 8192 MB</span>
+                    </div>
+                    <div class="ram-bar">
+                        <div class="ram-bar-fill" id="sidebar-ram-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="app-viewport">
+            
+            <!-- TAB 1: PLAY & LAUNCH -->
+            <div class="tab-pane active" id="tab-play">
+                <div class="launch-banner-card">
+                    <div class="banner-grid">
+                        <div class="banner-content">
+                            <div class="profile-tag-row">
+                                <span class="badge badge-loader" id="badge-loader-text">Fabric 0.16.0</span>
+                                <span class="badge badge-renderer" id="badge-renderer-text">VulkanMod 1.3</span>
+                                <span class="badge badge-fps" id="badge-fps-text">⚡ ~120 FPS Target</span>
+                            </div>
+                            <h1 class="banner-title" id="banner-version-title">Minecraft Java 1.21.1</h1>
+                            <p class="banner-desc">Equipped with Sodium, Iris Shaders, FerriteCore &amp; Lithium. Pre-compiled GPU pipeline active with 4096MB heap.</p>
+                            
+                            <div class="version-selector-group">
+                                <span style="font-size: 12px; color: var(--text-dim); font-weight: 700;">PROFILE:</span>
+                                <select class="version-dropdown" id="version-select">
+                                    <option value="fabric-1.21.1" selected>1.21.1 Fabric (Iris + Sodium)</option>
+                                    <option value="forge-1.20.1">1.20.1 Forge + Create Engine</option>
+                                    <option value="pvp-1.8.9">1.8.9 Hypixel PvP Feather Edition</option>
+                                    <option value="vanilla-1.21.1">1.21.1 Vanilla Release</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="launch-action-box">
+                            <button class="btn-launch" id="btn-launch-game">
+                                <div class="pulse-ring"></div>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                <span>LAUNCH MINECRAFT</span>
+                            </button>
+                            <span class="launch-subtext">Click to start simulation or native launch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servers & News Section -->
+                <div class="card-grid-2">
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                Featured Multi-Player Servers
+                            </span>
+                        </div>
+                        <div class="server-item">
+                            <div class="server-left">
+                                <div class="server-icon" style="background:#5b21b6; color:#fff;">HY</div>
+                                <div>
+                                    <div class="server-name">Hypixel Network</div>
+                                    <div class="server-motd">BedWars, SkyBlock &amp; Duels · mc.hypixel.net</div>
+                                </div>
+                            </div>
+                            <div class="server-ping">● 24ms</div>
+                        </div>
+                        <div class="server-item">
+                            <div class="server-left">
+                                <div class="server-icon" style="background:#0e7490; color:#fff;">MMC</div>
+                                <div>
+                                    <div class="server-name">Minemen Club</div>
+                                    <div class="server-motd">Ranked PvP &amp; Practice · na.minemen.club</div>
+                                </div>
+                            </div>
+                            <div class="server-ping">● 18ms</div>
+                        </div>
+                        <div class="server-item">
+                            <div class="server-left">
+                                <div class="server-icon" style="background:#15803d; color:#fff;">SMP</div>
+                                <div>
+                                    <div class="server-name">Shadow SMP World</div>
+                                    <div class="server-motd">Official Shadow Launcher Survival · smp.shadow.net</div>
+                                </div>
+                            </div>
+                            <div class="server-ping">● 12ms</div>
+                        </div>
+                    </div>
+
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                Shadow Engine Diagnostics &amp; News
+                            </span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                            <div style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--primary-hover); font-weight: 700;">[Changelog v1.0.0]</span>
+                                Mobile VulkanMod pipeline enabled by default. Up to 2.4x higher framerate on Adreno 7xx/6xx and Mali-G7xx GPUs.
+                            </div>
+                            <div style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+                                <span style="color: var(--cyan); font-weight: 700;">[Optimization Tip]</span>
+                                Setting RAM to 4096MB with Shenandoah GC avoids 99% of chunk generation micro-stutters during fast elytra flight.
+                            </div>
+                            <div>
+                                <span style="color: var(--emerald); font-weight: 700;">[ShadowTouch]</span>
+                                Added full Bluetooth gamepad controller and external keyboard &amp; mouse support.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: TURBO OPTIMIZER -->
+            <div class="tab-pane" id="tab-optimizer">
+                <h2 class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Performance &amp; Memory Allocation Engine
+                </h2>
+
+                <div class="card-grid-2">
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">RAM (Heap) Allocation</span>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Allocated Memory</div>
+                                <div class="setting-desc" id="ram-recommendation-note">Optimal &amp; Safe for device.</div>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="ram-slider" min="1024" max="8192" step="512" value="4096">
+                                <span class="slider-val" id="ram-val-display">4096 MB</span>
+                            </div>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Garbage Collector (GC)</div>
+                                <div class="setting-desc">Tuned algorithm for smooth frame pacing.</div>
+                            </div>
+                            <select class="ui-select" id="gc-mode-select">
+                                <option value="aikar" selected>Aikar's Flags (Recommended)</option>
+                                <option value="shenandoah">Shenandoah GC (&lt;10ms pause)</option>
+                                <option value="zgc">ZGC Generational (High RAM)</option>
+                                <option value="parallel">Parallel GC (Budget devices)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Aggressive Entity Culling</div>
+                                <div class="setting-desc">Skip rendering entities behind solid walls.</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked id="toggle-culling">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Graphics Renderer &amp; Scaling</span>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Mobile Renderer Pipeline</div>
+                                <div class="setting-desc">Select GPU graphics backend.</div>
+                            </div>
+                            <select class="ui-select" id="renderer-select">
+                                <option value="vulkan" selected>VulkanMod (Mobile Vulkan 1.3)</option>
+                                <option value="gl4es">Holy GL4ES 1.1.5 (GLES3)</option>
+                                <option value="angle">ANGLE (Direct GLES)</option>
+                                <option value="virgl">VirGL Zink</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Target Framerate Cap</div>
+                                <div class="setting-desc">Locks refresh rate to prevent thermal throttling.</div>
+                            </div>
+                            <select class="ui-select" id="fps-cap-select">
+                                <option value="60">60 FPS (Battery Saver)</option>
+                                <option value="90">90 FPS (Smooth)</option>
+                                <option value="120" selected>120 FPS (Pro Gaming)</option>
+                                <option value="144">144 FPS (Ultra)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Internal Render Scale</div>
+                                <div class="setting-desc">Upscale/downscale 3D viewport.</div>
+                            </div>
+                            <select class="ui-select" id="res-scale-select">
+                                <option value="75">75% (Performance 720p)</option>
+                                <option value="100" selected>100% (Native 1080p)</option>
+                                <option value="125">125% (Super-Sampled QHD)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom JVM Args Output -->
+                <div class="ui-card">
+                    <div class="ui-card-header">
+                        <span class="ui-card-title">Active Generated JVM Arguments</span>
+                        <button class="btn-skin-action" id="btn-copy-jvm">Copy Arguments</button>
+                    </div>
+                    <textarea class="jvm-textarea" id="jvm-args-textarea" readonly></textarea>
+                </div>
+            </div>
+
+            <!-- TAB 3: SHADOWTOUCH VIRTUAL GAMEPAD -->
+            <div class="tab-pane" id="tab-controls">
+                <h2 class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="13" r="1"/></svg>
+                    ShadowTouch Mobile Virtual Controls
+                </h2>
+
+                <div class="controls-preview-container">
+                    <div class="virtual-gamepad-overlay">
+                        <!-- Top Utility Bar -->
+                        <div class="v-utils-top">
+                            <button class="v-util-btn" data-action="f3">F3 DEBUG</button>
+                            <button class="v-util-btn" data-action="f5">F5 VIEW</button>
+                            <button class="v-util-btn" data-action="chat">CHAT [T]</button>
+                            <button class="v-util-btn" data-action="inv">INV [E]</button>
+                            <button class="v-util-btn" data-action="menu">PAUSE</button>
+                        </div>
+
+                        <!-- Left D-Pad -->
+                        <div class="v-dpad">
+                            <button class="v-btn dpad-up" data-action="up">▲</button>
+                            <button class="v-btn dpad-down" data-action="down">▼</button>
+                            <button class="v-btn dpad-left" data-action="left">◀</button>
+                            <button class="v-btn dpad-right" data-action="right">▶</button>
+                            <div class="v-btn dpad-center" data-action="sprint">LOCK</div>
+                        </div>
+
+                        <!-- Hotbar -->
+                        <div class="v-hotbar">
+                            <div class="hotbar-slot active" data-slot="0">🌿</div>
+                            <div class="hotbar-slot" data-slot="1">💎</div>
+                            <div class="hotbar-slot" data-slot="2">🪵</div>
+                            <div class="hotbar-slot" data-slot="3">🪨</div>
+                            <div class="hotbar-slot" data-slot="4">🗡️</div>
+                            <div class="hotbar-slot" data-slot="5">🍞</div>
+                            <div class="hotbar-slot" data-slot="6">🏹</div>
+                            <div class="hotbar-slot" data-slot="7">💧</div>
+                            <div class="hotbar-slot" data-slot="8">🧭</div>
+                        </div>
+
+                        <!-- Right Actions -->
+                        <div class="v-actions">
+                            <button class="v-btn btn-attack" data-action="attack">ATK</button>
+                            <button class="v-btn btn-use" data-action="use">USE</button>
+                            <button class="v-btn btn-jump" data-action="jump">JUMP</button>
+                            <button class="v-btn btn-sneak" data-action="sneak">SHIFT</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Tuning -->
+                <div class="card-grid-2">
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Overlay Layout Settings</span>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Button Opacity</div>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="ctrl-opacity-slider" min="20" max="100" value="75">
+                                <span class="slider-val" id="ctrl-opac-val">75%</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Button Scale</div>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="ctrl-scale-slider" min="80" max="140" value="100">
+                                <span class="slider-val" id="ctrl-scale-val">100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Haptics &amp; Sensors</span>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Vibration Haptic Feedback</div>
+                                <div class="setting-desc">Tactile clicks on button presses.</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked id="ctrl-haptic-toggle">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">External Controller Detection</div>
+                                <div class="setting-desc">Xbox / PlayStation / Razer Kishi support.</div>
+                            </div>
+                            <span style="font-size: 12px; color: var(--emerald); font-weight: 700;">AUTO-DETECT READY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: MODS & SHADERS -->
+            <div class="tab-pane" id="tab-mods">
+                <h2 class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    Modrinth &amp; CurseForge Optimization Hub
+                </h2>
+                <div id="mods-container"></div>
+            </div>
+
+            <!-- TAB 5: SKIN & ACCOUNT STUDIO -->
+            <div class="tab-pane" id="tab-skins">
+                <h2 class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a8.38 8.38 0 0 1 13 0"/></svg>
+                    Player Customization &amp; 3D Skin Studio
+                </h2>
+
+                <div class="skin-studio-grid">
+                    <div class="skin-viewport-card">
+                        <canvas id="skin-canvas" width="220" height="280"></canvas>
+                        <div style="font-size: 13px; font-weight: 700; margin-top: 8px; color: #fff;" id="player-skin-name">Shadow Cyber Samurai</div>
+                        <div style="font-size: 11px; color: var(--text-dim);">Drag to rotate model 360°</div>
+                    </div>
+
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Choose Preset Skin</span>
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <button class="btn-skin-action btn-skin-preset" data-skin="shadow_samurai">Shadow Cyber Samurai</button>
+                            <button class="btn-skin-action btn-skin-preset" data-skin="steve">Steve Classic HD</button>
+                            <button class="btn-skin-action btn-skin-preset" data-skin="void_walker">Void Walker (End)</button>
+                            <button class="btn-skin-action btn-skin-preset" data-skin="pvp_ninja">Stealth PvP Ninja</button>
+                        </div>
+
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Account Authentication</span>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Login Provider</div>
+                                <div class="setting-desc">Active account mode.</div>
+                            </div>
+                            <span style="font-size: 12px; color: var(--cyan); font-weight: 700;">Microsoft OAuth (Verified)</span>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Player Gamertag</div>
+                            </div>
+                            <span style="font-size: 13px; font-weight: 700; color: #fff;">ShadowPlayer_99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- GAME LAUNCHER PROGRESS & PLAYABLE SIMULATOR OVERLAY -->
+<div id="game-simulator-overlay">
+    
+    <!-- Step 1: Launch Progress Terminal -->
+    <div id="launch-progress-screen">
+        <img src="../icon-180.png" alt="" class="progress-logo">
+        <div class="progress-status-title" id="progress-status-title">Preparing Shadow Turbo Engine...</div>
+        <div class="progress-status-detail">Allocating JVM Heap &amp; Binding Vulkan 1.3</div>
+        <div class="progress-track">
+            <div class="progress-fill" id="launch-progress-fill"></div>
+        </div>
+        <div class="terminal-console-box" id="launch-terminal-console"></div>
+    </div>
+
+    <!-- Step 2: Playable In-Game Canvas -->
+    <div id="mc-canvas-container">
+        <canvas id="mc-game-canvas"></canvas>
+        <div class="ingame-crosshair"></div>
+        <div class="ingame-f3-hud" id="ingame-f3-hud"></div>
+
+        <div class="ingame-top-bar">
+            <button class="btn-game-menu" id="btn-open-game-menu">PAUSE MENU</button>
+        </div>
+
+        <!-- In-game Pause Modal -->
+        <div id="game-pause-modal">
+            <div class="pause-dialog">
+                <div class="pause-title">GAME PAUSED</div>
+                <button class="btn-pause-menu" id="btn-pause-resume">Back to Game</button>
+                <button class="btn-pause-menu btn-exit" id="btn-pause-exit">Exit to Shadow Launcher</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Audio and Scripts -->
+<script src="audio.js"></script>
+<script src="demo.js"></script>
+
+</body>
+</html>
