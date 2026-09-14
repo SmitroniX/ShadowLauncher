@@ -122,4 +122,110 @@
     // Initialize with Snapdragon
     updateBenchmarks('snapdragon');
 
+    // Mobile Navigation Drawer Toggle
+    const navToggle = document.querySelector('.nav-toggle-btn');
+    const mobileDrawer = document.querySelector('.mobile-nav-drawer');
+    if (navToggle && mobileDrawer) {
+        navToggle.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('open');
+        });
+        // Close on link click
+        mobileDrawer.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.remove('open');
+            });
+        });
+    }
+
+    // App Screenshot Showcase Switcher
+    const screenshotData = {
+        'dashboard': {
+            img: 'assets/designs/dashboard.jpg',
+            title: '01. Main Gaming Dashboard (16:9 Landscape)',
+            desc: 'Futuristic cyber-dark home screen with left navigation rail, active version hero banner, telemetry stats, and glowing PLAY CTA button.',
+            badges: ['VulkanMod 1.3', 'Java 21 LTS', '42 Active Mods']
+        },
+        'instances': {
+            img: 'assets/designs/instances.jpg',
+            title: '02. Instances & Versions Hub (16:9 Landscape)',
+            desc: 'Multi-card instance manager with automatic version folder isolation (instances/1.20.4-Fabric/), 1-tap folder explorer, and JRE/renderer inspector.',
+            badges: ['Auto-JVM Matcher', 'Dedicated Subfolders', 'Zero Conflict']
+        },
+        'mod_store': {
+            img: 'assets/designs/mod_store.jpg',
+            title: '03. In-App Mod & Resourcepack Store (16:9 Landscape)',
+            desc: 'Integrated Modrinth / CurseForge browser. 1-click install automatically verifies dependencies and drops jar files directly into the active instance mods folder.',
+            badges: ['1-Click Install', 'Dependency Check', 'Performance Packs']
+        },
+        'controls_studio': {
+            img: 'assets/designs/controls_studio.jpg',
+            title: '04. Custom HUD Controls Studio (16:9 Landscape)',
+            desc: 'Full drag-and-drop on-screen touch button editor over a live canvas. Features snap-to-grid, opacity slider, layout presets (PvP, Survival, One-Handed), and keycode assignment.',
+            badges: ['Live Game Canvas', 'Snap-to-Grid', 'Haptic Feedback']
+        },
+        'portrait_mobile': {
+            img: 'assets/designs/portrait_mobile.jpg',
+            title: '05. Mobile Portrait View (9:16)',
+            desc: 'Ergonomic one-handed vertical launcher layout with bottom navigation bar, quick telemetry drawer, and thumb-friendly PLAY button.',
+            badges: ['One-Handed Ergonomics', 'Dynamic Telemetry', 'Quick Play']
+        }
+    };
+
+    const screenTabs = document.querySelectorAll('.screenshot-tab');
+    const screenImg = document.getElementById('active-screenshot-img');
+    const screenTitle = document.getElementById('active-screenshot-title');
+    const screenDesc = document.getElementById('active-screenshot-desc');
+    const screenBadges = document.getElementById('active-screenshot-badges');
+
+    if (screenTabs.length && screenImg) {
+        screenTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const screenKey = tab.getAttribute('data-screen');
+                const data = screenshotData[screenKey];
+                if (!data) return;
+
+                screenTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                screenImg.style.opacity = '0';
+                setTimeout(() => {
+                    screenImg.src = data.img;
+                    screenImg.alt = data.title;
+                    if (screenTitle) screenTitle.textContent = data.title;
+                    if (screenDesc) screenDesc.textContent = data.desc;
+                    if (screenBadges) {
+                        screenBadges.innerHTML = data.badges.map(b => `<span class="c-tag feature">${b}</span>`).join('');
+                    }
+                    screenImg.style.opacity = '1';
+                }, 150);
+            });
+        });
+    }
+
+    // Lightbox Modal for Screenshots
+    const lightbox = document.getElementById('screenshot-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    if (screenImg && lightbox && lightboxImg) {
+        screenImg.addEventListener('click', () => {
+            lightboxImg.src = screenImg.src;
+            lightbox.classList.add('active');
+        });
+    }
+
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    }
+
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+    }
+
 })();

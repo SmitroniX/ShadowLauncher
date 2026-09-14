@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shadow Launcher — High-Performance Minecraft Java Launcher for Mobile</title>
-    <meta name="description" content="Shadow Launcher is a high-performance native Android Minecraft Java Edition launcher with Vulkan 1.3 & GL4ES pipelines, OpenJDK 21/17/8 runtimes, customizable touch controls, and virtual mouse support.">
+    <meta name="description" content="Shadow Launcher is an ultra-optimized native Android Minecraft Java Edition launcher with Vulkan 1.3 & GL4ES pipelines, OpenJDK 21/17/8 runtimes, isolated instance folders, customizable touch controls, and virtual mouse support.">
     <meta name="theme-color" content="#07080d">
 
     <!-- Open Graph & Social -->
     <meta property="og:title" content="Shadow Launcher — High-Performance Minecraft Java Mobile Launcher">
-    <meta property="og:description" content="Native OpenJDK runtime, Vulkan 1.3 pipeline, customizable on-screen touch controls, virtual mouse, and 1-click modpacks.">
-    <meta property="og:image" content="assets/banner.png">
+    <meta property="og:description" content="Native OpenJDK runtime, Vulkan 1.3 pipeline, customizable on-screen touch controls, isolated version instances, and 1-click modpacks.">
+    <meta property="og:image" content="assets/designs/dashboard.jpg">
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" sizes="180x180" href="icon-180.png">
@@ -37,12 +37,13 @@
 
         <nav class="nav-menu">
             <a href="#features" class="nav-link">Features</a>
-            <a href="#screens" class="nav-link">Interface</a>
+            <a href="#screens" class="nav-link">Screenshots</a>
+            <a href="#changelog" class="nav-link">Changelog</a>
             <a href="design-system.html" class="nav-link" style="color:#c084fc; font-weight:600;">✨ Figma UI/UX</a>
             <a href="#benchmarks" class="nav-link">Benchmarks</a>
             <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener" class="nav-link">Discord</a>
             <a href="https://smitronix.dev" target="_blank" rel="noopener" class="nav-link">SmitroniX</a>
-            <a href="#download" class="nav-link">Download APK</a>
+            <a href="#download" class="nav-link">Download</a>
         </nav>
 
         <div class="nav-actions">
@@ -58,9 +59,30 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Get APK</span>
             </a>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="nav-toggle-btn" aria-label="Toggle navigation menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
         </div>
     </div>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-drawer">
+    <a href="#features">Features</a>
+    <a href="#screens">App Screenshots</a>
+    <a href="#changelog">Release Changelogs</a>
+    <a href="design-system.html" style="color:#c084fc;">✨ Figma UI/UX Design System</a>
+    <a href="#benchmarks">Performance Benchmarks</a>
+    <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener">Discord Community</a>
+    <a href="https://smitronix.dev" target="_blank" rel="noopener">Developer Site (SmitroniX)</a>
+    <a href="#download" style="color:var(--emerald);">Download APK (v1.0.5)</a>
+</div>
 
 <!-- Hero Section -->
 <section class="hero">
@@ -68,7 +90,7 @@
     <div class="wrap hero-content">
         <div class="hero-pill">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor;"></span>
-            <span>Shadow Launcher v1.0.4 Native Release</span>
+            <span>Shadow Launcher v1.0.5 Native Release</span>
         </div>
 
         <h1 class="hero-title">
@@ -76,24 +98,29 @@
         </h1>
 
         <p class="hero-lead">
-            Play real, authentic Minecraft Java Edition on Android. Built with native OpenJDK runtime support, Vulkan 1.3 &amp; Holy GL4ES rendering, fully customizable on-screen touch controls, and a signature virtual mouse cursor.
+            Play real, authentic Minecraft Java Edition on Android. Built with native OpenJDK runtime support, Vulkan 1.3 &amp; Holy GL4ES rendering, dedicated version-isolated instances, customizable touch controls, and a signature virtual mouse cursor.
         </p>
 
         <div class="hero-buttons">
-            <a href="https://github.com/SmitroniX/ShadowLauncher/releases/latest/download/ShadowLauncher.apk" class="btn-primary-large" download>
+            <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" class="btn-primary-large" download>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span>Download Shadow APK (Full Offline)</span>
+                <span>Download Shadow APK (v1.0.5)</span>
+            </a>
+            <a href="design-system.html" class="btn-secondary-large" style="border-color:rgba(139,92,246,0.4);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>Figma UI/UX &amp; Specs</span>
             </a>
             <a href="docs.html" class="btn-secondary-large">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span>Setup &amp; RAM Guide</span>
+                <span>Setup Guide</span>
             </a>
         </div>
 
         <div class="hero-specs-row">
             <div class="hero-spec-item"><b>Platform:</b> Android 8.0+ (ARM64 &amp; x86_64)</div>
-            <div class="hero-spec-item"><b>Runtimes:</b> OpenJDK 21 / 17 / 8</div>
+            <div class="hero-spec-item"><b>Runtimes:</b> OpenJDK 21 / 17 / 8 Bundled</div>
             <div class="hero-spec-item"><b>Graphics:</b> Vulkan 1.3 &amp; Holy GL4ES</div>
+            <div class="hero-spec-item"><b>Instances:</b> Dedicated Folders per Version</div>
             <div class="hero-spec-item"><b>Package:</b> Full Offline Bundle (147 MB)</div>
         </div>
     </div>
@@ -103,26 +130,69 @@
 <section id="screens">
     <div class="wrap">
         <div class="section-head">
-            <div class="section-eyebrow">Pure Native Android UI</div>
-            <h2 class="section-heading">Engineered for Mobile &amp; Touch Perfection</h2>
-            <p class="section-sub">A genuine native mobile launcher with an intuitive dashboard, draggable touch controls customizer, virtual mouse pointer, and JVM memory tuning.</p>
-            <div style="margin-top:20px;">
+            <div class="section-eyebrow">Real App Interface &amp; HUD</div>
+            <h2 class="section-heading">Engineered for Mobile Touch Perfection</h2>
+            <p class="section-sub">Experience the next-generation cyber-dark interface designed specifically for touch gaming, version management, and visual HUD customization.</p>
+            <div style="margin-top:16px;">
                 <a href="design-system.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(6,182,212,0.2)); border:1px solid #8b5cf6; color:#fff; padding:8px 20px; border-radius:9999px; font-size:13px; font-weight:600; text-decoration:none;">
-                    <span>🎨 View Complete Figma Design System &amp; 5 UI Screen Mockups</span>
+                    <span>🎨 View Full Figma Design System &amp; Component Tokens</span>
                     <span style="color:#a78bfa;">→</span>
                 </a>
             </div>
         </div>
 
-        <div class="feature-grid-3">
+        <!-- Interactive Screenshot Showcase Container -->
+        <div class="screenshot-showcase">
+            <!-- Tabs -->
+            <div class="screenshot-tabs">
+                <div class="screenshot-tab active" data-screen="dashboard">
+                    <span>🎮</span> Main Dashboard
+                </div>
+                <div class="screenshot-tab" data-screen="instances">
+                    <span>📦</span> Instances &amp; Versions Hub
+                </div>
+                <div class="screenshot-tab" data-screen="mod_store">
+                    <span>🧩</span> In-App Mod Store
+                </div>
+                <div class="screenshot-tab" data-screen="controls_studio">
+                    <span>🕹️</span> Custom HUD Studio
+                </div>
+                <div class="screenshot-tab" data-screen="portrait_mobile">
+                    <span>📱</span> Mobile Portrait View
+                </div>
+            </div>
+
+            <!-- Display Area -->
+            <div class="screenshot-display-area">
+                <div class="screenshot-viewport">
+                    <img id="active-screenshot-img" src="assets/designs/dashboard.jpg" alt="Shadow Launcher Main Gaming Dashboard" class="screenshot-img" title="Click to enlarge screenshot">
+                </div>
+            </div>
+
+            <!-- Overlay Info -->
+            <div class="screenshot-overlay-info">
+                <div>
+                    <div id="active-screenshot-title" class="screenshot-title">01. Main Gaming Dashboard (16:9 Landscape)</div>
+                    <div id="active-screenshot-desc" class="screenshot-desc">Futuristic cyber-dark home screen with left navigation rail, active version hero banner, telemetry stats, and glowing PLAY CTA button.</div>
+                </div>
+                <div id="active-screenshot-badges" class="screenshot-badges">
+                    <span class="c-tag feature">VulkanMod 1.3</span>
+                    <span class="c-tag feature">Java 21 LTS</span>
+                    <span class="c-tag feature">42 Active Mods</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Cards Under Screenshots -->
+        <div class="feature-grid-3" style="margin-top:36px;">
             <!-- Screen Card 1: Dashboard -->
             <div class="feature-card">
                 <div class="feature-icon-wrapper" style="color:var(--emerald);">▶</div>
                 <h3 class="feature-title">Shadow Dashboard &amp; Quick Play</h3>
-                <p class="feature-text">Select your Minecraft version (1.21.1 down to 1.8.9 PvP), switch modloaders (Fabric, Forge, NeoForge), and hit the big green PLAY button to boot OpenJDK.</p>
+                <p class="feature-text">Select your Minecraft version (1.21.1 down to 1.8.9 PvP), switch modloaders (Fabric, Forge, NeoForge), and hit the big glowing PLAY button to boot OpenJDK.</p>
                 <div style="background:#090b12; border:1px solid var(--hair); border-radius:8px; padding:12px; margin-top:14px; font-size:12px; font-family:var(--font-mono); color:#9ca3af;">
                     <div style="color:#fff; font-weight:700; margin-bottom:4px;">⚡ Active Profile:</div>
-                    <div>• Version: 1.21.1 Tricky Trials</div>
+                    <div>• Version: 1.20.4 Fabric</div>
                     <div>• Loader: Fabric 0.16.0</div>
                     <div>• JRE: OpenJDK 21 LTS</div>
                     <div>• Renderer: VulkanMod 1.3</div>
@@ -132,7 +202,7 @@
             <!-- Screen Card 2: Touch Controls HUD -->
             <div class="feature-card">
                 <div class="feature-icon-wrapper" style="color:var(--cyan);">🕹️</div>
-                <h3 class="feature-title">Shadow Touch Controls &amp; Mouse</h3>
+                <h3 class="feature-title">Touch Controls &amp; Mouse</h3>
                 <p class="feature-text">Authentic on-screen buttons: PRI (Attack), SEC (Place), INV, F3, F5, CHAT, TAB, ESC, and a sprint-locking D-Pad. Includes a touchpad virtual mouse cursor.</p>
                 <div style="background:#090b12; border:1px solid var(--hair); border-radius:8px; padding:12px; margin-top:14px; font-size:12px; font-family:var(--font-mono); color:#9ca3af;">
                     <div style="color:#fff; font-weight:700; margin-bottom:4px;">🖱️ MOUSE Mode:</div>
@@ -146,11 +216,11 @@
             <!-- Screen Card 3: Layout Customizer -->
             <div class="feature-card">
                 <div class="feature-icon-wrapper" style="color:var(--acc);">📐</div>
-                <h3 class="feature-title">Custom Controls Layout Editor</h3>
-                <p class="feature-text">Built-in visual layout editor. Drag any button anywhere on your phone screen, resize width and height, adjust transparency, and save your custom layout.</p>
+                <h3 class="feature-title">Custom Controls Studio</h3>
+                <p class="feature-text">Visual HUD drag-and-drop editor. Reposition any button over a live game preview canvas, resize width and height, adjust transparency, and load PvP presets.</p>
                 <div style="background:#090b12; border:1px solid var(--hair); border-radius:8px; padding:12px; margin-top:14px; font-size:12px; font-family:var(--font-mono); color:#9ca3af;">
-                    <div style="color:#fff; font-weight:700; margin-bottom:4px;">⚙️ Editor Features:</div>
-                    <div>• Grid alignment canvas</div>
+                    <div style="color:#fff; font-weight:700; margin-bottom:4px;">⚙️ Studio Features:</div>
+                    <div>• Snap-to-grid alignment</div>
                     <div>• Button size &amp; keycode inspector</div>
                     <div>• Toggle vs. Momentary hold modes</div>
                     <div>• Instant layout save &amp; backup</div>
@@ -173,7 +243,7 @@
             <div class="feature-card">
                 <div class="feature-icon-wrapper">☕</div>
                 <h3 class="feature-title">Multi-JRE Runtime Manager</h3>
-                <p class="feature-text">Automatically selects OpenJDK 21 for Minecraft 1.20.5+, OpenJDK 17 for 1.17–1.20.4, and OpenJDK 8 for 1.12.2 / 1.8.9 PvP modpacks.</p>
+                <p class="feature-text">Automatically selects OpenJDK 21 for Minecraft 1.20.5+, OpenJDK 17 for 1.17–1.20.4, and OpenJDK 8 for 1.12.2 / 1.8.9 PvP modpacks. All runtimes pre-bundled offline.</p>
             </div>
 
             <div class="feature-card">
@@ -185,31 +255,225 @@
             <div class="feature-card">
                 <div class="feature-icon-wrapper">💾</div>
                 <h3 class="feature-title">Smart Heap &amp; Aikar's GC</h3>
-                <p class="feature-text">Native RAM allocation slider with dynamic safety limits for 4GB, 6GB, 8GB, and 12GB devices, paired with Aikar's G1GC flags to eliminate stutters.</p>
+                <p class="feature-text">Native RAM allocation slider with dynamic safety limits for 4GB, 6GB, 8GB, and 12GB devices, paired with Aikar's G1GC flags to eliminate micro-stutters.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon-wrapper">📦</div>
-                <h3 class="feature-title">1-Click Mod Hub &amp; .JAR Installer</h3>
-                <p class="feature-text">Pre-configured support for Sodium, Iris Shaders, Lithium, and FerriteCore. Run external Forge/Fabric installer .jar files directly in the app.</p>
+                <h3 class="feature-title">Version-Isolated Instances</h3>
+                <p class="feature-text">Every version runs in its own dedicated directory (e.g. <code>instances/1.20.4-Fabric/</code>) with isolated <code>mods/</code>, <code>resourcepacks/</code>, and <code>saves/</code>. Zero mod collisions.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon-wrapper">📋</div>
                 <h3 class="feature-title">Real-Time JVM Terminal Log</h3>
-                <p class="feature-text">Dedicated console output viewer streaming Minecraft stdout, stderr, and GC pauses in real time with 1-click clipboard export.</p>
+                <p class="feature-text">Dedicated console output viewer streaming Minecraft stdout, stderr, and GC pauses in real time with 1-click clipboard export and crash diagnostic tools.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon-wrapper">👤</div>
                 <h3 class="feature-title">Offline &amp; Microsoft Accounts</h3>
-                <p class="feature-text">Seamless offline nickname authentication for LAN play and single-player, plus Microsoft OAuth2 authentication for Hypixel and premium servers.</p>
+                <p class="feature-text">Seamless offline nickname authentication for LAN play and single-player, plus Microsoft OAuth2 authentication for Hypixel and premium multiplayer servers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Release Changelogs & Updates Section -->
+<section id="changelog">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Release History &amp; Updates</div>
+            <h2 class="section-heading">Continuous Innovation &amp; Changelogs</h2>
+            <p class="section-sub">Track all improvements, optimizations, and new features shipped in every Shadow Launcher release.</p>
+        </div>
+
+        <div class="changelog-timeline">
+            <!-- Release v1.0.5 (Latest) -->
+            <div class="changelog-card latest">
+                <div class="changelog-header">
+                    <div class="changelog-version-wrap">
+                        <span class="changelog-version">Shadow Launcher v1.0.5</span>
+                        <span class="changelog-pill-latest">Latest Release</span>
+                    </div>
+                    <div class="changelog-date">September 14, 2026</div>
+                </div>
+
+                <div class="changelog-tags">
+                    <span class="c-tag ui">Figma UI/UX</span>
+                    <span class="c-tag ui">Cyber Card Overhaul</span>
+                    <span class="c-tag feature">Glowing Play CTA</span>
+                    <span class="c-tag engine">Tokens Studio</span>
+                </div>
+
+                <ul class="changelog-items">
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Figma UI/UX Redesign:</strong> Implemented deep obsidian (<code>#07080D</code>) and card surfaces (<code>#121824</code>) with glowing electric violet (<code>#8B5CF6</code>) and cyan accents (<code>#06B6D4</code>).</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Cyber-Dark Card Layout:</strong> Replaced flat menu buttons with sleek modular cards featuring 14dp rounded corners, subtle borders, and touch-responsive ripple effects.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Glowing Gradient PLAY Button:</strong> Redesigned the primary launch action button with multi-stage pressed states and high-contrast typography.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Figma Design Tokens JSON:</strong> Released <code>shadow_launcher_tokens.json</code> for 1-click import into Tokens Studio for Figma and interactive web showcase at <code>design-system.html</code>.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Responsive Spacing:</strong> Added clean horizontal and vertical margins across all menu fragments for tablet and phone ergonomics.</div>
+                    </li>
+                </ul>
+
+                <div class="changelog-actions">
+                    <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" class="changelog-btn" download style="background:linear-gradient(135deg,#8B5CF6,#06B6D4);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>Download APK (147 MB)</span>
+                    </a>
+                    <a href="https://github.com/SmitroniX/ShadowLauncher/releases/tag/v1.0.5" target="_blank" rel="noopener" class="changelog-btn">
+                        <span>GitHub Release Notes</span>
+                    </a>
+                </div>
             </div>
 
-            <div class="feature-card" style="border-color: rgba(0, 240, 255, 0.4); background: rgba(0, 240, 255, 0.04);">
-                <div class="feature-icon-wrapper" style="color:var(--cyan);">⚡</div>
-                <h3 class="feature-title">Isolated Instances Engine</h3>
-                <p class="feature-text">Every version has its own dedicated directory with completely independent <code>mods/</code>, <code>resourcepacks/</code>, <code>saves/</code>, and configs. Zero modpack conflicts with 1-tap quick folder access!</p>
+            <!-- Release v1.0.4 -->
+            <div class="changelog-card">
+                <div class="changelog-header">
+                    <div class="changelog-version-wrap">
+                        <span class="changelog-version">Shadow Launcher v1.0.4</span>
+                    </div>
+                    <div class="changelog-date">September 13, 2026</div>
+                </div>
+
+                <div class="changelog-tags">
+                    <span class="c-tag feature">Isolated Instances</span>
+                    <span class="c-tag feature">Dedicated Folders</span>
+                    <span class="c-tag engine">Auto Migration</span>
+                    <span class="c-tag fix">Storage Explorer</span>
+                </div>
+
+                <ul class="changelog-items">
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Version-Isolated Instance Directories:</strong> Profiles automatically generate clean instance folders named directly after the Minecraft version (e.g. <code>instances/1.20.4-Fabric/</code>, <code>instances/1.20.1-Forge/</code>).</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Automated Subfolder Creation:</strong> Launcher immediately ensures <code>mods/</code>, <code>resourcepacks/</code>, <code>saves/</code>, <code>shaderpacks/</code>, and <code>config/</code> exist for every instance.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>In-App File Explorer Dialog:</strong> Tapping Open Directory displays the exact Android storage path and opens the device file manager.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Legacy Path Migration:</strong> Auto-routes generic legacy paths (such as <code>instances/Default</code>) to their matching version folders.</div>
+                    </li>
+                </ul>
+
+                <div class="changelog-actions">
+                    <a href="https://github.com/SmitroniX/ShadowLauncher/releases/tag/v1.0.4" target="_blank" rel="noopener" class="changelog-btn">
+                        <span>View Release Archive</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Release v1.0.3 -->
+            <div class="changelog-card">
+                <div class="changelog-header">
+                    <div class="changelog-version-wrap">
+                        <span class="changelog-version">Shadow Launcher v1.0.3</span>
+                    </div>
+                    <div class="changelog-date">September 13, 2026</div>
+                </div>
+
+                <div class="changelog-tags">
+                    <span class="c-tag engine">Multi-JRE Bundling</span>
+                    <span class="c-tag engine">Java 21 / 17 / 8</span>
+                    <span class="c-tag fix">Zero-Crash Matcher</span>
+                </div>
+
+                <ul class="changelog-items">
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Multi-JRE Auto-Selector:</strong> Automatically selects Java 21 for 1.20.5+, Java 17 for 1.17–1.20.4, and Java 8 for legacy 1.12.2 / 1.8.9 PvP.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Full Offline Runtimes:</strong> Pre-bundled OpenJDK 8, 17, and 21 into the app package, requiring zero runtime downloads.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Dynamic Heap Calculator:</strong> Automatically configures JVM RAM heap allocation based on total device memory.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Release v1.0.2 & v1.0.1 -->
+            <div class="changelog-card">
+                <div class="changelog-header">
+                    <div class="changelog-version-wrap">
+                        <span class="changelog-version">Shadow Launcher v1.0.2 &amp; v1.0.1</span>
+                    </div>
+                    <div class="changelog-date">September 13, 2026</div>
+                </div>
+
+                <div class="changelog-tags">
+                    <span class="c-tag fix">JVM Bridge Fixes</span>
+                    <span class="c-tag fix">Cacio Native Hooks</span>
+                    <span class="c-tag feature">Community Links</span>
+                </div>
+
+                <ul class="changelog-items">
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Dalvik/ART JVM Bridge Fix:</strong> Resolved Cacio/OpenJDK bridge exceptions on Android 12, 13, and 14.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>JNI_OnLoad Protection:</strong> Safely handled Dalvik JNI calls and cleared pending native exceptions during initialization.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Official Community Integration:</strong> Connected in-app Wiki buttons directly to <a href="https://smitronix.dev" style="color:#60a5fa;">smitronix.dev</a> and Discord to <a href="https://discord.gg/gtBzgWnD5X" style="color:#60a5fa;">discord.gg/gtBzgWnD5X</a>.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Release v1.0.0 -->
+            <div class="changelog-card">
+                <div class="changelog-header">
+                    <div class="changelog-version-wrap">
+                        <span class="changelog-version">Shadow Launcher v1.0.0 — Initial Release</span>
+                    </div>
+                    <div class="changelog-date">September 13, 2026</div>
+                </div>
+
+                <div class="changelog-tags">
+                    <span class="c-tag engine">Vulkan 1.3</span>
+                    <span class="c-tag engine">Holy GL4ES</span>
+                    <span class="c-tag feature">Touch HUD</span>
+                    <span class="c-tag feature">Virtual Mouse</span>
+                </div>
+
+                <ul class="changelog-items">
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Native Android Gaming Engine:</strong> High-performance mobile launcher built for Minecraft Java Edition.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Custom Touch HUD:</strong> On-screen buttons with sprint-locking D-Pad, F3/F5 debug toggles, and customizable layouts.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Virtual Mouse Mode:</strong> Touchpad cursor pointer for easy inventory crafting and navigation.</div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -327,28 +591,28 @@
             <div class="download-grid">
                 <div class="download-info">
                     <h3>Download Shadow Launcher APK</h3>
-                    <p>Get the official native Android APK file directly to your phone. Zero ads, no trackers, open source, and built for maximum performance.</p>
+                    <p>Get the official native Android APK directly to your phone. Zero ads, no trackers, open source, and built for maximum performance.</p>
 
                     <div class="download-badges">
-                        <div class="download-badge">Version: <b>v1.0.4 Native</b></div>
-                        <div class="download-badge">File Size: <b>149 MB (Full Offline Bundle)</b></div>
+                        <div class="download-badge">Version: <b>v1.0.5 Native Release</b></div>
+                        <div class="download-badge">File Size: <b>147 MB (Full Offline Bundle)</b></div>
                         <div class="download-badge">Requires: <b>Android 8.0+</b></div>
                         <div class="download-badge">License: <b>AGPL-3.0</b></div>
                     </div>
 
                     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
-                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/latest/download/ShadowLauncher.apk" class="btn-primary-large" download style="margin-bottom:0;">
+                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" class="btn-primary-large" download style="margin-bottom:0;">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             <span>Download APK (Direct)</span>
                         </a>
-                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-primary-large" style="background:#1e1e28; border:1px solid var(--hair); color:#fff; margin-bottom:0;">
+                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/tag/v1.0.5" target="_blank" rel="noopener noreferrer" class="btn-primary-large" style="background:#1e1e28; border:1px solid var(--hair); color:#fff; margin-bottom:0;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                             <span>GitHub Release</span>
                         </a>
                     </div>
 
                     <div class="checksum-box">
-                        <span>SHA256: <span id="checksum-value">27a28cc5299477c29c2b489d6275a75a38a7a965c54ac869be60b266804d5337</span></span>
+                        <span>SHA256: <span id="checksum-value">246dd9742c179f3d5ecc119c13171078811d4c4ed059f27d18868f4b621739bf</span></span>
                         <button class="btn-copy-hash" id="btn-copy-checksum">Copy SHA256</button>
                     </div>
                 </div>
@@ -375,19 +639,25 @@
 
                 <div class="step-card">
                     <div class="step-num">03</div>
-                    <div class="step-title">Choose Version &amp; RAM</div>
-                    <div class="step-desc">Open Shadow Launcher, select your Minecraft profile (e.g. 1.21.1 Fabric), and adjust RAM.</div>
+                    <div class="step-title">Choose Version &amp; Instance</div>
+                    <div class="step-desc">Open Shadow Launcher; instances are automatically isolated per Minecraft version with separate mods and packs.</div>
                 </div>
 
                 <div class="step-card">
                     <div class="step-num">04</div>
                     <div class="step-title">Play with Touch Controls</div>
-                    <div class="step-desc">Hit PLAY to start! Use the Shadow touch overlay or toggle the virtual mouse cursor anytime.</div>
+                    <div class="step-desc">Hit the glowing PLAY button to start! Use the touch HUD overlay or toggle the virtual mouse cursor anytime.</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Lightbox Modal -->
+<div id="screenshot-lightbox" class="lightbox-modal">
+    <span id="lightbox-close" class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged screenshot" class="lightbox-content">
+</div>
 
 <!-- Footer -->
 <footer class="site-footer">
@@ -400,11 +670,13 @@
 
             <div class="footer-links">
                 <a href="#features">Features</a>
-                <a href="#screens">Interface</a>
+                <a href="#screens">Screenshots</a>
+                <a href="#changelog">Changelog</a>
+                <a href="design-system.html">Figma UI/UX</a>
                 <a href="#benchmarks">Benchmarks</a>
                 <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener">Discord</a>
                 <a href="https://smitronix.dev" target="_blank" rel="noopener">SmitroniX</a>
-                <a href="ShadowLauncher.apk" download>Download APK</a>
+                <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" download>Download APK</a>
             </div>
         </div>
 
