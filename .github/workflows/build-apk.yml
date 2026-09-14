@@ -6,9 +6,17 @@ on:
       - main
     tags:
       - 'v*'
+    paths-ignore:
+      - 'website/**'
+      - '.github/workflows/deploy-pages.yml'
+      - 'README.md'
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - 'website/**'
+      - '.github/workflows/deploy-pages.yml'
+      - 'README.md'
   workflow_dispatch:
 
 concurrency:

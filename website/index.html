@@ -38,8 +38,9 @@
         <nav class="nav-menu">
             <a href="#features" class="nav-link">Features</a>
             <a href="#screens" class="nav-link">Screenshots</a>
+            <a href="#design-system" class="nav-link" style="color:#c084fc; font-weight:600;">✨ Figma UI/UX</a>
+            <a href="#docs" class="nav-link">Documentation</a>
             <a href="#changelog" class="nav-link">Changelog</a>
-            <a href="design-system.html" class="nav-link" style="color:#c084fc; font-weight:600;">✨ Figma UI/UX</a>
             <a href="#benchmarks" class="nav-link">Benchmarks</a>
             <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener" class="nav-link">Discord</a>
             <a href="https://smitronix.dev" target="_blank" rel="noopener" class="nav-link">SmitroniX</a>
@@ -76,11 +77,12 @@
 <div class="mobile-nav-drawer">
     <a href="#features">Features</a>
     <a href="#screens">App Screenshots</a>
+    <a href="#design-system" style="color:#c084fc;">✨ Figma UI/UX Design System</a>
+    <a href="#docs">Documentation &amp; RAM Guide</a>
     <a href="#changelog">Release Changelogs</a>
-    <a href="design-system.html" style="color:#c084fc;">✨ Figma UI/UX Design System</a>
     <a href="#benchmarks">Performance Benchmarks</a>
     <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener">Discord Community</a>
-    <a href="https://smitronix.dev" target="_blank" rel="noopener">Developer Site (SmitroniX)</a>
+    <a href="https://smitronix.dev" target="_blank" rel="noopener">Developer Site</a>
     <a href="#download" style="color:var(--emerald);">Download APK (v1.0.5)</a>
 </div>
 
@@ -106,11 +108,11 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Download Shadow APK (v1.0.5)</span>
             </a>
-            <a href="design-system.html" class="btn-secondary-large" style="border-color:rgba(139,92,246,0.4);">
+            <a href="#design-system" class="btn-secondary-large" style="border-color:rgba(139,92,246,0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 <span>Figma UI/UX &amp; Specs</span>
             </a>
-            <a href="docs.html" class="btn-secondary-large">
+            <a href="#docs" class="btn-secondary-large">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 <span>Setup Guide</span>
             </a>
@@ -275,6 +277,155 @@
                 <h3 class="feature-title">Offline &amp; Microsoft Accounts</h3>
                 <p class="feature-text">Seamless offline nickname authentication for LAN play and single-player, plus Microsoft OAuth2 authentication for Hypixel and premium multiplayer servers.</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Figma Design System & Tokens Section -->
+<section id="design-system">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Figma UI/UX Architecture</div>
+            <h2 class="section-heading">Official Figma Design System &amp; Tokens</h2>
+            <p class="section-sub">Standardized cyberpunk design tokens, glassmorphism cards, and interactive components designed for Tokens Studio for Figma.</p>
+            <div style="margin-top:16px;">
+                <a href="assets/designs/shadow_launcher_tokens.json" download class="cta-btn" style="display:inline-flex; background:linear-gradient(135deg,#8B5CF6,#06B6D4); padding:8px 20px; font-size:13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Download shadow_launcher_tokens.json</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="token-swatches">
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#07080D').then(()=>alert('Copied #07080D'))">
+                <div class="swatch-color" style="background:#07080D;"></div>
+                <div class="swatch-name">Canvas Root</div>
+                <div class="swatch-hex">#07080D (Obsidian)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#0B0E14').then(()=>alert('Copied #0B0E14'))">
+                <div class="swatch-color" style="background:#0B0E14;"></div>
+                <div class="swatch-name">Surface Dark</div>
+                <div class="swatch-hex">#0B0E14 (Rails &amp; Nav)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#121824').then(()=>alert('Copied #121824'))">
+                <div class="swatch-color" style="background:#121824;"></div>
+                <div class="swatch-name">Card Background</div>
+                <div class="swatch-hex">#121824 (Glass Card)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#8B5CF6').then(()=>alert('Copied #8B5CF6'))">
+                <div class="swatch-color" style="background:#8B5CF6;"></div>
+                <div class="swatch-name">Primary Violet</div>
+                <div class="swatch-hex">#8B5CF6 (Accent Glow)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#06B6D4').then(()=>alert('Copied #06B6D4'))">
+                <div class="swatch-color" style="background:#06B6D4;"></div>
+                <div class="swatch-name">Neon Cyan</div>
+                <div class="swatch-hex">#06B6D4 (Glitch Cyan)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#10B981').then(()=>alert('Copied #10B981'))">
+                <div class="swatch-color" style="background:#10B981;"></div>
+                <div class="swatch-name">Emerald Ready</div>
+                <div class="swatch-hex">#10B981 (Active Badge)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#F59E0B').then(()=>alert('Copied #F59E0B'))">
+                <div class="swatch-color" style="background:#F59E0B;"></div>
+                <div class="swatch-name">Amber Java</div>
+                <div class="swatch-hex">#F59E0B (Runtime LTS)</div>
+            </div>
+            <div class="token-swatch" onclick="navigator.clipboard.writeText('#EF4444').then(()=>alert('Copied #EF4444'))">
+                <div class="swatch-color" style="background:#EF4444;"></div>
+                <div class="swatch-name">Rose Danger</div>
+                <div class="swatch-hex">#EF4444 (Delete / Crash)</div>
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:24px; margin-top:36px;">
+            <div class="feature-card">
+                <h3 class="feature-title" style="margin-bottom:12px;">🔤 Typography Scale</h3>
+                <div style="font-size:13px; color:#9ca3af; line-height:1.8;">
+                    <div><strong style="color:#fff;">Display Hero:</strong> Inter / Rajdhani Bold 28px–36px</div>
+                    <div><strong style="color:#fff;">Instance Title:</strong> Inter SemiBold 20px–22px</div>
+                    <div><strong style="color:#fff;">Body Text:</strong> Inter Regular 14px–15px</div>
+                    <div><strong style="color:#fff;">Telemetry &amp; Code:</strong> JetBrains Mono 12px–13px</div>
+                    <div><strong style="color:#fff;">Status Chips:</strong> Inter Bold 11px (+0.05em spacing)</div>
+                </div>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title" style="margin-bottom:12px;">📐 Component Layout Metrics</h3>
+                <div style="font-size:13px; color:#9ca3af; line-height:1.8;">
+                    <div><strong style="color:#fff;">PLAY CTA Button:</strong> 64px Height, 16px Radius, Purple-Cyan Glow</div>
+                    <div><strong style="color:#fff;">Instance Cards:</strong> 16px Radius, 1px Subtle Border (#222E46)</div>
+                    <div><strong style="color:#fff;">HUD Touch Buttons:</strong> 14px Radius with 10px Backdrop Blur</div>
+                    <div><strong style="color:#fff;">Grid Spacing:</strong> 4px / 8px / 12px / 16px / 24px / 32px</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Documentation & Setup Section -->
+<section id="docs">
+    <div class="wrap">
+        <div class="section-head">
+            <div class="section-eyebrow">Setup &amp; Performance Manual</div>
+            <h2 class="section-heading">Installation &amp; RAM Optimization Guide</h2>
+            <p class="section-sub">Comprehensive instructions for installing Shadow Launcher and configuring JVM memory for stutter-free Minecraft Java on mobile.</p>
+        </div>
+
+        <div class="feature-grid-3">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper" style="color:var(--emerald);">📥</div>
+                <h3 class="feature-title">1. Android Installation</h3>
+                <p class="feature-text">Download <code>ShadowLauncher.apk</code>, tap the notification or file manager, and enable <i>"Install unknown apps"</i> when prompted. Requires Android 8.0+.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper" style="color:var(--cyan);">📁</div>
+                <h3 class="feature-title">2. Scoped Storage Access</h3>
+                <p class="feature-text">Instances are stored safely in <code>Android/data/com.shadowlauncher/files/instances/</code>. Tap the in-app Folder shortcut anytime to open directly in your file manager.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper" style="color:var(--acc);">⚡</div>
+                <h3 class="feature-title">3. Vulkan vs. HolyGL</h3>
+                <p class="feature-text">Use <strong>VulkanMod 1.3</strong> for maximum frame rates and lower thermals on Snapdragon/Mali GPUs. Fall back to <strong>Holy GL4ES</strong> for legacy 1.8.9/1.12.2 mods.</p>
+            </div>
+        </div>
+
+        <div class="docs-table-wrapper" style="margin-top:36px;">
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Device Physical RAM</th>
+                        <th>Optimal Shadow Heap Allocation</th>
+                        <th>Recommended Target Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>4 GB Phone</strong></td>
+                        <td>1536 MB – 2048 MB</td>
+                        <td>Vanilla 1.20 / Fabric + Sodium (6 Chunks)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6 GB Phone</strong></td>
+                        <td>2560 MB – 3072 MB</td>
+                        <td>Fabric + Sodium + Iris Shaders (8 Chunks)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8 GB Phone</strong></td>
+                        <td>3584 MB – 4096 MB</td>
+                        <td>Heavy Modpacks (ATM9, Prominence II, 10–12 Chunks)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>12 GB+ Phone / Tablet</strong></td>
+                        <td>4608 MB – 5120 MB</td>
+                        <td>Ultra Shaders (Complementary Reimagined, 16 Chunks)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert-box">
+            <strong>⚠️ RAM Allocation Tip:</strong> Avoid allocating 100% of your device RAM to Java. Android requires 1.5 GB to 2.5 GB for the OS, SurfaceFlinger compositor, and GPU texture allocations. Allocating too much will trigger Android's Low Memory Killer (LMK).
         </div>
     </div>
 </section>

@@ -1140,3 +1140,129 @@ footer.site-footer {
   }
 }
 
+/* Figma Tokens & Swatches */
+.token-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.token-swatch {
+  background: #121824;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.token-swatch:hover {
+  transform: translateY(-2px);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.swatch-color {
+  height: 44px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.swatch-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.swatch-hex {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.code-box {
+  background: #090c12;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #e2e8f0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+}
+
+/* Documentation Tables & Alert Boxes */
+.docs-table-wrapper {
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0E121C;
+  font-size: 14px;
+}
+
+.docs-table th, .docs-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.docs-table th {
+  background: #141A29;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.docs-table td {
+  color: #94A3B8;
+}
+
+.docs-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.alert-box {
+  background: rgba(139, 92, 246, 0.1);
+  border-left: 4px solid var(--acc);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  color: #CBD5E1;
+  font-size: 14px;
+}
+
+.alert-box strong {
+  color: #fff;
+}
+
+
