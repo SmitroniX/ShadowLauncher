@@ -3,17 +3,17 @@
     <color name="control_button_color">#4CC4C4C4</color>
     <color name="control_button_pressed_color">#4D000000</color>
 
-    <!-- Primary action / MineButton: Electric Neon Emerald -->
-    <color name="minebutton_color">#00E676</color>
-    <color name="minebutton_pressed">#00C853</color>
-    <color name="minebutton_text">#05080E</color>
+    <!-- Primary action / MineButton: Cyber Purple-Cyan Gradient & White Text -->
+    <color name="minebutton_color">#8B5CF6</color>
+    <color name="minebutton_pressed">#6D28D9</color>
+    <color name="minebutton_text">#FFFFFF</color>
 
-    <!-- Deep Obsidian Dark App Surfaces -->
-    <color name="background_app">#0A0D14</color>
+    <!-- Deep Obsidian Dark App Surfaces (Figma Design Tokens) -->
+    <color name="background_app">#07080D</color>
     <color name="divider">#1A2234</color>
-    <color name="background_overlay">#141A29</color>
-    <color name="background_status_bar">#070A0F</color>
-    <color name="background_bottom_bar">#0E131E</color>
+    <color name="background_overlay">#121824</color>
+    <color name="background_status_bar">#05060A</color>
+    <color name="background_bottom_bar">#0B0E14</color>
 
     <!-- Typography -->
     <color name="primary_text">#F8FAFC</color>
