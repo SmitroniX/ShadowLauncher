@@ -1,0 +1,172 @@
+{
+  "version": "1.0.0",
+  "name": "Shadow Launcher Design Tokens",
+  "author": "SmitroniX Dev Team",
+  "description": "Figma design tokens for Shadow Launcher mobile Minecraft Java edition",
+  "global": {
+    "color": {
+      "background": {
+        "canvas": { "value": "#07080D", "type": "color", "description": "App background root obsidian" },
+        "surface": { "value": "#0B0E14", "type": "color", "description": "Surface background for rail & headers" },
+        "card": { "value": "#121824", "type": "color", "description": "Default card background with 60% blur" },
+        "cardHover": { "value": "#182030", "type": "color", "description": "Elevated card on hover/focus" },
+        "cardActive": { "value": "#1F293D", "type": "color", "description": "Active selected instance card" },
+        "hudOverlay": { "value": "rgba(11, 14, 20, 0.65)", "type": "color", "description": "In-game HUD background overlay" }
+      },
+      "border": {
+        "subtle": { "value": "rgba(255, 255, 255, 0.08)", "type": "color" },
+        "medium": { "value": "rgba(255, 255, 255, 0.16)", "type": "color" },
+        "accent": { "value": "rgba(139, 92, 246, 0.5)", "type": "color" },
+        "cyan": { "value": "rgba(6, 182, 212, 0.5)", "type": "color" },
+        "active": { "value": "#8B5CF6", "type": "color" }
+      },
+      "brand": {
+        "purplePrimary": { "value": "#8B5CF6", "type": "color", "description": "Primary Shadow Purple" },
+        "purpleHover": { "value": "#A78BFA", "type": "color" },
+        "purpleDark": { "value": "#2E1065", "type": "color" },
+        "cyanAccent": { "value": "#06B6D4", "type": "color", "description": "Neon Glitch Cyan" },
+        "cyanHover": { "value": "#22D3EE", "type": "color" },
+        "cyanDark": { "value": "#083344", "type": "color" },
+        "emeraldSuccess": { "value": "#10B981", "type": "color", "description": "Compatible / Ready / Active status" },
+        "amberWarning": { "value": "#F59E0B", "type": "color", "description": "Java LTS badge / Caution" },
+        "roseDanger": { "value": "#EF4444", "type": "color", "description": "Delete / Crash / Conflict" }
+      },
+      "text": {
+        "primary": { "value": "#FFFFFF", "type": "color" },
+        "secondary": { "value": "#9CA3AF", "type": "color" },
+        "tertiary": { "value": "#6B7280", "type": "color" },
+        "accent": { "value": "#A78BFA", "type": "color" },
+        "cyan": { "value": "#22D3EE", "type": "color" },
+        "emerald": { "value": "#34D399", "type": "color" }
+      }
+    },
+    "spacing": {
+      "xs": { "value": "4px", "type": "spacing" },
+      "sm": { "value": "8px", "type": "spacing" },
+      "md": { "value": "12px", "type": "spacing" },
+      "lg": { "value": "16px", "type": "spacing" },
+      "xl": { "value": "20px", "type": "spacing" },
+      "2xl": { "value": "24px", "type": "spacing" },
+      "3xl": { "value": "32px", "type": "spacing" },
+      "4xl": { "value": "48px", "type": "spacing" }
+    },
+    "borderRadius": {
+      "xs": { "value": "4px", "type": "borderRadius" },
+      "sm": { "value": "8px", "type": "borderRadius" },
+      "md": { "value": "12px", "type": "borderRadius" },
+      "lg": { "value": "16px", "type": "borderRadius" },
+      "xl": { "value": "24px", "type": "borderRadius" },
+      "full": { "value": "9999px", "type": "borderRadius" }
+    },
+    "typography": {
+      "fontFamilies": {
+        "display": { "value": "Inter, -apple-system, system-ui, sans-serif", "type": "fontFamilies" },
+        "mono": { "value": "'JetBrains Mono', 'Fira Code', monospace", "type": "fontFamilies" },
+        "gaming": { "value": "'Rajdhani', 'Chakra Petch', sans-serif", "type": "fontFamilies" }
+      },
+      "fontSizes": {
+        "xs": { "value": "11px", "type": "fontSizes" },
+        "sm": { "value": "13px", "type": "fontSizes" },
+        "base": { "value": "15px", "type": "fontSizes" },
+        "lg": { "value": "18px", "type": "fontSizes" },
+        "xl": { "value": "22px", "type": "fontSizes" },
+        "2xl": { "value": "28px", "type": "fontSizes" },
+        "3xl": { "value": "36px", "type": "fontSizes" }
+      },
+      "fontWeights": {
+        "regular": { "value": "400", "type": "fontWeights" },
+        "medium": { "value": "500", "type": "fontWeights" },
+        "semibold": { "value": "600", "type": "fontWeights" },
+        "bold": { "value": "700", "type": "fontWeights" },
+        "black": { "value": "900", "type": "fontWeights" }
+      }
+    },
+    "boxShadow": {
+      "card": {
+        "value": {
+          "x": "0",
+          "y": "8px",
+          "blur": "24px",
+          "spread": "0",
+          "color": "rgba(0, 0, 0, 0.45)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow"
+      },
+      "glowPurple": {
+        "value": {
+          "x": "0",
+          "y": "0",
+          "blur": "24px",
+          "spread": "4px",
+          "color": "rgba(139, 92, 246, 0.4)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow"
+      },
+      "glowCyan": {
+        "value": {
+          "x": "0",
+          "y": "0",
+          "blur": "24px",
+          "spread": "4px",
+          "color": "rgba(6, 182, 212, 0.4)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow"
+      },
+      "glowPlayBtn": {
+        "value": {
+          "x": "0",
+          "y": "4px",
+          "blur": "28px",
+          "spread": "2px",
+          "color": "rgba(139, 92, 246, 0.6)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow"
+      }
+    }
+  },
+  "components": {
+    "playButton": {
+      "height": "64px",
+      "borderRadius": "16px",
+      "background": "linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)",
+      "textColor": "#FFFFFF",
+      "fontSize": "20px",
+      "fontWeight": "800",
+      "letterSpacing": "0.08em",
+      "boxShadow": "0 8px 30px rgba(139, 92, 246, 0.45)"
+    },
+    "instanceCard": {
+      "background": "#121824",
+      "border": "1px solid rgba(255, 255, 255, 0.08)",
+      "borderRadius": "16px",
+      "padding": "20px",
+      "activeBorder": "1.5px solid #8B5CF6",
+      "activeGlow": "0 0 20px rgba(139, 92, 246, 0.25)"
+    },
+    "hudTouchButton": {
+      "background": "rgba(18, 24, 36, 0.65)",
+      "backdropFilter": "blur(10px)",
+      "border": "1.5px solid rgba(255, 255, 255, 0.2)",
+      "borderRadius": "14px",
+      "selectedBorder": "2px solid #8B5CF6",
+      "selectedGlow": "0 0 16px rgba(139, 92, 246, 0.6)"
+    },
+    "statusChip": {
+      "padding": "4px 10px",
+      "borderRadius": "9999px",
+      "fontSize": "11px",
+      "fontWeight": "700",
+      "letterSpacing": "0.04em",
+      "variants": {
+        "active": { "bg": "#064E3B", "text": "#34D399", "border": "1px solid #059669" },
+        "java": { "bg": "#33240E", "text": "#F59E0B", "border": "1px solid #78350F" },
+        "loader": { "bg": "#2E1065", "text": "#C084FC", "border": "1px solid #6B21A8" },
+        "renderer": { "bg": "#083344", "text": "#22D3EE", "border": "1px solid #0E7490" }
+      }
+    }
+  }
+}
