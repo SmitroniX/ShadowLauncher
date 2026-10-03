@@ -83,7 +83,7 @@
     <a href="#benchmarks">Performance Benchmarks</a>
     <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener">Discord Community</a>
     <a href="https://smitronix.dev" target="_blank" rel="noopener">Developer Site</a>
-    <a href="#download" style="color:var(--emerald);">Download APK (v1.0.5)</a>
+    <a href="#download" style="color:var(--emerald);">Download APK (v1.0.6)</a>
 </div>
 
 <!-- Hero Section -->
@@ -92,7 +92,7 @@
     <div class="wrap hero-content">
         <div class="hero-pill">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor;"></span>
-            <span>Shadow Launcher v1.0.5 Native Release</span>
+            <span>Shadow Launcher v1.0.6 Native Release</span>
         </div>
 
         <h1 class="hero-title">
@@ -104,9 +104,9 @@
         </p>
 
         <div class="hero-buttons">
-            <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" class="btn-primary-large" download>
+            <a href="ShadowLauncher.apk" class="btn-primary-large" download>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span>Download Shadow APK (v1.0.5)</span>
+                <span>Download Shadow APK (v1.0.6)</span>
             </a>
             <a href="#design-system" class="btn-secondary-large" style="border-color:rgba(139,92,246,0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -440,12 +440,58 @@
         </div>
 
         <div class="changelog-timeline">
-            <!-- Release v1.0.5 (Latest) -->
+            <!-- Release v1.0.6 (Latest) -->
             <div class="changelog-card latest">
                 <div class="changelog-header">
                     <div class="changelog-version-wrap">
-                        <span class="changelog-version">Shadow Launcher v1.0.5</span>
+                        <span class="changelog-version">Shadow Launcher v1.0.6</span>
                         <span class="changelog-pill-latest">Latest Release</span>
+                    </div>
+                    <div class="changelog-date">October 3, 2026</div>
+                </div>
+
+                <div class="changelog-tags">
+                    <span class="c-tag engine">Minecraft 26.x Ready</span>
+                    <span class="c-tag feature">Latest Release Default</span>
+                    <span class="c-tag engine">OpenJDK 21 Auto-Detect</span>
+                    <span class="c-tag ui">Zero-Config Launch</span>
+                </div>
+
+                <ul class="changelog-items">
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Out-of-the-Box Latest Minecraft:</strong> Default profile now points directly to <code>Latest Release</code> with isolated instance directory and folders, allowing players to jump straight into the latest Minecraft version on mobile with zero setup.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>26.x Year-Based &amp; Snapshot Compatibility:</strong> Upgraded runtime auto-detector with regex patterns for modern year-based releases (<code>26.3</code>, <code>26.x-snapshot</code>, <code>24w+</code>) and dynamic release aliases.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Resilient OpenJDK Fallback:</strong> Guarded internal runtime selection to gracefully fallback to bundled <code>Internal-21</code> on modern releases, eliminating runtime search exceptions.</div>
+                    </li>
+                    <li>
+                        <span class="changelog-dot"></span>
+                        <div><strong>Seamless Legacy Upgrade:</strong> Automatically migrates untouched 1.7.10 default profiles to modern Latest Release instances.</div>
+                    </li>
+                </ul>
+
+                <div class="changelog-actions">
+                    <a href="ShadowLauncher.apk" class="changelog-btn" download style="background:linear-gradient(135deg,#8B5CF6,#06B6D4);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>Download APK (147 MB)</span>
+                    </a>
+                    <a href="https://github.com/SmitroniX/ShadowLauncher" target="_blank" rel="noopener" class="changelog-btn">
+                        <span>GitHub Repository</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Release v1.0.5 -->
+            <div class="changelog-card">
+                <div class="changelog-header">
+                    <div class="changelog-version-wrap">
+                        <span class="changelog-version">Shadow Launcher v1.0.5</span>
                     </div>
                     <div class="changelog-date">September 14, 2026</div>
                 </div>
@@ -745,25 +791,25 @@
                     <p>Get the official native Android APK directly to your phone. Zero ads, no trackers, open source, and built for maximum performance.</p>
 
                     <div class="download-badges">
-                        <div class="download-badge">Version: <b>v1.0.5 Native Release</b></div>
+                        <div class="download-badge">Version: <b>v1.0.6 Native Release</b></div>
                         <div class="download-badge">File Size: <b>147 MB (Full Offline Bundle)</b></div>
                         <div class="download-badge">Requires: <b>Android 8.0+</b></div>
                         <div class="download-badge">License: <b>AGPL-3.0</b></div>
                     </div>
 
                     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
-                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" class="btn-primary-large" download style="margin-bottom:0;">
+                        <a href="ShadowLauncher.apk" class="btn-primary-large" download style="margin-bottom:0;">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             <span>Download APK (Direct)</span>
                         </a>
-                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/tag/v1.0.5" target="_blank" rel="noopener noreferrer" class="btn-primary-large" style="background:#1e1e28; border:1px solid var(--hair); color:#fff; margin-bottom:0;">
+                        <a href="https://github.com/SmitroniX/ShadowLauncher/releases/tag/v1.0.6" target="_blank" rel="noopener noreferrer" class="btn-primary-large" style="background:#1e1e28; border:1px solid var(--hair); color:#fff; margin-bottom:0;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                             <span>GitHub Release</span>
                         </a>
                     </div>
 
                     <div class="checksum-box">
-                        <span>SHA256: <span id="checksum-value">246dd9742c179f3d5ecc119c13171078811d4c4ed059f27d18868f4b621739bf</span></span>
+                        <span>SHA256: <span id="checksum-value">10146fbfb82bf58b00419e5f2ae45f50e553fec622b2a9da36e680b8fd1876d7</span></span>
                         <button class="btn-copy-hash" id="btn-copy-checksum">Copy SHA256</button>
                     </div>
                 </div>
@@ -827,7 +873,7 @@
                 <a href="#benchmarks">Benchmarks</a>
                 <a href="https://discord.gg/gtBzgWnD5X" target="_blank" rel="noopener">Discord</a>
                 <a href="https://smitronix.dev" target="_blank" rel="noopener">SmitroniX</a>
-                <a href="https://github.com/SmitroniX/ShadowLauncher/releases/download/v1.0.5/ShadowLauncher.apk" download>Download APK</a>
+                <a href="ShadowLauncher.apk" download>Download APK (v1.0.6)</a>
             </div>
         </div>
 

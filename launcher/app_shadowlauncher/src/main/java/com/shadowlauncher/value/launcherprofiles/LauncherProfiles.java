@@ -40,6 +40,12 @@ public class LauncherProfiles {
         for (Map.Entry<String, MinecraftProfile> entry : mainProfileJson.profiles.entrySet()) {
             MinecraftProfile p = entry.getValue();
             if (p != null) {
+                if ("Default".equals(p.name) && "1.7.10".equals(p.lastVersionId)) {
+                    p.name = "Latest Release";
+                    p.lastVersionId = MinecraftProfile.LATEST_RELEASE;
+                    p.gameDir = Tools.generateInstancePath(p.name, p.lastVersionId);
+                    instanceUpdated = true;
+                }
                 boolean needsInstancePath = p.gameDir == null || p.gameDir.trim().isEmpty() 
                         || p.gameDir.equals(".minecraft") || p.gameDir.equals("./.minecraft")
                         || p.gameDir.equals("./instances/Default") || p.gameDir.equals("./instances/Instance")

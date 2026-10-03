@@ -21,11 +21,30 @@ import java.util.regex.Pattern;
 public class NewJREUtil {
     private static final Pattern SNAPSHOT_PATTERN =
             Pattern.compile("\\b([12][0-9])w([0-9]{2})[a-z]\\b", Pattern.CASE_INSENSITIVE);
+    private static final Pattern MODERN_YEAR_PATTERN =
+            Pattern.compile("\\b(2[4-9]|[3-9][0-9])\\.(\\d+)(?:\\.(\\d+))?");
+    private static final Pattern MODERN_SNAPSHOT_PATTERN =
+            Pattern.compile("\\b(2[4-9]|[3-9][0-9])\\.(\\d+)-(?:snapshot|rc|pre)-?(\\d+)?", Pattern.CASE_INSENSITIVE);
     private static final Pattern VERSION_PATTERN =
             Pattern.compile("1\\.(\\d+)(?:\\.(\\d+))?");
 
     public static int parseMinecraftVersionToJava(String versionStr) {
         if (versionStr == null || versionStr.trim().isEmpty()) return 8;
+
+        String lower = versionStr.trim().toLowerCase(java.util.Locale.ROOT);
+        if (lower.contains("latest-release") || lower.contains("latest-snapshot") || lower.equals("latest")) {
+            return 21;
+        }
+
+        Matcher modernSnapMatcher = MODERN_SNAPSHOT_PATTERN.matcher(versionStr);
+        if (modernSnapMatcher.find()) {
+            return 21;
+        }
+
+        Matcher modernYearMatcher = MODERN_YEAR_PATTERN.matcher(versionStr);
+        if (modernYearMatcher.find()) {
+            return 21;
+        }
 
         Matcher snapMatcher = SNAPSHOT_PATTERN.matcher(versionStr);
         if (snapMatcher.find()) {
@@ -63,6 +82,14 @@ public class NewJREUtil {
             if (major >= 21) return 21;
             if (major >= 16) return 17;
             return 8;
+        }
+
+        if (versionId != null) {
+            String normalized = com.shadowlauncher.tasks.AsyncMinecraftDownloader.normalizeVersionId(versionId);
+            if (normalized != null && !normalized.equalsIgnoreCase(versionId)) {
+                int fromNorm = parseMinecraftVersionToJava(normalized);
+                if (fromNorm > 0) return fromNorm;
+            }
         }
 
         if (versionInfo != null && versionInfo.inheritsFrom != null && !versionInfo.inheritsFrom.trim().isEmpty()) {
@@ -134,12 +161,26 @@ public class NewJREUtil {
 
     private static MathUtils.RankedValue<Runtime> getNearestInstalledRuntime(int targetVersion) {
         List<Runtime> runtimes = MultiRTUtils.getRuntimes();
-        return MathUtils.findNearestPositive(targetVersion, runtimes, (runtime) -> runtime.javaVersion);
+        MathUtils.RankedValue<Runtime> res = MathUtils.findNearestPositive(targetVersion, runtimes, (runtime) -> runtime.javaVersion);
+        if (res == null && runtimes != null && !runtimes.isEmpty()) {
+            Runtime highest = null;
+            for (Runtime r : runtimes) {
+                if (highest == null || r.javaVersion > highest.javaVersion) highest = r;
+            }
+            if (highest != null && highest.javaVersion > 0) {
+                return new MathUtils.RankedValue<>(highest, 0);
+            }
+        }
+        return res;
     }
 
     private static MathUtils.RankedValue<InternalRuntime> getNearestInternalRuntime(int targetVersion) {
         List<InternalRuntime> runtimeList = Arrays.asList(InternalRuntime.values());
-        return MathUtils.findNearestPositive(targetVersion, runtimeList, (runtime) -> runtime.majorVersion);
+        MathUtils.RankedValue<InternalRuntime> res = MathUtils.findNearestPositive(targetVersion, runtimeList, (runtime) -> runtime.majorVersion);
+        if (res == null) {
+            return new MathUtils.RankedValue<>(InternalRuntime.JRE_21, 0);
+        }
+        return res;
     }
 
     /** @return true if everything is good, false otherwise. */

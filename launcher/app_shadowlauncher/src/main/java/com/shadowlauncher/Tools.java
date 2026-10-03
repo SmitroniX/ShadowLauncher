@@ -476,6 +476,8 @@ public final class Tools {
         boolean isGeneric = profileName == null
                 || profileName.trim().isEmpty()
                 || "Default".equalsIgnoreCase(profileName.trim())
+                || "Latest Release".equalsIgnoreCase(profileName.trim())
+                || "Latest".equalsIgnoreCase(profileName.trim())
                 || "New".equalsIgnoreCase(profileName.trim())
                 || "Instance".equalsIgnoreCase(profileName.trim())
                 || "forge".equalsIgnoreCase(profileName.trim())
@@ -1413,7 +1415,9 @@ public final class Tools {
                     preferredRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
                 }
             }
-            if(preferredRuntime == null) throw new RuntimeException("Failed to autopick runtime!");
+            if(preferredRuntime == null) {
+                preferredRuntime = "Internal-21";
+            }
             if(profileRuntime != null) minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX+preferredRuntime;
             runtime = preferredRuntime;
         }
