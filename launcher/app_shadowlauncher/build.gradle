@@ -6,9 +6,9 @@ static def getDate() { return new Date().format('yyyyMMdd') }
 
 static def getDateSeconds() {
     if (System.getenv("GITHUB_ACTIONS") == "true") {
-        return 9934841 + Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))
+        return 10001007 + Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))
     } else {
-        return 172005
+        return 10001007
     }
 }
 
@@ -102,6 +102,10 @@ android {
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
+            enableV4Signing false
         }
         googlePlayBuild {
             storeFile file("upload.jks")
