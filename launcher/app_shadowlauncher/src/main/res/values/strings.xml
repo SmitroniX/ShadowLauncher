@@ -442,4 +442,12 @@
     <string name="instance_select_directory_title">Instance Directories</string>
     <string name="instance_badge">ISOLATED INSTANCE</string>
     <string name="instance_folder_toast">Opened: %s</string>
+
+    <!-- Dashboard Cyber UI Badges & Headers -->
+    <string name="dashboard_hero_title">SHADOW ENGINE // SYSTEM DECK</string>
+    <string name="dashboard_status_active">● ACTIVE</string>
+    <string name="dashboard_badge_fps">⚡ 144 FPS UNLOCKED</string>
+    <string name="dashboard_badge_java">☕ JAVA 25 READY</string>
+    <string name="dashboard_hero_subtitle">HARDWARE ACCELERATED • ZERO LATENCY PIPELINE</string>
+    <string name="dashboard_matrix_label">QUICK ACCESS MATRIX</string>
 </resources>

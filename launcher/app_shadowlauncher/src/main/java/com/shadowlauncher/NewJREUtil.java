@@ -13,6 +13,7 @@ import com.shadowlauncher.value.launcherprofiles.LauncherProfiles;
 import com.shadowlauncher.value.launcherprofiles.MinecraftProfile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,9 +23,9 @@ public class NewJREUtil {
     private static final Pattern SNAPSHOT_PATTERN =
             Pattern.compile("\\b([12][0-9])w([0-9]{2})[a-z]\\b", Pattern.CASE_INSENSITIVE);
     private static final Pattern MODERN_YEAR_PATTERN =
-            Pattern.compile("\\b(2[4-9]|[3-9][0-9])\\.(\\d+)(?:\\.(\\d+))?");
+            Pattern.compile("(?<![0-9.])(2[4-9]|[3-9][0-9])\\.(\\d+)(?:\\.(\\d+))?(?![0-9])");
     private static final Pattern MODERN_SNAPSHOT_PATTERN =
-            Pattern.compile("\\b(2[4-9]|[3-9][0-9])\\.(\\d+)-(?:snapshot|rc|pre)-?(\\d+)?", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("(?<![0-9.])(2[4-9]|[3-9][0-9])\\.(\\d+)-(?:snapshot|rc|pre)-?(\\d+)?(?![0-9])", Pattern.CASE_INSENSITIVE);
     private static final Pattern VERSION_PATTERN =
             Pattern.compile("1\\.(\\d+)(?:\\.(\\d+))?");
 
@@ -33,29 +34,10 @@ public class NewJREUtil {
 
         String lower = versionStr.trim().toLowerCase(java.util.Locale.ROOT);
         if (lower.contains("latest-release") || lower.contains("latest-snapshot") || lower.equals("latest")) {
-            return 21;
+            return 25;
         }
 
-        Matcher modernSnapMatcher = MODERN_SNAPSHOT_PATTERN.matcher(versionStr);
-        if (modernSnapMatcher.find()) {
-            return 21;
-        }
-
-        Matcher modernYearMatcher = MODERN_YEAR_PATTERN.matcher(versionStr);
-        if (modernYearMatcher.find()) {
-            return 21;
-        }
-
-        Matcher snapMatcher = SNAPSHOT_PATTERN.matcher(versionStr);
-        if (snapMatcher.find()) {
-            try {
-                int year = Integer.parseInt(snapMatcher.group(1));
-                if (year >= 24) return 21;
-                if (year >= 21) return 17;
-                return 8;
-            } catch (Exception ignored) {}
-        }
-
+        // 1. Standard releases 1.x.y (must be evaluated first to avoid matching compound loader strings like 1.20.1-forge-47.2.0)
         Matcher verMatcher = VERSION_PATTERN.matcher(versionStr);
         int lastMinor = -1;
         int lastPatch = 0;
@@ -67,10 +49,43 @@ public class NewJREUtil {
         }
 
         if (lastMinor != -1) {
+            if (lastMinor >= 26) return 25;
             if (lastMinor >= 21) return 21;
             if (lastMinor == 20 && lastPatch >= 5) return 21;
             if (lastMinor >= 17) return 17;
             return 8;
+        }
+
+        // 2. Modern release snapshots (e.g. 26.1-rc1)
+        Matcher modernSnapMatcher = MODERN_SNAPSHOT_PATTERN.matcher(versionStr);
+        if (modernSnapMatcher.find()) {
+            try {
+                int year = Integer.parseInt(modernSnapMatcher.group(1));
+                if (year >= 26) return 25;
+            } catch (Exception ignored) {}
+            return 21;
+        }
+
+        // 3. Modern standalone year versions (e.g. 26.3, 26.1)
+        Matcher modernYearMatcher = MODERN_YEAR_PATTERN.matcher(versionStr);
+        if (modernYearMatcher.find()) {
+            try {
+                int year = Integer.parseInt(modernYearMatcher.group(1));
+                if (year >= 26) return 25;
+            } catch (Exception ignored) {}
+            return 21;
+        }
+
+        // 4. Yearly snapshots (e.g. 26w02a, 24w14a)
+        Matcher snapMatcher = SNAPSHOT_PATTERN.matcher(versionStr);
+        if (snapMatcher.find()) {
+            try {
+                int year = Integer.parseInt(snapMatcher.group(1));
+                if (year >= 26) return 25;
+                if (year >= 24) return 21;
+                if (year >= 21) return 17;
+                return 8;
+            } catch (Exception ignored) {}
         }
 
         return 8;
@@ -79,6 +94,7 @@ public class NewJREUtil {
     public static int detectRequiredJavaVersion(JMinecraftVersionList.Version versionInfo, String versionId) {
         if (versionInfo != null && versionInfo.javaVersion != null && versionInfo.javaVersion.majorVersion > 0) {
             int major = versionInfo.javaVersion.majorVersion;
+            if (major >= 22) return 25;
             if (major >= 21) return 21;
             if (major >= 16) return 17;
             return 8;
@@ -111,6 +127,7 @@ public class NewJREUtil {
     }
 
     public static InternalRuntime getInternalRuntimeForVersion(int majorVersion) {
+        if (majorVersion >= 25) return InternalRuntime.JRE_25;
         if (majorVersion >= 21) return InternalRuntime.JRE_21;
         if (majorVersion >= 17) return InternalRuntime.JRE_17;
         return InternalRuntime.JRE_8;
@@ -125,8 +142,8 @@ public class NewJREUtil {
     public static boolean checkInternalRuntime(AssetManager assetManager, InternalRuntime internalRuntime) {
         String launcher_runtime_version;
         String installed_runtime_version = MultiRTUtils.readInternalRuntimeVersion(internalRuntime.name);
-        try {
-            launcher_runtime_version = Tools.read(assetManager.open(internalRuntime.path + "/version"));
+        try (InputStream is = assetManager.open(internalRuntime.path + "/version")) {
+            launcher_runtime_version = Tools.read(is);
         } catch (IOException exc) {
             // We don't have a runtime included in assets
             return installed_runtime_version != null;
@@ -139,11 +156,11 @@ public class NewJREUtil {
     }
 
     private static boolean unpackInternalRuntime(AssetManager assetManager, InternalRuntime internalRuntime, String version) {
-        try {
-            MultiRTUtils.installRuntimeNamedBinpack(
-                    assetManager.open(internalRuntime.path + "/universal.tar.xz"),
-                    assetManager.open(internalRuntime.path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
-                    internalRuntime.name, version);
+        String uniPath = internalRuntime.path + "/universal.tar.xz";
+        String platformPath = internalRuntime.path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz";
+        try (InputStream universalStream = assetManager.open(uniPath);
+             InputStream platformStream = assetManager.open(platformPath)) {
+            MultiRTUtils.installRuntimeNamedBinpack(universalStream, platformStream, internalRuntime.name, version);
             MultiRTUtils.postPrepare(internalRuntime.name);
             return true;
         } catch (IOException e) {
@@ -178,7 +195,7 @@ public class NewJREUtil {
         List<InternalRuntime> runtimeList = Arrays.asList(InternalRuntime.values());
         MathUtils.RankedValue<InternalRuntime> res = MathUtils.findNearestPositive(targetVersion, runtimeList, (runtime) -> runtime.majorVersion);
         if (res == null) {
-            return new MathUtils.RankedValue<>(InternalRuntime.JRE_21, 0);
+            return new MathUtils.RankedValue<>(InternalRuntime.JRE_25, 0);
         }
         return res;
     }
@@ -247,7 +264,8 @@ public class NewJREUtil {
     public enum InternalRuntime {
         JRE_8(8, "Internal", "components/jre"),
         JRE_17(17, "Internal-17", "components/jre-new"),
-        JRE_21(21, "Internal-21", "components/jre-21");
+        JRE_21(21, "Internal-21", "components/jre-21"),
+        JRE_25(25, "Internal-25", "components/jre-25");
 
         public final int majorVersion;
         public final String name;

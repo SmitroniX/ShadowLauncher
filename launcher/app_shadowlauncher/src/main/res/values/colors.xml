@@ -18,6 +18,7 @@
     <!-- Typography -->
     <color name="primary_text">#F8FAFC</color>
     <color name="secondary_text">#94A3B8</color>
+    <color name="cyber_text_dim">#64748B</color>
 
     <!-- Shadow Signature Neon Accents -->
     <color name="accent_cyan">#00F0FF</color>
@@ -25,12 +26,18 @@
     <color name="accent_purple">#A855F7</color>
     <color name="accent_purple_glow">#33A855F7</color>
     <color name="accent_blue">#38BDF8</color>
+    <color name="accent_green">#10B981</color>
+    <color name="accent_green_glow">#3310B981</color>
 
     <!-- Card & Component Surfaces -->
     <color name="card_surface">#121826</color>
     <color name="card_surface_elevated">#172033</color>
     <color name="card_border">#222E46</color>
     <color name="card_border_glow">#4400F0FF</color>
+
+    <!-- Glassmorphic Tokens -->
+    <color name="glass_border_highlight">#4D00F0FF</color>
+    <color name="glass_surface_dark">#E60B0E17</color>
 
     <!-- Instance Badge & Danger Accents -->
     <color name="instance_badge_bg">#0C2B3D</color>

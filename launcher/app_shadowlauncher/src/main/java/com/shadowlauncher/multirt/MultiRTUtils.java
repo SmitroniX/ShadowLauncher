@@ -105,15 +105,26 @@ public class MultiRTUtils {
     public static void installRuntimeNamedBinpack(InputStream universalFileInputStream, InputStream platformBinsInputStream, String name, String binpackVersion) throws IOException {
         File dest = new File(RUNTIME_FOLDER,"/"+name);
         if(dest.exists()) FileUtils.deleteDirectory(dest);
-        installRuntimeNamedNoRemove(universalFileInputStream,dest);
-        installRuntimeNamedNoRemove(platformBinsInputStream,dest);
+        try {
+            installRuntimeNamedNoRemove(universalFileInputStream,dest);
+            installRuntimeNamedNoRemove(platformBinsInputStream,dest);
+        } finally {
+            if (universalFileInputStream != null) {
+                try { universalFileInputStream.close(); } catch (Exception ignored) {}
+            }
+            if (platformBinsInputStream != null) {
+                try { platformBinsInputStream.close(); } catch (Exception ignored) {}
+            }
+        }
 
-        unpack200(NATIVE_LIB_DIR,RUNTIME_FOLDER + "/" + name);
+        if ("Internal".equals(name)) {
+            unpack200(NATIVE_LIB_DIR,RUNTIME_FOLDER + "/" + name);
+        }
 
         File binpack_verfile = new File(RUNTIME_FOLDER,"/"+name+"/pojav_version");
-        FileOutputStream fos = new FileOutputStream(binpack_verfile);
-        fos.write(binpackVersion.getBytes());
-        fos.close();
+        try (FileOutputStream fos = new FileOutputStream(binpack_verfile)) {
+            fos.write(binpackVersion.getBytes());
+        }
 
         ProgressLayout.clearProgress(ProgressLayout.UNPACK_RUNTIME);
 
@@ -145,7 +156,7 @@ public class MultiRTUtils {
 
     public static File getRuntimeHome(String name) {
         File dest = new File(RUNTIME_FOLDER, name);
-        Log.i("MiltiRTUitls", "Dest exists? "+dest.exists());
+        Log.i("MultiRTUtils", "Dest exists? "+dest.exists());
         if((!dest.exists()) || MultiRTUtils.forceReread(name).versionString == null) throw new RuntimeException("Selected runtime is broken!");
         return dest;
     }
@@ -170,15 +181,17 @@ public class MultiRTUtils {
                 String[] javaVersionSplit = javaVersion.split("\\.");
                 int javaVersionInt;
                 if (javaVersionSplit[0].equals("1")) {
-                    javaVersionInt = Integer.parseInt(javaVersionSplit[1]);
+                    String minorToken = javaVersionSplit.length > 1 ? javaVersionSplit[1].replaceAll("[^0-9].*", "") : "8";
+                    javaVersionInt = minorToken.isEmpty() ? 8 : Integer.parseInt(minorToken);
                 } else {
-                    javaVersionInt = Integer.parseInt(javaVersionSplit[0]);
+                    String majorToken = javaVersionSplit[0].replaceAll("[^0-9].*", "");
+                    javaVersionInt = majorToken.isEmpty() ? 0 : Integer.parseInt(majorToken);
                 }
                 returnRuntime = new Runtime(name, javaVersion, osArch, javaVersionInt);
             }else{
                 returnRuntime =  new Runtime(name);
             }
-        }catch(IOException e) {
+        }catch(Exception e) {
             returnRuntime =  new Runtime(name);
         }
         sCache.put(name, returnRuntime);
@@ -252,9 +265,9 @@ public class MultiRTUtils {
             } else if (tarEntry.isDirectory()) {
                 com.shadowlauncher.utils.FileUtils.ensureDirectory(destPath);
             } else if (!destPath.exists() || destPath.length() != tarEntry.getSize()) {
-                FileOutputStream os = new FileOutputStream(destPath);
-                IOUtils.copyLarge(tarIn, os, buffer);
-                os.close();
+                try (FileOutputStream os = new FileOutputStream(destPath)) {
+                    IOUtils.copyLarge(tarIn, os, buffer);
+                }
             }
             tarEntry = tarIn.getNextTarEntry();
         }

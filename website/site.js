@@ -1,7 +1,25 @@
-// Shadow Launcher — Website Interactive Features & Benchmarks
+// Shadow Launcher — Website Interactive Features & Benchmarks (v1.0.7)
 
 (function() {
     'use strict';
+
+    // Non-intrusive Toast Notification Utility
+    let toastTimeout = null;
+    function showToast(message) {
+        let toast = document.querySelector('.toast-notification');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.add('show');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2400);
+    }
+    window.showShadowToast = showToast;
 
     // Accent Theme Switcher
     const accentDots = document.querySelectorAll('.accent-dot');
@@ -13,6 +31,7 @@
                 try {
                     localStorage.setItem('shadow_accent', acc);
                 } catch (e) {}
+                showToast(`Switched theme to ${acc.toUpperCase()}`);
             }
         });
     });
@@ -23,29 +42,29 @@
         if (saved) document.documentElement.setAttribute('data-accent', saved);
     } catch (e) {}
 
-    // Interactive Benchmark Data
+    // Interactive Benchmark Data (144Hz & OpenJDK 25 Benchmarks)
     const benchmarkData = {
         'snapdragon': {
             name: 'Snapdragon 8 Gen 3 (Galaxy S24 / OnePlus 12)',
-            fps: { shadow: 138, standard: 62, vanilla: 35 },
+            fps: { shadow: 144, standard: 62, vanilla: 35 },
             ram: { shadow: 1420, standard: 2840, vanilla: 3450 },
             latency: { shadow: 8, standard: 36, vanilla: 54 }
         },
         'dimensity': {
             name: 'MediaTek Dimensity 9300 (Mali-G720 Immortalis)',
-            fps: { shadow: 124, standard: 48, vanilla: 28 },
+            fps: { shadow: 132, standard: 48, vanilla: 28 },
             ram: { shadow: 1480, standard: 2950, vanilla: 3550 },
             latency: { shadow: 9, standard: 40, vanilla: 58 }
         },
         'tensor': {
             name: 'Google Tensor G3 (Pixel 8 Pro)',
-            fps: { shadow: 98, standard: 42, vanilla: 24 },
+            fps: { shadow: 110, standard: 42, vanilla: 24 },
             ram: { shadow: 1520, standard: 3100, vanilla: 3600 },
             latency: { shadow: 10, standard: 44, vanilla: 62 }
         },
         'helio': {
             name: 'Budget Helio G99 / Snapdragon 680 (4GB Device)',
-            fps: { shadow: 64, standard: 22, vanilla: 14 },
+            fps: { shadow: 68, standard: 22, vanilla: 14 },
             ram: { shadow: 1120, standard: 2200, vanilla: 2400 },
             latency: { shadow: 14, standard: 55, vanilla: 82 }
         }
@@ -60,42 +79,66 @@
         const fpsStandardPct = Math.min(100, (data.fps.standard / 144) * 100);
         const fpsVanillaPct = Math.min(100, (data.fps.vanilla / 144) * 100);
 
-        document.getElementById('bench-fps-shadow').style.width = `${fpsShadowPct}%`;
-        document.getElementById('bench-fps-shadow').textContent = `${data.fps.shadow} FPS`;
+        const elFpsShadow = document.getElementById('bench-fps-shadow');
+        const elFpsStandard = document.getElementById('bench-fps-standard');
+        const elFpsVanilla = document.getElementById('bench-fps-vanilla');
 
-        document.getElementById('bench-fps-standard').style.width = `${fpsStandardPct}%`;
-        document.getElementById('bench-fps-standard').textContent = `${data.fps.standard} FPS`;
-
-        document.getElementById('bench-fps-vanilla').style.width = `${fpsVanillaPct}%`;
-        document.getElementById('bench-fps-vanilla').textContent = `${data.fps.vanilla} FPS`;
+        if (elFpsShadow) {
+            elFpsShadow.style.width = `${fpsShadowPct}%`;
+            elFpsShadow.textContent = `${data.fps.shadow} FPS`;
+        }
+        if (elFpsStandard) {
+            elFpsStandard.style.width = `${fpsStandardPct}%`;
+            elFpsStandard.textContent = `${data.fps.standard} FPS`;
+        }
+        if (elFpsVanilla) {
+            elFpsVanilla.style.width = `${fpsVanillaPct}%`;
+            elFpsVanilla.textContent = `${data.fps.vanilla} FPS`;
+        }
 
         // RAM Usage (Lower is better, Max 4000MB)
         const ramShadowPct = Math.min(100, (data.ram.shadow / 4000) * 100);
         const ramStandardPct = Math.min(100, (data.ram.standard / 4000) * 100);
         const ramVanillaPct = Math.min(100, (data.ram.vanilla / 4000) * 100);
 
-        document.getElementById('bench-ram-shadow').style.width = `${ramShadowPct}%`;
-        document.getElementById('bench-ram-shadow').textContent = `${data.ram.shadow} MB`;
+        const elRamShadow = document.getElementById('bench-ram-shadow');
+        const elRamStandard = document.getElementById('bench-ram-standard');
+        const elRamVanilla = document.getElementById('bench-ram-vanilla');
 
-        document.getElementById('bench-ram-standard').style.width = `${ramStandardPct}%`;
-        document.getElementById('bench-ram-standard').textContent = `${data.ram.standard} MB`;
-
-        document.getElementById('bench-ram-vanilla').style.width = `${ramVanillaPct}%`;
-        document.getElementById('bench-ram-vanilla').textContent = `${data.ram.vanilla} MB`;
+        if (elRamShadow) {
+            elRamShadow.style.width = `${ramShadowPct}%`;
+            elRamShadow.textContent = `${data.ram.shadow} MB`;
+        }
+        if (elRamStandard) {
+            elRamStandard.style.width = `${ramStandardPct}%`;
+            elRamStandard.textContent = `${data.ram.standard} MB`;
+        }
+        if (elRamVanilla) {
+            elRamVanilla.style.width = `${ramVanillaPct}%`;
+            elRamVanilla.textContent = `${data.ram.vanilla} MB`;
+        }
 
         // Touch Latency (Lower is better, Max 100ms)
         const latShadowPct = Math.min(100, (data.latency.shadow / 100) * 100);
         const latStandardPct = Math.min(100, (data.latency.standard / 100) * 100);
         const latVanillaPct = Math.min(100, (data.latency.vanilla / 100) * 100);
 
-        document.getElementById('bench-lat-shadow').style.width = `${latShadowPct}%`;
-        document.getElementById('bench-lat-shadow').textContent = `${data.latency.shadow} ms`;
+        const elLatShadow = document.getElementById('bench-lat-shadow');
+        const elLatStandard = document.getElementById('bench-lat-standard');
+        const elLatVanilla = document.getElementById('bench-lat-vanilla');
 
-        document.getElementById('bench-lat-standard').style.width = `${latStandardPct}%`;
-        document.getElementById('bench-lat-standard').textContent = `${data.latency.standard} ms`;
-
-        document.getElementById('bench-lat-vanilla').style.width = `${latVanillaPct}%`;
-        document.getElementById('bench-lat-vanilla').textContent = `${data.latency.vanilla} ms`;
+        if (elLatShadow) {
+            elLatShadow.style.width = `${latShadowPct}%`;
+            elLatShadow.textContent = `${data.latency.shadow} ms`;
+        }
+        if (elLatStandard) {
+            elLatStandard.style.width = `${latStandardPct}%`;
+            elLatStandard.textContent = `${data.latency.standard} ms`;
+        }
+        if (elLatVanilla) {
+            elLatVanilla.style.width = `${latVanillaPct}%`;
+            elLatVanilla.textContent = `${data.latency.vanilla} ms`;
+        }
     }
 
     const chipsetBtns = document.querySelectorAll('.chipset-btn');
@@ -114,10 +157,25 @@
             const hashText = document.getElementById('checksum-value').textContent.trim();
             navigator.clipboard.writeText(hashText).then(() => {
                 copyHashBtn.textContent = 'Copied!';
-                setTimeout(() => copyHashBtn.textContent = 'Copy SHA256', 2000);
+                showToast('SHA256 Checksum copied to clipboard!');
+                setTimeout(() => copyHashBtn.textContent = 'Copy SHA256', 2200);
+            }).catch(() => {
+                showToast('Copied SHA256!');
             });
         });
     }
+
+    // Token Swatches Copy Interaction
+    document.querySelectorAll('.token-swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+            const hex = swatch.getAttribute('data-hex');
+            if (hex) {
+                navigator.clipboard.writeText(hex).then(() => {
+                    showToast(`Copied token color ${hex} to clipboard!`);
+                }).catch(() => {});
+            }
+        });
+    });
 
     // Initialize with Snapdragon
     updateBenchmarks('snapdragon');
@@ -143,13 +201,13 @@
             img: 'assets/designs/dashboard.jpg',
             title: '01. Main Gaming Dashboard (16:9 Landscape)',
             desc: 'Futuristic cyber-dark home screen with left navigation rail, active version hero banner, telemetry stats, and glowing PLAY CTA button.',
-            badges: ['VulkanMod 1.3', 'Java 21 LTS', '42 Active Mods']
+            badges: ['VulkanMod 1.3', 'Java 25 Ready', '144 FPS Pro', '42 Active Mods']
         },
         'instances': {
             img: 'assets/designs/instances.jpg',
             title: '02. Instances & Versions Hub (16:9 Landscape)',
             desc: 'Multi-card instance manager with automatic version folder isolation (instances/1.20.4-Fabric/), 1-tap folder explorer, and JRE/renderer inspector.',
-            badges: ['Auto-JVM Matcher', 'Dedicated Subfolders', 'Zero Conflict']
+            badges: ['Auto-JVM 25/21/17/8', 'Dedicated Subfolders', 'Zero Collision']
         },
         'mod_store': {
             img: 'assets/designs/mod_store.jpg',

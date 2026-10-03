@@ -1405,7 +1405,8 @@ public final class Tools {
         Runtime pickedRuntime = MultiRTUtils.read(runtime);
         if(runtime == null || pickedRuntime.javaVersion == 0 || pickedRuntime.javaVersion < targetJavaVersion) {
             String preferredRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
-            if(preferredRuntime == null) {
+            Runtime candidate = preferredRuntime != null ? MultiRTUtils.read(preferredRuntime) : null;
+            if(candidate == null || candidate.javaVersion < targetJavaVersion) {
                 AssetManager am = null;
                 if(context != null) am = context.getAssets();
                 else if(ContextExecutor.getActivity() != null) am = ContextExecutor.getActivity().getAssets();
@@ -1416,7 +1417,7 @@ public final class Tools {
                 }
             }
             if(preferredRuntime == null) {
-                preferredRuntime = "Internal-21";
+                preferredRuntime = targetJavaVersion >= 25 ? "Internal-25" : "Internal-21";
             }
             if(profileRuntime != null) minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX+preferredRuntime;
             runtime = preferredRuntime;

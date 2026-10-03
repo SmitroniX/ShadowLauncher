@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Cyber Outline Stroke -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="14dp"/>
+            <gradient
+                android:startColor="#4D00F0FF"
+                android:centerColor="#338B5CF6"
+                android:endColor="#263A5E"
+                android:angle="90"/>
+        </shape>
+    </item>
+    <!-- Dark Card Surface -->
+    <item android:top="1dp" android:bottom="1dp" android:left="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="13dp"/>
+            <gradient
+                android:startColor="#182236"
+                android:endColor="#0F1624"
+                android:angle="270"/>
+        </shape>
+    </item>
+</layer-list>

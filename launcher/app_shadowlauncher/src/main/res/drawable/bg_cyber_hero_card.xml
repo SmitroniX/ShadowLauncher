@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer Glow Border Gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp"/>
+            <gradient
+                android:startColor="#6600F0FF"
+                android:centerColor="#44A855F7"
+                android:endColor="#6600F0FF"
+                android:angle="135"/>
+        </shape>
+    </item>
+    <!-- Dark Cyber Card Surface -->
+    <item android:top="1.2dp" android:bottom="1.2dp" android:left="1.2dp" android:right="1.2dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="15dp"/>
+            <gradient
+                android:startColor="#162033"
+                android:centerColor="#111728"
+                android:endColor="#0B0F1A"
+                android:angle="270"/>
+        </shape>
+    </item>
+</layer-list>

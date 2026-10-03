@@ -25,20 +25,21 @@ public class AsyncAssetManager {
     private AsyncAssetManager(){}
 
     /**
-     * Attempt to install the bundled Java 8, 17, and 21 runtimes if necessary
+     * Attempt to install the bundled Java 8, 17, 21, and 25 runtimes if necessary
      * @param am App context
      */
     public static void unpackRuntime(AssetManager am) {
         unpackSingleRuntime(am, "Internal", "components/jre", 8);
         unpackSingleRuntime(am, "Internal-17", "components/jre-new", 17);
         unpackSingleRuntime(am, "Internal-21", "components/jre-21", 21);
+        unpackSingleRuntime(am, "Internal-25", "components/jre-25", 25);
     }
 
     private static void unpackSingleRuntime(AssetManager am, String name, String path, int majorVersion) {
         String rt_version = null;
         String current_rt_version = MultiRTUtils.readInternalRuntimeVersion(name);
-        try {
-            rt_version = Tools.read(am.open(path + "/version"));
+        try (InputStream is = am.open(path + "/version")) {
+            rt_version = Tools.read(is);
         } catch (IOException e) {
             Log.e("JREAuto", "JRE " + name + " was not included on this APK.", e);
         }
@@ -50,11 +51,11 @@ public class AsyncAssetManager {
         // Install the runtime in an async manner
         String finalRt_version = rt_version;
         sExecutorService.execute(() -> {
-            try {
-                MultiRTUtils.installRuntimeNamedBinpack(
-                        am.open(path + "/universal.tar.xz"),
-                        am.open(path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
-                        name, finalRt_version);
+            String archPath = path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz";
+            String uniPath = path + "/universal.tar.xz";
+            try (InputStream uniStream = am.open(uniPath);
+                 InputStream platformStream = am.open(archPath)) {
+                MultiRTUtils.installRuntimeNamedBinpack(uniStream, platformStream, name, finalRt_version);
                 MultiRTUtils.postPrepare(name);
             } catch (IOException e) {
                 Log.e("JREAuto", "Internal JRE " + name + " unpack failed", e);

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Top cyber neon accent line -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="20dp" android:topRightRadius="20dp"/>
+            <gradient
+                android:startColor="#8000F0FF"
+                android:centerColor="#60A855F7"
+                android:endColor="#8000F0FF"
+                android:angle="0"/>
+        </shape>
+    </item>
+    <!-- Translucent glass dark obsidian body -->
+    <item android:top="1.5dp">
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="19dp" android:topRightRadius="19dp"/>
+            <gradient
+                android:startColor="#F20D121F"
+                android:centerColor="#F50A0E18"
+                android:endColor="#FA060810"
+                android:angle="270"/>
+        </shape>
+    </item>
+</layer-list>
