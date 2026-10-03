@@ -540,7 +540,18 @@ public class GLFW
         memPutInt(mGLFWVideoMode.address() + mGLFWVideoMode.REDBITS, 8);
         memPutInt(mGLFWVideoMode.address() + mGLFWVideoMode.GREENBITS, 8);
         memPutInt(mGLFWVideoMode.address() + mGLFWVideoMode.BLUEBITS, 8);
-        memPutInt(mGLFWVideoMode.address() + mGLFWVideoMode.REFRESHRATE, 60);
+        int targetRefreshRate = 144;
+        try {
+            String prop = System.getProperty("glfwstub.refreshRate");
+            if (prop == null || prop.trim().isEmpty()) {
+                prop = System.getenv("GLFW_REFRESH_RATE");
+            }
+            if (prop != null && !prop.trim().isEmpty()) {
+                targetRefreshRate = Integer.parseInt(prop.trim());
+            }
+        } catch (Throwable ignored) {}
+        if (targetRefreshRate <= 0) targetRefreshRate = 144;
+        memPutInt(mGLFWVideoMode.address() + mGLFWVideoMode.REFRESHRATE, targetRefreshRate);
 
         // A way to generate key code names
         Field[] thisFieldArr = GLFW.class.getFields();
@@ -640,6 +651,12 @@ public class GLFW
         if (mGLFWVideoMode == null) return;
         memPutInt(mGLFWVideoMode.address() + (long) mGLFWVideoMode.WIDTH, mGLFWWindowWidth);
         memPutInt(mGLFWVideoMode.address() + (long) mGLFWVideoMode.HEIGHT, mGLFWWindowHeight);
+    }
+
+    @SuppressWarnings("unused") // Used by pojavexec / shadowlauncher
+    public static void internalSetRefreshRate(int refreshRate) {
+        if (mGLFWVideoMode == null || refreshRate <= 0) return;
+        memPutInt(mGLFWVideoMode.address() + (long) mGLFWVideoMode.REFRESHRATE, refreshRate);
     }
 
     public static GLFWWindowProperties internalGetWindow(long window) {
@@ -903,6 +920,9 @@ public class GLFW
     public static void glfwSetWindowMonitor(@NativeType("GLFWwindow *") long window, @NativeType("GLFWmonitor *") long monitor, int xpos, int ypos, int width, int height, int refreshRate) {
         // weird calculation to fake pointer
         mGLFWWindowMonitor = window * monitor;
+        if (refreshRate > 0 && mGLFWVideoMode != null) {
+            memPutInt(mGLFWVideoMode.address() + (long) mGLFWVideoMode.REFRESHRATE, refreshRate);
+        }
     }
 
     public static int glfwGetWindowAttrib(@NativeType("GLFWwindow *") long window, int attrib) {

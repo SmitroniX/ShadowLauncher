@@ -37,6 +37,7 @@ import com.shadowlauncher.customcontrols.mouse.InGUIEventProcessor;
 import com.shadowlauncher.customcontrols.mouse.InGameEventProcessor;
 import com.shadowlauncher.customcontrols.mouse.TouchEventProcessor;
 import com.shadowlauncher.prefs.LauncherPreferences;
+import com.shadowlauncher.utils.DisplayUtils;
 import com.shadowlauncher.utils.JREUtils;
 import com.shadowlauncher.utils.MCOptionUtils;
 
@@ -112,6 +113,8 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         if(LauncherPreferences.PREF_USE_ALTERNATE_SURFACE){
             SurfaceView surfaceView = new SurfaceView(getContext());
             mSurface = surfaceView;
+            float maxFps = DisplayUtils.getMaxSupportedRefreshRate(getContext());
+            DisplayUtils.applySurfaceViewFrameRate(surfaceView, maxFps);
 
             surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 private boolean isCalled = isAlreadyRunning;
@@ -379,10 +382,17 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         // may be broken/unknown.
         refreshSize(true);
 
+        float maxFps = DisplayUtils.getMaxSupportedRefreshRate(getContext());
+        DisplayUtils.applySurfaceFrameRate(surface, maxFps);
+
         //Load Minecraft options:
         MCOptionUtils.set("fullscreen", "off");
         MCOptionUtils.set("overrideWidth", String.valueOf(windowWidth));
         MCOptionUtils.set("overrideHeight", String.valueOf(windowHeight));
+        String currentMaxFps = MCOptionUtils.get("maxFps");
+        if (currentMaxFps == null || "60".equals(currentMaxFps) || "120".equals(currentMaxFps)) {
+            MCOptionUtils.set("maxFps", "260");
+        }
         MCOptionUtils.save();
         getMcScale();
 

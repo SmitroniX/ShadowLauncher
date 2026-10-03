@@ -61,6 +61,7 @@ import com.shadowlauncher.lifecycle.ContextExecutor;
 import com.shadowlauncher.prefs.LauncherPreferences;
 import com.shadowlauncher.prefs.QuickSettingSideDialog;
 import com.shadowlauncher.services.GameService;
+import com.shadowlauncher.utils.DisplayUtils;
 import com.shadowlauncher.utils.JREUtils;
 import com.shadowlauncher.utils.MCOptionUtils;
 import com.shadowlauncher.value.MinecraftAccount;
@@ -121,6 +122,9 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         // Set the sustained performance mode for available APIs
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             getWindow().setSustainedPerformanceMode(PREF_SUSTAINED_PERFORMANCE);
+
+        // Unlock high refresh rate displays (up to 144Hz / 120Hz)
+        DisplayUtils.applyHighRefreshRate(getWindow());
 
         ingameControlsEditorArrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.menu_customcontrol));

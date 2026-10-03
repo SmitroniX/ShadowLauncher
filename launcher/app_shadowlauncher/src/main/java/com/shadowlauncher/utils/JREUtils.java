@@ -198,6 +198,10 @@ public class JREUtils {
         // The OPEN GL version is changed according
         envMap.put("LIBGL_ES", (String) ExtraCore.getValue(ExtraConstants.OPEN_GL_VERSION));
 
+        int targetRefreshRate = Math.round(DisplayUtils.getMaxSupportedRefreshRate(activity));
+        if (targetRefreshRate < 60) targetRefreshRate = 144;
+        envMap.put("GLFW_REFRESH_RATE", Integer.toString(targetRefreshRate));
+
         envMap.put("FORCE_VSYNC", String.valueOf(LauncherPreferences.PREF_FORCE_VSYNC));
 
         envMap.put("MESA_GLSL_CACHE_DIR", Tools.DIR_CACHE.getAbsolutePath());
@@ -370,9 +374,10 @@ public class JREUtils {
                 //"-Dorg.lwjgl.util.Debug=true",
                 //"-Dorg.lwjgl.util.DebugFunctions=true",
                 //"-Dorg.lwjgl.util.DebugLoader=true",
-                // GLFW Stub width height
+                // GLFW Stub width height and high refresh rate
                 "-Dglfwstub.windowWidth=" + Tools.getDisplayFriendlyRes(currentDisplayMetrics.widthPixels, LauncherPreferences.PREF_SCALE_FACTOR),
                 "-Dglfwstub.windowHeight=" + Tools.getDisplayFriendlyRes(currentDisplayMetrics.heightPixels, LauncherPreferences.PREF_SCALE_FACTOR),
+                "-Dglfwstub.refreshRate=" + (Math.round(DisplayUtils.getMaxSupportedRefreshRate(ctx)) < 60 ? 144 : Math.round(DisplayUtils.getMaxSupportedRefreshRate(ctx))),
                 "-Dglfwstub.initEgl=false",
                 "-Dext.net.resolvPath=" +resolvFile,
                 "-Dlog4j2.formatMsgNoLookups=true", //Log4j RCE mitigation
