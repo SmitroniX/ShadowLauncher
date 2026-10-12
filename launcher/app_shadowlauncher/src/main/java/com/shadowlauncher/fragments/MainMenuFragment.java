@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,9 @@ public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";
 
     private mcVersionSpinner mVersionSpinner;
+    private TextView mFpsBadge;
+    private TextView mThemeBadge;
+    private TextView mStatusIndicator;
 
     public MainMenuFragment(){
         super(R.layout.fragment_launcher);
@@ -51,6 +55,23 @@ public class MainMenuFragment extends Fragment {
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
+
+        mFpsBadge = view.findViewById(R.id.badge_fps_unlocked);
+        mThemeBadge = view.findViewById(R.id.badge_java25_ready);
+        mStatusIndicator = view.findViewById(R.id.dashboard_status_indicator);
+
+        updateThermalBadges();
+        updateThemeBadge();
+
+        if (mFpsBadge != null) {
+            mFpsBadge.setOnClickListener(v -> showThermalProfileDialog(v.getContext()));
+        }
+        if (mStatusIndicator != null) {
+            mStatusIndicator.setOnClickListener(v -> showThermalProfileDialog(v.getContext()));
+        }
+        if (mThemeBadge != null) {
+            mThemeBadge.setOnClickListener(v -> showUIThemeDialog(v.getContext()));
+        }
 
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
         mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.discord_invite)));
@@ -75,11 +96,115 @@ public class MainMenuFragment extends Fragment {
             return true;
         });
 
-
         mNewsButton.setOnLongClickListener((v)->{
             Tools.swapFragment(requireActivity(), GamepadMapperFragment.class, GamepadMapperFragment.TAG, null);
             return true;
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mVersionSpinner != null) {
+            mVersionSpinner.reloadProfiles();
+        }
+        updateThermalBadges();
+        updateThemeBadge();
+    }
+
+    private void updateThermalBadges() {
+        if (mFpsBadge == null) return;
+        String profile = LauncherPreferences.PREF_THERMAL_PROFILE;
+        if ("battery_saver".equalsIgnoreCase(profile)) {
+            mFpsBadge.setText("🔋 60 FPS • ECO COOL");
+            if (mStatusIndicator != null) mStatusIndicator.setText("● 🔋 ECO SAVER");
+        } else if ("max_performance".equalsIgnoreCase(profile)) {
+            mFpsBadge.setText("⚡ 144Hz • PRO TURBO");
+            if (mStatusIndicator != null) mStatusIndicator.setText("● ⚡ UNLOCKED");
+        } else {
+            mFpsBadge.setText("❄️ BALANCED • 120Hz");
+            if (mStatusIndicator != null) mStatusIndicator.setText("● ❄️ COOL & READY");
+        }
+    }
+
+    private void updateThemeBadge() {
+        if (mThemeBadge == null) return;
+        String theme = LauncherPreferences.PREF_UI_THEME;
+        if ("obsidian_minimal".equalsIgnoreCase(theme)) {
+            mThemeBadge.setText("🌌 MINIMAL • JAVA 25");
+        } else if ("cyber_neon".equalsIgnoreCase(theme)) {
+            mThemeBadge.setText("⚡ CYBER • JAVA 25");
+        } else if ("aurora_glass".equalsIgnoreCase(theme)) {
+            mThemeBadge.setText("🌈 AURORA • JAVA 25");
+        } else {
+            mThemeBadge.setText("✨ GLASS • JAVA 25");
+        }
+    }
+
+    private void showThermalProfileDialog(Context context) {
+        final CharSequence[] items = new CharSequence[] {
+            getString(R.string.thermal_profile_cool_balanced),
+            getString(R.string.thermal_profile_battery_saver),
+            getString(R.string.thermal_profile_max_performance)
+        };
+        final String[] values = new String[] {
+            "cool_balanced",
+            "battery_saver",
+            "max_performance"
+        };
+        int selectedIndex = 0;
+        String current = LauncherPreferences.PREF_THERMAL_PROFILE;
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].equalsIgnoreCase(current)) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.dialog_select_thermal_title);
+        builder.setSingleChoiceItems(items, selectedIndex, (dialog, which) -> {
+            LauncherPreferences.PREF_THERMAL_PROFILE = values[which];
+            LauncherPreferences.DEFAULT_PREF.edit().putString("thermalProfile", values[which]).apply();
+            updateThermalBadges();
+            dialog.dismiss();
+            Toast.makeText(context, items[which], Toast.LENGTH_SHORT).show();
+        });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.show();
+    }
+
+    private void showUIThemeDialog(Context context) {
+        final CharSequence[] items = new CharSequence[] {
+            getString(R.string.ui_theme_glassmorphism),
+            getString(R.string.ui_theme_obsidian_minimal),
+            getString(R.string.ui_theme_cyber_neon),
+            getString(R.string.ui_theme_aurora_glass)
+        };
+        final String[] values = new String[] {
+            "glassmorphism",
+            "obsidian_minimal",
+            "cyber_neon",
+            "aurora_glass"
+        };
+        int selectedIndex = 0;
+        String current = LauncherPreferences.PREF_UI_THEME;
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].equalsIgnoreCase(current)) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.dialog_select_theme_title);
+        builder.setSingleChoiceItems(items, selectedIndex, (dialog, which) -> {
+            LauncherPreferences.PREF_UI_THEME = values[which];
+            LauncherPreferences.DEFAULT_PREF.edit().putString("uiTheme", values[which]).apply();
+            updateThemeBadge();
+            dialog.dismiss();
+            Toast.makeText(context, items[which], Toast.LENGTH_SHORT).show();
+        });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.show();
     }
 
     private void showInstanceDirectoryDialog(Context context) {
@@ -151,12 +276,6 @@ public class MainMenuFragment extends Fragment {
             }
         }
         return Tools.ensureInstanceDirectoryStructure(profileObject);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mVersionSpinner.reloadProfiles();
     }
 
     private void runInstallerWithConfirmation(boolean isCustomArgs) {

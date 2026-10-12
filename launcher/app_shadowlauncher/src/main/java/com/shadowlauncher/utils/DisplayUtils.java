@@ -69,9 +69,18 @@ public final class DisplayUtils {
     }
 
     /**
-     * Apply maximum refresh rate to the window attributes (preferredDisplayModeId and refresh rate limits).
+     * Apply maximum refresh rate to the window attributes with adaptive pacing.
      */
     public static void applyHighRefreshRate(Window window) {
+        applyThermalDisplayProfile(window, "cool_balanced");
+    }
+
+    /**
+     * Apply thermal-aware display refresh rate profile to window attributes.
+     * Prevents phone overheating by enabling dynamic LTPO downclocking when idle
+     * and respecting battery saver constraints.
+     */
+    public static void applyThermalDisplayProfile(Window window, String profile) {
         if (window == null) return;
         try {
             Context ctx = window.getContext();
@@ -88,13 +97,16 @@ public final class DisplayUtils {
                 if (wm != null) display = wm.getDefaultDisplay();
             }
 
+            boolean isBatterySaver = "battery_saver".equalsIgnoreCase(profile);
+            float targetCap = isBatterySaver ? 60.0f : MAX_TARGET_FPS;
+
             if (display != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 Display.Mode[] modes = display.getSupportedModes();
                 Display.Mode bestMode = null;
                 if (modes != null) {
                     for (Display.Mode mode : modes) {
                         float rate = mode.getRefreshRate();
-                        if (rate > maxRate && rate <= (MAX_TARGET_FPS + 1.0f)) {
+                        if (rate > maxRate && rate <= (targetCap + 1.0f)) {
                             maxRate = rate;
                             bestMode = mode;
                         }
@@ -104,25 +116,25 @@ public final class DisplayUtils {
                     params.preferredDisplayModeId = bestMode.getModeId();
                     Log.i(TAG, "Configured preferredDisplayModeId=" + bestMode.getModeId() + " (" + maxRate + " Hz)");
                 }
-                // Also set legacy preferredRefreshRate on API 23+
                 try {
                     params.preferredRefreshRate = maxRate;
                 } catch (Throwable ignored) {}
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && maxRate > 60.0f) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 try {
-                    Field minField = WindowManager.LayoutParams.class.getField("preferredMinDisplayRefreshRate");
-                    minField.setFloat(params, maxRate);
                     Field maxField = WindowManager.LayoutParams.class.getField("preferredMaxDisplayRefreshRate");
                     maxField.setFloat(params, maxRate);
-                    Log.i(TAG, "Configured preferred display refresh rate: " + maxRate + " Hz");
+                    // Do NOT lock minDisplayRefreshRate to maxRate to allow LTPO/VRR idle drop and prevent phone heating
+                    Field minField = WindowManager.LayoutParams.class.getField("preferredMinDisplayRefreshRate");
+                    minField.setFloat(params, isBatterySaver ? 30.0f : 0.0f);
+                    Log.i(TAG, "Configured adaptive display refresh rate: max=" + maxRate + " Hz (thermal=" + profile + ")");
                 } catch (Throwable ignored) {}
             }
 
             window.setAttributes(params);
         } catch (Throwable t) {
-            Log.w(TAG, "Failed to apply high refresh rate to window", t);
+            Log.w(TAG, "Failed to apply thermal display profile to window", t);
         }
     }
 

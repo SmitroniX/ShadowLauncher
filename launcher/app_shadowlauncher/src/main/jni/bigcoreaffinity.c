@@ -24,32 +24,45 @@ void bigcore_set_affinity() {
     unsigned long core_freq;
     unsigned long max_freq = 0;
     unsigned int corecnt = 0;
-    unsigned int big_core_id = 0;
-    while(1) {
+    unsigned long freqs[64];
+    memset(freqs, 0, sizeof(freqs));
+
+    while(corecnt < 64) {
         bigcore_format_cpu_path(path_buffer, corecnt);
         int corefreqfd = open(path_buffer, O_RDONLY);
         if(corefreqfd != -1) {
-            ssize_t read_count = read(corefreqfd, freq_buffer, FREQ_MAX);
+            ssize_t read_count = read(corefreqfd, freq_buffer, FREQ_MAX - 1);
             close(corefreqfd);
-            freq_buffer[read_count] = 0;
-            core_freq = strtoul(freq_buffer, &discard, 10);
-            if(core_freq >= max_freq) {
-                max_freq = core_freq;
-                big_core_id = corecnt;
+            if (read_count > 0) {
+                freq_buffer[read_count] = 0;
+                core_freq = strtoul(freq_buffer, &discard, 10);
+                freqs[corecnt] = core_freq;
+                if(core_freq > max_freq) {
+                    max_freq = core_freq;
+                }
             }
         }else{
             break;
         }
         corecnt++;
     }
-    printf("bigcore: big CPU number is %u, frequency %lu Hz\n", big_core_id, max_freq);
+
+    if (max_freq == 0 || corecnt == 0) return;
+
     cpu_set_t bigcore_affinity_set;
     CPU_ZERO(&bigcore_affinity_set);
-    CPU_SET_S(big_core_id, CPU_SETSIZE, &bigcore_affinity_set);
+    unsigned long threshold = (unsigned long)(max_freq * 0.80);
+    unsigned int added = 0;
+    for (unsigned int i = 0; i < corecnt; i++) {
+        if (freqs[i] >= threshold) {
+            CPU_SET_S(i, CPU_SETSIZE, &bigcore_affinity_set);
+            added++;
+        }
+    }
     int result = sched_setaffinity(0, CPU_SETSIZE, &bigcore_affinity_set);
     if(result != 0) {
         printf("bigcore: setting affinity failed: %s\n", strerror(result));
     }else{
-        printf("bigcore: forced current thread onto big core\n");
+        printf("bigcore: distributed affinity across %u high-performance cluster cores (max %lu Hz)\n", added, max_freq);
     }
 }

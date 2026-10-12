@@ -123,8 +123,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             getWindow().setSustainedPerformanceMode(PREF_SUSTAINED_PERFORMANCE);
 
-        // Unlock high refresh rate displays (up to 144Hz / 120Hz)
-        DisplayUtils.applyHighRefreshRate(getWindow());
+        // Configure display refresh rate with thermal profile protection
+        DisplayUtils.applyThermalDisplayProfile(getWindow(), LauncherPreferences.PREF_THERMAL_PROFILE);
 
         ingameControlsEditorArrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.menu_customcontrol));

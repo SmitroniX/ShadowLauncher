@@ -114,6 +114,9 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
             SurfaceView surfaceView = new SurfaceView(getContext());
             mSurface = surfaceView;
             float maxFps = DisplayUtils.getMaxSupportedRefreshRate(getContext());
+            if ("battery_saver".equalsIgnoreCase(LauncherPreferences.PREF_THERMAL_PROFILE)) {
+                maxFps = 60.0f;
+            }
             DisplayUtils.applySurfaceViewFrameRate(surfaceView, maxFps);
 
             surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -383,6 +386,10 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         refreshSize(true);
 
         float maxFps = DisplayUtils.getMaxSupportedRefreshRate(getContext());
+        String thermalProfile = LauncherPreferences.PREF_THERMAL_PROFILE;
+        if ("battery_saver".equalsIgnoreCase(thermalProfile)) {
+            maxFps = 60.0f;
+        }
         DisplayUtils.applySurfaceFrameRate(surface, maxFps);
 
         //Load Minecraft options:
@@ -390,8 +397,20 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         MCOptionUtils.set("overrideWidth", String.valueOf(windowWidth));
         MCOptionUtils.set("overrideHeight", String.valueOf(windowHeight));
         String currentMaxFps = MCOptionUtils.get("maxFps");
-        if (currentMaxFps == null || "60".equals(currentMaxFps) || "120".equals(currentMaxFps)) {
-            MCOptionUtils.set("maxFps", "260");
+        if ("battery_saver".equalsIgnoreCase(thermalProfile)) {
+            MCOptionUtils.set("maxFps", "60");
+        } else if ("cool_balanced".equalsIgnoreCase(thermalProfile)) {
+            // Adaptive cool target: match display refresh rate up to 120 FPS, never an insane 260
+            int targetFps = Math.min(Math.round(maxFps), 120);
+            if (targetFps < 60) targetFps = 60;
+            if (currentMaxFps == null || "260".equals(currentMaxFps)) {
+                MCOptionUtils.set("maxFps", String.valueOf(targetFps));
+            }
+        } else {
+            // max_performance: match display refresh rate (e.g. 120 or 144) instead of uncapped 260
+            if (currentMaxFps == null || "260".equals(currentMaxFps)) {
+                MCOptionUtils.set("maxFps", String.valueOf(Math.round(maxFps)));
+            }
         }
         MCOptionUtils.save();
         getMcScale();

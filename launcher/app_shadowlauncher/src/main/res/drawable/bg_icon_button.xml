@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#4000F0FF">
+    android:color="#26FFFFFF">
     <item>
         <selector>
             <item android:state_pressed="true">
                 <shape android:shape="rectangle">
-                    <corners android:radius="12dp"/>
-                    <solid android:color="#2A3D5E"/>
-                    <stroke android:width="1.2dp" android:color="#00F0FF"/>
+                    <corners android:radius="14dp"/>
+                    <solid android:color="#2C283B55"/>
+                    <stroke android:width="1.2dp" android:color="#4D38BDF8"/>
                 </shape>
             </item>
             <item android:state_focused="true">
                 <shape android:shape="rectangle">
-                    <corners android:radius="12dp"/>
-                    <solid android:color="#20304D"/>
-                    <stroke android:width="1.5dp" android:color="#00F0FF"/>
+                    <corners android:radius="14dp"/>
+                    <solid android:color="#2622324A"/>
+                    <stroke android:width="1.2dp" android:color="#4D38BDF8"/>
                 </shape>
             </item>
             <item>
                 <shape android:shape="rectangle">
-                    <corners android:radius="12dp"/>
+                    <corners android:radius="14dp"/>
                     <gradient
-                        android:startColor="#1E2A3E"
-                        android:endColor="#141D2C"
+                        android:startColor="#201E293B"
+                        android:endColor="#14131D2E"
                         android:angle="270"/>
-                    <stroke android:width="1dp" android:color="#2B3D5C"/>
+                    <stroke android:width="1dp" android:color="#26FFFFFF"/>
                 </shape>
             </item>
         </selector>

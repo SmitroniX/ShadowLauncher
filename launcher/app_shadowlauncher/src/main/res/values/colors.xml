@@ -36,8 +36,25 @@
     <color name="card_border_glow">#4400F0FF</color>
 
     <!-- Glassmorphic Tokens -->
-    <color name="glass_border_highlight">#4D00F0FF</color>
-    <color name="glass_surface_dark">#E60B0E17</color>
+    <color name="glass_border_highlight">#33FFFFFF</color>
+    <color name="glass_surface_dark">#E60F172A</color>
+    <color name="glass_card_bg_start">#2A1E293B</color>
+    <color name="glass_card_bg_center">#1F162032</color>
+    <color name="glass_card_bg_end">#180F172A</color>
+    <color name="glass_card_stroke_top">#38FFFFFF</color>
+    <color name="glass_card_stroke_bottom">#12FFFFFF</color>
+    <color name="glass_pill_bg">#1F38BDF8</color>
+    <color name="glass_pill_border">#4038BDF8</color>
+    <color name="glass_pill_purple_bg">#1FA78BFA</color>
+    <color name="glass_pill_purple_border">#40A78BFA</color>
+    <color name="glass_pill_green_bg">#1F34D399</color>
+    <color name="glass_pill_green_border">#4034D399</color>
+    <color name="accent_frost_blue">#38BDF8</color>
+    <color name="accent_frost_purple">#C084FC</color>
+    <color name="accent_frost_emerald">#34D399</color>
+    <color name="glass_button_bg_start">#201E293B</color>
+    <color name="glass_button_bg_end">#16131D2E</color>
+    <color name="glass_button_stroke">#26FFFFFF</color>
 
     <!-- Instance Badge & Danger Accents -->
     <color name="instance_badge_bg">#0C2B3D</color>

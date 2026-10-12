@@ -22,14 +22,14 @@
 			android:layout_height="wrap_content"
 			android:paddingBottom="@dimen/_12sdp">
 
-			<!-- Cyber Gaming Dashboard Hero Banner -->
+			<!-- Glassmorphic Dashboard Hero Banner -->
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:id="@+id/dashboard_hero_card"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="@dimen/_8sdp"
 				android:layout_marginTop="@dimen/_8sdp"
-				android:background="@drawable/bg_cyber_hero_card"
+				android:background="@drawable/bg_glass_hero_card"
 				android:padding="@dimen/_10sdp"
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
@@ -40,10 +40,10 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:text="@string/dashboard_hero_title"
-					android:textColor="@color/accent_cyan"
-					android:textSize="@dimen/_10ssp"
+					android:textColor="@color/primary_text"
+					android:textSize="@dimen/_11ssp"
 					android:textStyle="bold"
-					android:letterSpacing="0.06"
+					android:letterSpacing="0.04"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintEnd_toStartOf="@id/dashboard_status_indicator" />
@@ -54,9 +54,12 @@
 					android:layout_height="wrap_content"
 					android:text="@string/dashboard_status_active"
 					android:textColor="@color/accent_green"
-					android:textSize="@dimen/_9ssp"
+					android:textSize="@dimen/_8ssp"
 					android:textStyle="bold"
 					android:letterSpacing="0.04"
+					android:background="@drawable/bg_status_pill"
+					android:paddingHorizontal="@dimen/_8sdp"
+					android:paddingVertical="@dimen/_3sdp"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintTop_toTopOf="@id/dashboard_system_title"
 					app:layout_constraintBottom_toBottomOf="@id/dashboard_system_title" />
@@ -71,7 +74,7 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintEnd_toEndOf="parent">
 
-					<!-- 144 FPS UNLOCKED Badge -->
+					<!-- Thermal & Performance Badge -->
 					<TextView
 						android:id="@+id/badge_fps_unlocked"
 						android:layout_width="0dp"
@@ -83,14 +86,14 @@
 						android:paddingVertical="@dimen/_6sdp"
 						android:paddingHorizontal="@dimen/_6sdp"
 						android:text="@string/dashboard_badge_fps"
-						android:textColor="@color/accent_cyan"
+						android:textColor="@color/accent_frost_blue"
 						android:textSize="@dimen/_9ssp"
 						android:textStyle="bold"
 						android:letterSpacing="0.03"
 						android:singleLine="true"
 						android:ellipsize="end" />
 
-					<!-- JAVA 25 READY Badge -->
+					<!-- Glass UI & Runtime Badge -->
 					<TextView
 						android:id="@+id/badge_java25_ready"
 						android:layout_width="0dp"
@@ -102,7 +105,7 @@
 						android:paddingVertical="@dimen/_6sdp"
 						android:paddingHorizontal="@dimen/_6sdp"
 						android:text="@string/dashboard_badge_java"
-						android:textColor="@color/accent_purple"
+						android:textColor="@color/accent_frost_purple"
 						android:textSize="@dimen/_9ssp"
 						android:textStyle="bold"
 						android:letterSpacing="0.03"
@@ -118,7 +121,7 @@
 					android:text="@string/dashboard_hero_subtitle"
 					android:textColor="@color/secondary_text"
 					android:textSize="@dimen/_8ssp"
-					android:letterSpacing="0.05"
+					android:letterSpacing="0.04"
 					android:gravity="center"
 					app:layout_constraintTop_toBottomOf="@id/status_badges_container"
 					app:layout_constraintStart_toStartOf="parent"

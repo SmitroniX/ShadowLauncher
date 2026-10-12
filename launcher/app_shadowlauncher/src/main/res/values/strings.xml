@@ -443,11 +443,28 @@
     <string name="instance_badge">ISOLATED INSTANCE</string>
     <string name="instance_folder_toast">Opened: %s</string>
 
-    <!-- Dashboard Cyber UI Badges & Headers -->
-    <string name="dashboard_hero_title">SHADOW ENGINE // SYSTEM DECK</string>
-    <string name="dashboard_status_active">● ACTIVE</string>
-    <string name="dashboard_badge_fps">⚡ 144 FPS UNLOCKED</string>
-    <string name="dashboard_badge_java">☕ JAVA 25 READY</string>
-    <string name="dashboard_hero_subtitle">HARDWARE ACCELERATED • ZERO LATENCY PIPELINE</string>
-    <string name="dashboard_matrix_label">QUICK ACCESS MATRIX</string>
+    <!-- Dashboard Glassmorphic UI & Thermal Protection -->
+    <string name="dashboard_hero_title">SHADOW LAUNCHER</string>
+    <string name="dashboard_status_active">❄️ COOL &amp; READY</string>
+    <string name="dashboard_badge_fps">❄️ BALANCED • 120Hz</string>
+    <string name="dashboard_badge_java">✨ GLASS • JAVA 25</string>
+    <string name="dashboard_hero_subtitle">ADAPTIVE PACING • THERMAL GUARD ACTIVE</string>
+    <string name="dashboard_matrix_label">QUICK ACTIONS</string>
+
+    <!-- Thermal & Performance Profiles -->
+    <string name="preference_thermal_profile_title">Thermal &amp; Power Optimization</string>
+    <string name="preference_thermal_profile_summary">Smart frame pacing and CPU throttling protection to prevent device heating</string>
+    <string name="thermal_profile_cool_balanced">❄️ Balanced &amp; Cool (Adaptive Pacing • Recommended)</string>
+    <string name="thermal_profile_battery_saver">🔋 Battery Saver (60 FPS Cap • Coolest)</string>
+    <string name="thermal_profile_max_performance">⚡ High Performance (Unlocked 144Hz • Dynamic)</string>
+    <string name="dialog_select_thermal_title">Select Thermal Profile</string>
+    <string name="dialog_select_theme_title">Select UI Theme &amp; Style</string>
+
+    <!-- UI Themes & Styles -->
+    <string name="preference_ui_theme_title">Launcher UI Theme &amp; Style</string>
+    <string name="preference_ui_theme_summary">Choose your visual aesthetic (Glassmorphism, Minimalist, Cyber, Aurora)</string>
+    <string name="ui_theme_glassmorphism">✨ Modern Glassmorphism (Frosted Glass)</string>
+    <string name="ui_theme_obsidian_minimal">🌌 Midnight Slate (Minimalist Dark)</string>
+    <string name="ui_theme_cyber_neon">⚡ Cyber Neon (Classic Cyberpunk)</string>
+    <string name="ui_theme_aurora_glass">🌈 Aurora Glass (Gradient Frost)</string>
 </resources>

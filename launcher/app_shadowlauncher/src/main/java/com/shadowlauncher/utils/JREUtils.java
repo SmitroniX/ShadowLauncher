@@ -377,7 +377,7 @@ public class JREUtils {
                 // GLFW Stub width height and high refresh rate
                 "-Dglfwstub.windowWidth=" + Tools.getDisplayFriendlyRes(currentDisplayMetrics.widthPixels, LauncherPreferences.PREF_SCALE_FACTOR),
                 "-Dglfwstub.windowHeight=" + Tools.getDisplayFriendlyRes(currentDisplayMetrics.heightPixels, LauncherPreferences.PREF_SCALE_FACTOR),
-                "-Dglfwstub.refreshRate=" + (Math.round(DisplayUtils.getMaxSupportedRefreshRate(ctx)) < 60 ? 144 : Math.round(DisplayUtils.getMaxSupportedRefreshRate(ctx))),
+                "-Dglfwstub.refreshRate=" + ("battery_saver".equalsIgnoreCase(LauncherPreferences.PREF_THERMAL_PROFILE) ? 60 : (Math.round(DisplayUtils.getMaxSupportedRefreshRate(ctx)) <= 0 ? 60 : Math.round(DisplayUtils.getMaxSupportedRefreshRate(ctx)))),
                 "-Dglfwstub.initEgl=false",
                 "-Dext.net.resolvPath=" +resolvFile,
                 "-Dlog4j2.formatMsgNoLookups=true", //Log4j RCE mitigation

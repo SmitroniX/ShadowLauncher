@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Top Glass Highlight Rim -->
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="16dp"/>
-            <solid android:color="#A855F7"/>
+            <gradient
+                android:startColor="#40FFFFFF"
+                android:centerColor="#20FFFFFF"
+                android:endColor="#10FFFFFF"
+                android:angle="135"/>
         </shape>
     </item>
-    <item android:top="1.5dp" android:bottom="1.5dp" android:left="1.5dp" android:right="1.5dp">
+    <!-- Pressed Deep Indigo-Violet Core -->
+    <item android:top="1.2dp" android:bottom="1.2dp" android:left="1.2dp" android:right="1.2dp">
         <shape android:shape="rectangle">
             <corners android:radius="15dp"/>
             <gradient
-                android:startColor="#0891B2"
+                android:startColor="#7C3AED"
                 android:centerColor="#6D28D9"
-                android:endColor="#7E22CE"
+                android:endColor="#4F46E5"
                 android:angle="135"/>
         </shape>
     </item>

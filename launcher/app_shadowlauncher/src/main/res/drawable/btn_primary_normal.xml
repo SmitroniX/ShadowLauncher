@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- High-visibility glowing neon border -->
+    <!-- Top Glass Specular Highlight Rim -->
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="16dp"/>
             <gradient
-                android:startColor="#E0F2FE"
-                android:centerColor="#C084FC"
-                android:endColor="#67E8F9"
+                android:startColor="#60FFFFFF"
+                android:centerColor="#30FFFFFF"
+                android:endColor="#18FFFFFF"
                 android:angle="135"/>
         </shape>
     </item>
-    <!-- Vivid Cyber Purple-Cyan Core -->
-    <item android:top="1.5dp" android:bottom="1.5dp" android:left="1.5dp" android:right="1.5dp">
+    <!-- Modern Glassmorphic Indigo-Violet CTA Core -->
+    <item android:top="1.2dp" android:bottom="1.2dp" android:left="1.2dp" android:right="1.2dp">
         <shape android:shape="rectangle">
             <corners android:radius="15dp"/>
             <gradient
-                android:startColor="#00E5FF"
+                android:startColor="#8B5CF6"
                 android:centerColor="#7C3AED"
-                android:endColor="#9333EA"
+                android:endColor="#6366F1"
                 android:angle="135"/>
         </shape>
     </item>
